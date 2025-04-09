@@ -1,0 +1,32 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/*For all elements */
+* {
+
+  /* Hide scrollbar*/
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+
+/*COLORS*/
+:root {
+  --primary-color: #032539;
+  --secondary-color: #e87a00;
+  --accent-color: #2c3e50;
+  --background-color: #ffe3c7;
+  --text-color: #f8dcbf;
+  --header-height: 64px;
+}

@@ -1,0 +1,13 @@
+/*Setta lo style di chi 'hosta' questo component */
+:host {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.spacer {
+    flex: 1 1 auto;
+}
+
+

@@ -1,0 +1,29 @@
+{
+  "api-messages-public": {
+    "text": "This is a public message."
+  },
+  "api-messages-protected": {
+    "text": "This is a protected message."
+  },
+  "api-messages-admin": {
+    "text": "This is an admin message."
+  },
+
+  "annunci":[
+    {
+      "id": 1,
+      "title": "MOCK Annuncio 1",
+      "description": "MOCK Descrizione dell'annuncio 1",
+      "price": 10.99,
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 2,
+      "title": "Annuncio 2",
+      "description": "Descrizione dell'annuncio 2",
+      "price": 20.99,
+      "image": "https://via.placeholder.com/150"
+    }
+
+  ]
+}

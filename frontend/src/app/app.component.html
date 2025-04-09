@@ -1,0 +1,11 @@
+<!--COMMON COMPONENTS TO ALL PAGES-->
+<app-common [pageContent]="pageContentTemplate" />
+
+<!--CURRENT PAGE-->
+<ng-template #pageContentTemplate> <!-- render the page when ref is passed to *ngTemplateOutlet  -->
+    <main>
+        <router-outlet/>
+
+    </main>
+</ng-template>
+

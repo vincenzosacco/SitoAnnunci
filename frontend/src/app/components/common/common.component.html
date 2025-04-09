@@ -1,0 +1,23 @@
+<!--HEADER-->
+<header>
+    <mat-toolbar>
+        <app-header [title]="APP_TITLE" (menuButtonClick)="sidenav.toggle()"/>
+    </mat-toolbar>
+</header>
+
+<mat-sidenav-container class="page-content-container">
+<!-- SIDE MENU CONTENT   -->
+    <mat-sidenav #sidenav mode="side" opened>
+        <div id="sidemenu">
+            <app-sidemenu-content/>
+        </div>
+    </mat-sidenav>
+
+<!-- PAGE CONTENT    -->
+    <mat-sidenav-content class="page-content" >
+        <div id="page-body">
+            <ng-container *ngTemplateOutlet="pageContent" ></ng-container>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
