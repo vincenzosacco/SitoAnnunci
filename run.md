@@ -32,7 +32,7 @@ Per avviare l'applicazione in modalità production dalla `project root` director
 >#### Development
 >Per avviare il server `backend` (development) dalla `project root` directory
 >``` shell
->cd frontend ; npm run mock:be
+>cd frontend ; npm run mock-be
 >```
 >*NOTE:In modalità development il server backend è simulato da un server mock (json-server) nella cartella frontend.*
 >Per avviare il server `frontend` (development) `project root` directory
