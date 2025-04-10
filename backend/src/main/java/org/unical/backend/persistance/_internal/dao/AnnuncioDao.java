@@ -2,7 +2,7 @@
 DAO interface for Annuncio
  */
 
-package org.unical.backend.persistance.dao;
+package org.unical.backend.persistance._internal.dao;
 
 import org.unical.backend.model.Annuncio;
 

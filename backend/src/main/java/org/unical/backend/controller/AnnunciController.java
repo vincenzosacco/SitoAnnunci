@@ -3,7 +3,7 @@ package org.unical.backend.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.unical.backend.model.Annuncio;
-import org.unical.backend.service.IAnnuncioService;
+import org.unical.backend.persistance.service.IAnnuncioService;
 
 @RestController
 @RequestMapping("annunci")

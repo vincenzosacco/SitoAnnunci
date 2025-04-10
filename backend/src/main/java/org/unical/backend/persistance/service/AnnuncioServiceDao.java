@@ -1,13 +1,13 @@
-package org.unical.backend.service;
+package org.unical.backend.persistance.service;
 
 import org.springframework.stereotype.Service;
-import org.unical.backend.persistance.dao.AnnuncioDao;
+import org.unical.backend.persistance._internal.dao.AnnuncioDao;
 import org.unical.backend.model.Annuncio;
 
 import java.util.Collection;
 
 @Service
-class AnnuncioService implements IAnnuncioService {
+class AnnuncioServiceDao implements IAnnuncioService {
 
     //opzione autowiring 1
 //    @Autowired
@@ -16,12 +16,12 @@ class AnnuncioService implements IAnnuncioService {
     // opzione autowiring 2
     private final AnnuncioDao dao;
 
-    AnnuncioService(AnnuncioDao annDao) {
+    AnnuncioServiceDao(AnnuncioDao annDao) {
         this.dao = annDao;
     }
 
     @Override
-    public Collection<Annuncio> findAll() {
+    public Collection<Annuncio>findAll() {
         return dao.findAll();
     }
 
