@@ -10,8 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "npm run env && ng test",
     "env": "ts-node parse-properties.ts",
-    "mock_be": "json-server -p 3000 -h localhost .\\json_server\\backend_mock.json",
-    "mock_db": "json-server -p 3000 -h localhost .\\json_server\\db_mock.json"
+    "mock-be": "json-server -p 3000 -h localhost .\\json_server\\backend_mock.json",
   },
   "private": true,
   "dependencies": {
