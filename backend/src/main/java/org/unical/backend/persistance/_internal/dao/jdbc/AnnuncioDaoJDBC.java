@@ -2,11 +2,11 @@
 DAO implementation for Annuncio
  */
 
-package org.unical.backend.persistance.dao.jdbc;
+package org.unical.backend.persistance._internal.dao.jdbc;
 
 import org.springframework.stereotype.Component;
 import org.unical.backend.persistance.DBManager;
-import org.unical.backend.persistance.dao.AnnuncioDao;
+import org.unical.backend.persistance._internal.dao.AnnuncioDao;
 import org.unical.backend.model.Annuncio;
 
 import java.sql.Connection;

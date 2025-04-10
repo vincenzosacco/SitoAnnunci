@@ -1,12 +1,7 @@
 package org.unical.backend.persistance;
 
 
-import org.unical.backend.model.Annuncio;
-import org.unical.backend.persistance.dao.AnnuncioDao;
-import org.unical.backend.persistance.dao.jdbc.AnnuncioDaoJDBC;
-
 import java.sql.*;
-import java.util.List;
 
 public class DBManager {
     private static DBManager instance = null;
