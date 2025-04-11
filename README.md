@@ -14,12 +14,16 @@ Il progetto è un'applicazione web che ...
 # Run
 [Run](./run.md) l'applicazione in modalità *development* o *production*.
 
+# Troubleshooting
+- [Problemi comuni con il backend](./backend/troubleshooting.md)
+- [Problemi comuni con il frontend](./frontend/troubleshooting.md)
+
 
 
 # Frameworks and Technologies
 
 ## Maven
-Il progetto è gestito con [Maven](https://maven.apache.org), ed è diviso in due moduli: [Frontend](#frontend) e [Backend](#backend).
+Il progetto è gestito con [Maven](https://maven.apache.org), ed è diviso in due moduli: [fronted](#frontend) e [backend](#backend).
 
 *[pom.xml (root)](./pom.xml)*
 ``` xml 
