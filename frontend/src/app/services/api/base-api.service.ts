@@ -28,7 +28,7 @@ export abstract class BaseApiService<T> {
   }
 
   create(item: T): Observable<T> {
-    console.debug("[Angular] Http request to: ", `${this.endpointUrl}`);
+    console.debug("[Angular] Http request to: ", `${this.endpointUrl}/`);
     return this.http.post<T>(this.endpointUrl, item);
   }
 

@@ -21,7 +21,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
  * https://docs.spring.io/spring-framework/reference/web/webmvc-cors.html#mvc-cors-intro
  */
 
-    @Value("${management.endpoints.web.cors.allowed-origins}") // get the value from application.properties
+    @Value("${cors.allowed-origins}") // get the value from application-prod.properties
     private List<String> allowedUrlList;
 
     @PostConstruct // Need to be called after the constructor.

@@ -1,6 +1,5 @@
 package org.unical.backend.persistance;
 
-
 import java.sql.*;
 
 public class DBManager {

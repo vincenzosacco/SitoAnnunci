@@ -10,4 +10,6 @@ import lombok.*;
 public class Annuncio {
     private int id;
     private String title;
+    private String description;
+    private String price;
 }

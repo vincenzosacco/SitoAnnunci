@@ -11,6 +11,13 @@
 Il progetto è un'applicazione web che ...
 
 
+
+# Configurazione
+L'applicazione ha due configurazioni 
+## Development
+In questa configurazione l'applicazione
+
+
 # Run
 [Run](./run.md) l'applicazione in modalità *development* o *production*.
 

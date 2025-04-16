@@ -1,22 +1,17 @@
-package org.unical.backend.persistance.service;
+package org.unical.backend.service._impl;
 
 import org.springframework.stereotype.Service;
-import org.unical.backend.persistance._internal.dao.AnnuncioDao;
+import org.unical.backend.persistance._impl.dao.IDao;
 import org.unical.backend.model.Annuncio;
+import org.unical.backend.service.IAnnuncioService;
 
 import java.util.Collection;
 
 @Service
 class AnnuncioServiceDao implements IAnnuncioService {
+    private final IDao<Annuncio, Integer> dao;
 
-    //opzione autowiring 1
-//    @Autowired
-//    private AnnuncioDao dao;
-
-    // opzione autowiring 2
-    private final AnnuncioDao dao;
-
-    AnnuncioServiceDao(AnnuncioDao annDao) {
+    AnnuncioServiceDao(IDao<Annuncio,Integer> annDao) {
         this.dao = annDao;
     }
 

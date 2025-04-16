@@ -13,14 +13,17 @@ import {NgOptimizedImage} from "@angular/common";
 })
 export class AnnuncioComponent {
   private annuncioService = inject(AnnuncioService)
-  annuncio: AnnuncioModel | undefined;
-
+  annunci: AnnuncioModel[] = []
   ngOnInit() {
-    this.annuncioService.getById(1).subscribe((data: AnnuncioModel) => {
-      this.annuncio = data;
-    });
+    this.annuncioService.getAll().subscribe({
+      next: (data) => {
+        this.annunci = data
+        // console.log(this.annunci)
+      },
+      error: (error) => {
+        console.error('Errore durante il recupero degli annunci:', error);
+      }
+    })
 
   }
-
-
 }
