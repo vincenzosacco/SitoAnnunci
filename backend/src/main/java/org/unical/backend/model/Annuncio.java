@@ -7,6 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode // for testing purposes
 public class Annuncio {
     private int id;
     private String title;

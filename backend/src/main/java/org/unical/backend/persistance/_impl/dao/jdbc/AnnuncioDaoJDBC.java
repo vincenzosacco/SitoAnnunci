@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-
 @Repository
 public class AnnuncioDaoJDBC extends BaseAbsJDBC implements IDao<Annuncio, Integer> {
 

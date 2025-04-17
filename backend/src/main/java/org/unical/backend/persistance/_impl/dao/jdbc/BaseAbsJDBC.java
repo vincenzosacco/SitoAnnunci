@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.unical.backend.persistance._impl.dao.IDao;
 
 import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * Abstract base class for all DAO JDBC implementations.
@@ -22,6 +19,12 @@ public abstract class BaseAbsJDBC {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /**
+     * Get the RowMapper for the entity.
+     * It is used to map the ResultSet to the entity.
+     * Ref: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jdbc/core/RowMapper.html
+     * @return RowMapper object
+     */
     protected abstract RowMapper getRowMapper();
 
 }

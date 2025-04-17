@@ -1,4 +1,5 @@
--- schema.sql
+-- schema.sql - Used to create the init schema for h2(in memory) database.
+-- All objects will be deleted when the application is closed or restarted.
 CREATE TABLE annuncio (
     id INT PRIMARY KEY,
     title VARCHAR(255),
