@@ -15,7 +15,18 @@ public interface IDao<ENT, PK> {
 
     public ENT findByPrimaryKey(PK id);
 
-    public void save(ENT ann);
+    /**
+     * Save the entity.
+     * @param ann The entity to save.
+     * @throws Exception if the entity cannot be saved.
+     * @return The saved entity.
+     */
+    public ENT save(ENT ann) throws Exception;
 
-    public void delete(ENT ann);
+    /**
+     * Delete the entity.
+     * @param ann The entity to delete.
+     * @throws Exception if the entity cannot be deleted.
+     */
+    public void delete(ENT ann) throws Exception;
 }

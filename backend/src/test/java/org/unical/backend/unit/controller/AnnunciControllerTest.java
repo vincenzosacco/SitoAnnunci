@@ -1,6 +1,7 @@
 package org.unical.backend.unit.controller;
 
-import org.junit.jupiter.api.BeforeEach;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,13 +15,10 @@ import org.unical.backend.service.IAnnuncioService;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.assertj.core.api.Assertions.assertThat;
 
 
 
@@ -37,15 +35,6 @@ public class AnnunciControllerTest {
 
     @MockitoBean
     private IAnnuncioService mockService;
-
-
-    /**
-     * Initialize data for the tests.
-     */
-    @BeforeEach
-    public void init() {
-    }
-
 
     /**
      * Test if method {@link org.unical.backend.controller.AnnunciController#getAllAnnunci()} returns the expected value.

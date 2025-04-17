@@ -11,7 +11,7 @@ import javax.sql.DataSource;
  * Abstract base class for all DAO JDBC implementations.
  */
 @Repository
-public abstract class BaseAbsJDBC {
+public abstract class ABaseJDBC {
     protected JdbcTemplate jdbcTemplate;
 
     @Autowired

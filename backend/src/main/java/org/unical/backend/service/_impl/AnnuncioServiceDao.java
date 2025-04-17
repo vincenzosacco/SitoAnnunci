@@ -1,6 +1,7 @@
 package org.unical.backend.service._impl;
 
 import org.springframework.stereotype.Service;
+import org.unical.backend.exceptions.NotImplementedException;
 import org.unical.backend.persistance._impl.dao.IDao;
 import org.unical.backend.model.Annuncio;
 import org.unical.backend.service.IAnnuncioService;
@@ -27,17 +28,18 @@ class AnnuncioServiceDao implements IAnnuncioService {
 
     @Override
     public Annuncio createAnnuncio(Annuncio ann) throws Exception {
-        return null;
+        return dao.save(ann);
     }
 
     @Override
-    public Annuncio updateAnnuncio(int toUpdateAnnID, Annuncio ann) throws Exception {
-        return null;
+    public Annuncio updateAnnuncio(int toUpdateAnnID, Annuncio ann)  {
+        throw new NotImplementedException();
     }
 
     @Override
     public void deleteAnnuncio(int id) {
-
+//        return dao.delete();
+        throw new NotImplementedException();
     }
 
 }
