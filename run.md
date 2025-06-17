@@ -1,43 +1,51 @@
 # Run Configuration
 ## IntelliJIDEA
 Nella cartella [.run](./.run) sono presenti le runConfigurations:
-- [BackendApplication.run.xml](.run/BackendApplication.run.xml) => backend
-
+- [BackendApplication.run.xml](.run/BackendApplication-dev.run.xml) => backend
+.run\BackendApplication-dev.run.xml
 
 - [start_dev.run.xml](.run/start_dev.run.xml) => frontend --development
 - [start_prod.run.xml](.run/start_prod.run.xml) => frontend --production
 
 ## Shell
-Per avviare l'applicazione al di fuori di IntelliJ, è necessario eseguire i seguenti comandi:
+Per avviare l'applicazione al di fuori di IntelliJ, assicurarsi
+di avere installato [maven](https://maven.apache.org/install.html) e [nodejs](https://nodejs.org/en/download/package-manager/). 
+
 
 ### Application
 Per avviare l'applicazione in modalità production dalla `project root` directory
-- production : run section [production](#production)
-- development : run section [development](#development)
-
 
 >#### Production
 >Per avviare il server `backend` (production)`project root` directory
 >``` shell
->mvn -pl backend spring-boot:run
+># Windows
+>./run-be.cmd prod
+># Linux/Mac
+>./run-be.sh prod
 >```
->*NOTE: il server backend reale è interrogato solo in modalità production. 
->In modalità development il server backend è simulato da un server mock (json-server) nella cartella frontend.*
 >
 >Per avviare il server `frontend` (production) dalla `project root` directory
 >``` shell
->cd frontend ; npm run start:prod
+># Windows
+>./run-fe.cmd prod
+># Linux/Mac
+>./run-fe.sh prod
 >```
 
 >#### Development
 >Per avviare il server `backend` (development) dalla `project root` directory
 >``` shell
->cd frontend ; npm run mock-be
+># Windows
+>./run-be.cmd dev
+># Linux/Mac
+>./run-be.sh dev
 >```
->*NOTE:In modalità development il server backend è simulato da un server mock (json-server) nella cartella frontend.*
->Per avviare il server `frontend` (development) `project root` directory
+>Per avviare il server `frontend` (development) dalla `project root` directory
 >``` bash
->cd frontend ; npm run start:dev
+># Windows
+>./run-fe.cmd dev
+># Linux/Mac
+>./run-fe.sh dev
 >```
 
 

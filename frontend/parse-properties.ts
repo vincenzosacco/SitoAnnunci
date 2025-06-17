@@ -3,7 +3,7 @@ import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'fs';
 import path from 'path';
 
 // Constants
-const PROPERTIES_PATH = '../.properties';
+const PROPERTIES_PATH = '../.app-properties';
 const PACKAGE_JSON_PATH = './package.json';
 const ANGULAR_JSON_PATH = './angular.json';
 const ENV_DEV_PATH = './src/environments/environment.ts';

@@ -1,3 +1,6 @@
+# This is a configuration file for the entire application.
+# Changing these values will affect both the backend and frontend.
+
 # BACKEND
 backend.protocol=http
 backend.host=localhost
