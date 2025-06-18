@@ -23,7 +23,6 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@auth0/auth0-angular": "^2.2.3",
-    "dotenv": "^16.4.7",
     "properties-parser": "^0.6.0",
     "property-parser": "^0.0.4",
     "rxjs": "~7.8.0",
