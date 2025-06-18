@@ -11,6 +11,13 @@
 Il progetto è un'applicazione web che ...
 
 ## Configurazione
+Per prima cosa dopo avere clonato il repository, eseguire dall root del progetto:
+```bash
+mvn clean install
+```
+Questo comando installa le dipendenze e compila il progetto.
+
+
 L'applicazione ha due configurazioni 
 - **dev (Development)**: 
   - Il _frontend_ non cambia.
@@ -22,14 +29,14 @@ L'applicazione ha due configurazioni
   - Il backend interroga un database PostgreSQL per la produzione.
   - Configurazioni di sicurezza e performance ottimizzate.
 - Adatta per l'ambiente di produzione.
-
+ 
 >[Run](./run.md) in modalità *development* o *production*.
 
 
 ## Frameworks and Technologies
 
 ### Maven
-Il progetto è gestito con [Maven](https://maven.apache.org), ed è diviso in due moduli: [fronted](#frontend) e [backend](#backend).
+Il progetto è gestito con [Maven](https://maven.apache.org), ed è diviso in due sottomoduli:
 
 *[pom.xml (root)](./pom.xml)*
 ``` xml 
