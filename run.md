@@ -15,7 +15,7 @@ di avere installato [maven](https://maven.apache.org/install.html) e [nodejs](ht
 ### Application
 Per avviare l'applicazione in modalità production dalla `project root` directory
 
->#### Production
+       >#### Production
 >Per avviare il server `backend` (production)`project root` directory
 >``` shell
 ># Windows

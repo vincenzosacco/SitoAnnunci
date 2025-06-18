@@ -1,3 +1,6 @@
+// This script reads a properties file and parses it
+// to update Angular configuration files and package.json.
+
 import properties from 'properties-parser';
 import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'fs';
 import path from 'path';
