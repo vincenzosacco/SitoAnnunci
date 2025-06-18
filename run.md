@@ -1,21 +1,17 @@
 # Run Configuration
+Prima di eseguire l'applicazione, assicurati di avere installato le dipendenze necessarie. 
+Puoi farlo eseguendo il comando `mvn install`(_[troubleshooting](backend/troubleshooting.md#compilation-errors)_) nella directory principale del progetto.
+
+
 ## IntelliJIDEA
 Nella cartella [.run](./.run) sono presenti le runConfigurations:
-- [BackendApplication.run.xml](.run/BackendApplication-dev.run.xml) => backend
-.run\BackendApplication-dev.run.xml
-
-- [start_dev.run.xml](.run/start_dev.run.xml) => frontend --development
-- [start_prod.run.xml](.run/start_prod.run.xml) => frontend --production
+- [BackendApplication-dev](.run/BackendApplication-dev.run.xml) - backend in modalità dev
+- [start:dev](.run/start_dev.run.xml) - frontend in modalità dev
+- [BackendApplication-prod](.run/BackendApplication-prod.run.xml) - backend in modalità prod
+- [start:prod](.run/start_prod.run.xml) - frontend in modalità prod
 
 ## Shell
-Per avviare l'applicazione al di fuori di IntelliJ, assicurarsi
-di avere installato [maven](https://maven.apache.org/install.html) e [nodejs](https://nodejs.org/en/download/package-manager/). 
-
-
-### Application
-Per avviare l'applicazione in modalità production dalla `project root` directory
-
-       >#### Production
+>#### Production
 >Per avviare il server `backend` (production)`project root` directory
 >``` shell
 ># Windows
