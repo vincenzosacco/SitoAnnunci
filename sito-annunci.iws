@@ -5,71 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b1f5fa50-3240-4881-8abc-1c7f4c801c01" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/json_server/backend_mock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/json_server/backend_mock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/frontend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/frontend.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.config.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.constants.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.routes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/api/annuncio/annuncio.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/api/annuncio/annuncio.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/api/annuncio/annuncio.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/api/annuncio/annuncio.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/api/annuncio/annuncio.model.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/common.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/common.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/common.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/common.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/header/header.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/header/header.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/header/header.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/header/header.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/menu-item/menu-item.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/menu-item/menu-item.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/menu-item/menu-item.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/sidemenu-content/sidemenu-content.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/sidemenu-content/sidemenu-content.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/sidemenu-content/sidemenu-content.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/common/sidemenu-content/sidemenu-content.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/other/altrapagina/altra.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/other/altrapagina/altra.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/other/altrapagina/altra.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/other/login-button/login-button.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/other/login-button/login-button.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/other/login-button/login-button.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/other/login-button/login-button.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/other/modifica/modifica.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/other/modifica/modifica.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/other/modifica/modifica.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/other/modifica/modifica.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/pages/home/AnnuncioOld.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/pages/home/Images.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/pages/home/home.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/pages/home/home.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/pages/home/home.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/services/api/annuncio.service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/services/api/base-api.service.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/services/api/base-api.service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/services/auth.service.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/services/auth.service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/annunci.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/imgur.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/scripts/elementCreation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/custom-theme.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/environments/environment.prod.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/environments/environment.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sito-annunci.iml" beforeDir="false" afterPath="$PROJECT_DIR$/sito-annunci.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sito-annunci.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/sito-annunci.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sito-annunci.iws" beforeDir="false" afterPath="$PROJECT_DIR$/sito-annunci.iws" afterDir="false" />
@@ -325,22 +263,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/franc/IdeaProjects/SitoAnnunci/frontend/src/app/components/api/annuncio",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\franc\\IdeaProjects\\SitoAnnunci\\frontend\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;front-test-iorio&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/franc/IdeaProjects/SitoAnnunci/frontend/src/app/components/api/annuncio&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\franc\\IdeaProjects\\SitoAnnunci\\frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\franc\IdeaProjects\SitoAnnunci\frontend\src\app\components\api\annuncio" />
@@ -442,6 +380,7 @@
       <workItem from="1749914476146" duration="2931000" />
       <workItem from="1749980167896" duration="14344000" />
       <workItem from="1750261572647" duration="1187000" />
+      <workItem from="1750265572681" duration="351000" />
     </task>
     <servers />
   </component>
