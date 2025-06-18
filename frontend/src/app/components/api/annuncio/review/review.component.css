@@ -1,0 +1,11 @@
+.review-form {
+  margin: auto;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f8f9fa;
+}
+
+.review-form button[type="submit"] {
+  margin-top: 15px;
+}

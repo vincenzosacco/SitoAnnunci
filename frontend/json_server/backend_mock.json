@@ -1,29 +1,122 @@
 {
-  "api-messages-public": {
-    "text": "This is a public message."
-  },
-  "api-messages-protected": {
-    "text": "This is a protected message."
-  },
-  "api-messages-admin": {
-    "text": "This is an admin message."
-  },
-
-  "annunci":[
+  "annunci": [
     {
-      "id": 1,
+      "id": "1",
       "title": "MOCK Annuncio 1",
+      "forSale": true,
+      "citta": "Reggio Calabria",
+      "price": 40000,
       "description": "MOCK Descrizione dell'annuncio 1",
-      "price": 10.99,
-      "image": "https://via.placeholder.com/150"
+      "image": "https://picsum.photos/200",
+      "categoria": "Attico",
+      "superficie": 500,
+      "utenteId": 101
     },
     {
-      "id": 2,
-      "title": "Annuncio 2",
-      "description": "Descrizione dell'annuncio 2",
-      "price": 20.99,
-      "image": "https://via.placeholder.com/150"
+      "id": "2",
+      "title": "MOCK Annuncio 2",
+      "forSale": true,
+      "citta": "Cosenza",
+      "price": 3000,
+      "description": "MOCK Descrizione dell'annuncio 2",
+      "image": "https://picsum.photos/201",
+      "categoria": "Box Auto",
+      "superficie": 70,
+      "utenteId": 102
+    },
+    {
+      "id": "3",
+      "title": "MOCK Annuncio 3",
+      "forSale": true,
+      "citta": "Crotone",
+      "price": 74000,
+      "description": "MOCK Descrizione dell'annuncio 3",
+      "image": "https://picsum.photos/202",
+      "categoria": "Appartamento",
+      "superficie": 1500,
+      "utenteId": 102
+    },
+    {
+      "id": "4",
+      "title": "MOCK Annuncio 4",
+      "forSale": false,
+      "citta": "Vibo Valentia",
+      "price": 4000,
+      "description": "Cerco piccolo box auto",
+      "image": "https://picsum.photos/203",
+      "categoria": "Box Auto",
+      "superficie": 40,
+      "utenteId": 202
     }
-
+  ],
+  "utenti": [
+    {
+      "id": "101",
+      "nome": "Mario Rossi",
+      "email": "mario@example.com",
+      "telefono": 3334445566,
+      "ruolo": "venditore"
+    },
+    {
+      "id": "102",
+      "nome": "Maria Fossi",
+      "email": "maria@example.com",
+      "telefono": 1334445566,
+      "ruolo": "venditore"
+    },
+    {
+      "id": "202",
+      "nome": "Luca Bianchi",
+      "email": "luca@example.com",
+      "telefono": 2334445566,
+      "ruolo": "acquirente"
+    }
+  ],
+  "recensioni": [
+    {
+      "id": "832d",
+      "annuncioId": 1,
+      "utenteId": 1,
+      "nome": "Mario",
+      "voto": "3",
+      "commento": "Bell'immobile",
+      "dataCreazione": "2025-06-14T15:29:01.538Z"
+    },
+    {
+      "id": "4550",
+      "annuncioId": 1,
+      "utenteId": 1,
+      "nome": "Lucia",
+      "voto": "5",
+      "commento": "Perfetto",
+      "dataCreazione": "2025-06-14T15:29:35.482Z"
+    },
+    {
+      "id": "04da",
+      "annuncioId": 1,
+      "utenteId": 1,
+      "nome": "Kevin",
+      "voto": "1",
+      "commento": "Brutto",
+      "dataCreazione": "2025-06-14T15:29:44.322Z"
+    },
+    {
+      "id": "718d",
+      "annuncioId": 1,
+      "utenteId": 1,
+      "nome": "Luigi",
+      "voto": "4",
+      "commento": "Bello",
+      "dataCreazione": "2025-06-14T15:29:52.775Z"
+    },
+    {
+      "id": "9f31",
+      "annuncioId": 1,
+      "utenteId": 1,
+      "nome": "Leo",
+      "voto": "5",
+      "commento": "Ottimo",
+      "dataCreazione": "2025-06-15T10:47:27.450Z"
+    }
   ]
 }

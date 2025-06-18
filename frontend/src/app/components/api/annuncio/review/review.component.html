@@ -1,0 +1,29 @@
+<div class="review-form">
+  <h4>Lascia una Recensione</h4>
+
+  <form (ngSubmit)="inviaRecensione()" #reviewForm="ngForm">
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" class="form-control" [(ngModel)]="nome" name="nome" required>
+    </div>
+
+    <div class="form-group">
+      <label for="voto">Voto</label>
+      <select id="voto" class="form-control" [(ngModel)]="voto" name="voto" required>
+        <option value="">Seleziona un voto</option>
+        <option *ngFor="let n of [1,2,3,4,5]" [value]="n">{{ n }} ⭐</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="commento">Commento</label>
+      <textarea id="commento" class="form-control" [(ngModel)]="commento" name="commento"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!reviewForm.valid">Invia Recensione</button>
+  </form>
+
+  <div *ngIf="recensioneInviata" class="alert alert-success mt-2">
+    Recensione inviata con successo! Grazie per il tuo feedback.
+  </div>
+</div>

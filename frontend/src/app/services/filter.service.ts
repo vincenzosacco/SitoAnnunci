@@ -1,0 +1,61 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FilterService {
+
+  private searchFiltersSubject = new BehaviorSubject<any>({
+    titolo: '',
+    categoria: '',
+    citta: ''
+  });
+  searchFilters$ = this.searchFiltersSubject.asObservable();
+
+  private advancedFiltersSubject = new BehaviorSubject<any>({
+    forSale: null, // true = in vendita, false = cercasi
+    prezzoDa: null,
+    prezzoA: null,
+    superficieDa: null,
+    superficieA: null
+  });
+  advancedFilters$ = this.advancedFiltersSubject.asObservable();
+
+
+  aggiornaFiltriRicerca(filtroTitolo: string, filtroCategoria: string, filtroCitta: string) {
+    this.searchFiltersSubject.next({
+      titolo: filtroTitolo,
+      categoria: filtroCategoria,
+      citta: filtroCitta
+    });
+  }
+
+
+  //Metodi per aggiornare i filtri del pannello laterale
+  aggiornaFiltroForSale(valore: boolean | null) {
+    this.updateAdvancedFilters({ forSale: valore });
+  }
+
+  aggiornaFiltroPrezzoDa(valore: number | null) {
+    this.updateAdvancedFilters({ prezzoDa: valore });
+  }
+
+  aggiornaFiltroPrezzoA(valore: number | null) {
+    this.updateAdvancedFilters({ prezzoA: valore });
+  }
+
+  aggiornaFiltroSuperficieDa(valore: number | null) {
+    this.updateAdvancedFilters({ superficieDa: valore });
+  }
+
+  aggiornaFiltroSuperficieA(valore: number | null) {
+    this.updateAdvancedFilters({ superficieA: valore });
+  }
+
+  private updateAdvancedFilters(nuoviFiltri: Partial<any>) {
+    const filtriAttuali = this.advancedFiltersSubject.value;
+    this.advancedFiltersSubject.next({ ...filtriAttuali, ...nuoviFiltri });
+  }
+
+}

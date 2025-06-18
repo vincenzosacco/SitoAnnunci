@@ -1,0 +1,11 @@
+.contact-form {
+  margin-bottom: 40px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f8f9fa;
+}
+
+.contact-form button[type="submit"] {
+  margin-top: 15px;
+}

@@ -1,0 +1,24 @@
+<div class="container">
+
+  <h4>Cerca tra gli annunci...</h4>
+
+  <div class="search-bar">
+
+    <input [(ngModel)]="filtroTitolo" type="text" placeholder="Cosa stai cercando?" />
+
+    <select [(ngModel)]="filtroCategoria">
+      <option class="input" value="">Tipo di immobile</option>
+      <option value="Appartamento">Appartamento</option>
+      <option value="Villa">Villa</option>
+      <option value="Attico">Attico</option>
+      <option value="Monolocale">Monolocale</option>
+      <option value="Terreno">Terreno</option>
+      <option value="Box Auto">Box Auto</option>
+      <option value="Ufficio">Ufficio</option>
+    </select>
+
+    <input [(ngModel)]="filtroCitta" type="text" placeholder="Località" />
+
+    <button type="button" class="btn btn-primary" (click)="aggiornaFiltri()">Cerca</button>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<h4 class="text-center mt-3">Filtra la tua ricerca!</h4>
+
+<div class="card p-3">
+  <!-- Tipologia di annuncio -->
+  <div class="card-header">Tipologia di annuncio:</div>
+  <div class="card-body">
+    <div class="form-check">
+      <input type="radio" id="vendesi" name="tipologia" class="form-check-input" [(ngModel)]="filtroForSale" [value]="true">
+      <label class="form-check-label" for="vendesi">Vendesi</label>
+    </div>
+    <div class="form-check">
+      <input type="radio" id="cercasi" name="tipologia" class="form-check-input" [(ngModel)]="filtroForSale" [value]="false">
+      <label class="form-check-label" for="cercasi">Cercasi</label>
+    </div>
+  </div>
+
+  <!-- Prezzo -->
+  <div class="card-header">Prezzo (€)</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="form-group">
+        <label for="prezzoDa">Prezzo da:</label>
+        <input type="number" [(ngModel)]="prezzoDa" class="form-control" id="prezzoDa" placeholder="Da">
+      </div>
+      <div class="form-group">
+        <label for="prezzoA">Prezzo a:</label>
+        <input type="number" [(ngModel)]="prezzoA" class="form-control" id="prezzoA" placeholder="A">
+      </div>
+    </div>
+  </div>
+
+  <!-- Superficie -->
+  <div class="card-header">Superficie (mq)</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="superficieDa">Superficie da:</label>
+          <input type="number" [(ngModel)]="superficieDa" class="form-control" id="superficieDa" placeholder="Da">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="superficieA">Superficie a:</label>
+          <input type="number" [(ngModel)]="superficieA" class="form-control" id="superficieA" placeholder="A">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Pulsanti -->
+  <div class="d-flex justify-content-between mt-3">
+    <button type="button" class="btn btn-primary w-50 mx-1" (click)="applyFilters()">Applica filtri</button>
+    <button type="button" class="btn btn-secondary w-50 mx-1" (click)="resetFilters()">Reset</button>
+  </div>
+</div>
