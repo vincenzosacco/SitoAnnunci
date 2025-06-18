@@ -1,5 +1,6 @@
 <!--Print all Annunci-->
 <div>
+
     @for (ann of annunci; track ann.id) {
         <div>
             <h1>{{ann.title}}</h1>
@@ -7,6 +8,6 @@
             <p>Price: {{ann.price}} €</p>
             <img ngSrc="{{ann.image}}" width="100" height="100" alt="@id{{ann.id}} Image" />
         </div>
-
     }
+
 </div>

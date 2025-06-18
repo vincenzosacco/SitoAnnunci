@@ -7,7 +7,10 @@ import {inject, Injectable} from "@angular/core";
 @Injectable({
     providedIn: 'root'
 })
+
+// Base URL for the API, all endpoints services must extend this class
 export abstract class BaseApiService<T> {
+
   private readonly baseUrl = `${environment.api.serverUrl}`
 
   protected readonly endpointUrl = `${environment.api.serverUrl}`

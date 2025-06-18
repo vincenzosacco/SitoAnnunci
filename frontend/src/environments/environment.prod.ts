@@ -1,3 +1,4 @@
+// Production environment configuration for Angular application
 export const environment = {
   production: true,
   api: {
