@@ -8,8 +8,8 @@ if not exist "backend\pom.xml" (
     echo Error: backend/pom.xml not found. Please run this script from the project root directory.
     exit /b 1
 )
-if not exist ".app-properties" (
-    echo Error: .app-properties file not found. Please run this script from the project root directory.
+if not exist "app.properties" (
+    echo Error: app.properties file not found. Please run this script from the project root directory.
     exit /b 1
 )
 

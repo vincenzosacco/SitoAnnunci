@@ -6,8 +6,8 @@ if [ ! -f "frontend/pom.xml" ]; then
     echo "Error: frontend/pom.xml not found. Please run this script from the project root directory."
     exit 1
 fi
-if [ ! -f ".app-properties" ]; then
-    echo "Error: .app-properties file not found. Please run this script from the project root directory."
+if [ ! -f "app.properties" ]; then
+    echo "Error: app.properties file not found. Please run this script from the project root directory."
     exit 1
 fi
 
