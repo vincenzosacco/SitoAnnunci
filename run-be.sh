@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run backend in dev mode or prod mode
-# Must be run from project root because backend/pom.xml must read '.properties' from root
+# Must be run from project root because backend/pom.xml must read 'app.properties' from root
 set -e
 
 # Check if the required files exist
@@ -9,7 +9,7 @@ if [ ! -f "backend/pom.xml" ]; then
     echo "Missing backend/pom.xml"
     exit 1
 fi
-if [ ! -f ".app-properties" ]; then
+if [ ! -f "app.properties" ]; then
     echo "Missing .app-properties file"
     exit 1
 fi
