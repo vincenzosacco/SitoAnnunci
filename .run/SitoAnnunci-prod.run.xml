@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SitoAnnunci-prod" type="CompoundRunConfigurationType">
+    <toRun name="fe-start:prod" type="js.build_tools.npm" />
+    <toRun name="be-prod" type="SpringBootApplicationConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -5,10 +5,12 @@ Puoi farlo eseguendo il comando `mvn install`(_[troubleshooting](backend/trouble
 
 ## IntelliJIDEA
 Nella cartella [.run](./.run) sono presenti le runConfigurations:
-- [BackendApplication-dev](.run/BackendApplication-dev.run.xml) - backend in modalità dev
-- [start:dev](.run/start_dev.run.xml) - frontend in modalità dev
-- [BackendApplication-prod](.run/BackendApplication-prod.run.xml) - backend in modalità prod
-- [start:prod](.run/start_prod.run.xml) - frontend in modalità prod
+- [SitoAnnunci-dev](.run/SitoAnnunci-dev.run.xml) - WebApp (be+fe) in modalità dev
+- [SitoAnnunci-prod](.run/SitoAnnunci-prod.run.xml) - WebApp (be+fe) in modalità prod
+- [be-dev](.run/be-dev.run.xml) - solo backend in modalità dev
+- [fe-dev](.run/fe-dev.run.xml) - solo frontend in modalità dev
+- [be-prod](.run/be-prod.run.xml) - solo backend in modalità prod
+- [fe-prod](.run/fe-prod.run.xml) - solo frontend in modalità prod
 
 ## Shell
 >#### Production

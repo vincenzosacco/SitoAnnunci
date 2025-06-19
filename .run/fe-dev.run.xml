@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="start:prod" type="js.build_tools.npm" nameIsGenerated="true">
+  <configuration default="false" name="fe-start:dev" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/frontend/package.json" />
     <command value="run" />
     <scripts>
-      <script value="start:prod" />
+      <script value="start:dev" />
     </scripts>
     <node-interpreter value="project" />
     <envs />
