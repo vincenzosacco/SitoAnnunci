@@ -12,6 +12,7 @@ export class AnnuncioService extends BaseApiService<AnnuncioModel> {
     constructor() {
         super('annunci')
     }
+
   getById(id: number) {
     return this.getBy(id)
   }

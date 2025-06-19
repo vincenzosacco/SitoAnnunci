@@ -9,7 +9,9 @@
     "build:dev": "npm run env && ng build --configuration development",
     "watch": "ng build --watch --configuration development",
     "test": "npm run env && ng test",
-    "env": "ts-node parse-properties.ts"
+    "env": "ts-node parse-properties.ts",
+    "mock-be": "json-server -p 3000 -h localhost .\\json_server\\backend_mock.json",
+    "mock_db": "json-server -p 3000 -h localhost .\\json_server\\db_mock.json"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +25,8 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@auth0/auth0-angular": "^2.2.3",
+    "bootstrap": "^5.3.6",
+    "dotenv": "^16.4.7",
     "properties-parser": "^0.6.0",
     "property-parser": "^0.0.4",
     "rxjs": "~7.8.0",

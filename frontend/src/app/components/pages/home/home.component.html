@@ -1,7 +1,17 @@
-<!--Remove this-->
-<h1>HOME PAGE</h1>
+<div class="page-container">
 
-<!--Display the first 'Annuncio' calling annuncioService.get(0)-->
-<app-annuncio>
+  <div class="search-bar-wrapper">
+    <app-search-bar></app-search-bar>
+  </div>
 
-</app-annuncio>
+
+  <div class="content">
+    <div class="filters">
+      <app-filters></app-filters>
+    </div>
+
+    <div class="main-content">
+      <app-results></app-results>
+    </div>
+  </div>
+</div>

@@ -1,13 +1,39 @@
-<!--Print all Annunci-->
-<div>
+<section class="annuncio-dettaglio-container">
 
-    @for (ann of annunci; track ann.id) {
-        <div>
-            <h1>{{ann.title}}</h1>
-            <p>{{ann.description}}</p>
-            <p>Price: {{ann.price}} €</p>
-            <img ngSrc="{{ann.image}}" width="100" height="100" alt="@id{{ann.id}} Image" />
-        </div>
-    }
+  <h2 class="titolo-annuncio">{{ annuncio?.title }}</h2>
 
-</div>
+  <!-- Sezione superiore -->
+  <section class="riga-annuncio">
+
+    <img [src]="annuncio?.image" alt="Immagine annuncio" class="img-principale" />
+
+
+    <!-- Info venditore -->
+    <section class="info-venditore">
+      <p><i class="bi bi-person"></i> <strong>Utente:</strong> {{ venditore.nome }}</p>
+      <p><i class="bi bi-telephone"></i> <strong>Cellulare:</strong> {{ venditore.telefono }}</p>
+      <p><i class="bi bi-envelope"></i> <strong>Email:</strong> {{ venditore.email }}</p>
+      <p><i class="bi bi-star-fill text-warning"></i> <strong>Recensioni medie:</strong> {{mediaRecensioni | number:'1.1-1' }}/5 ⭐ </p>
+
+      <div class="bottoni-venditore">
+        <a class="btn btn-primary" href="#contact" ><i class="bi bi-chat-dots"></i> Contatta</a>
+        <a class="btn btn-outline-secondary" href="#review"> <i class="bi bi-pencil-square"></i> Scrivi una recensione</a>
+      </div>
+    </section>
+  </section>
+
+  <!-- Dettagli annuncio -->
+  <section class="dettagli-annuncio">
+    <p><strong>Descrizione:</strong> {{ annuncio?.description }}</p>
+    <p><strong>Prezzo:</strong> {{ annuncio?.price }} €</p>
+    <p><strong>Categoria:</strong> {{ annuncio?.categoria }}</p>
+    <p><strong>Superficie:</strong> {{ annuncio?.superficie }} mq</p>
+    <p><strong>Località:</strong> {{ annuncio?.citta }}</p>
+  </section>
+
+  <app-contact-seller id="contact" [venditoreId]="annuncio?.utenteId"></app-contact-seller>
+
+  <h3>Hai già visitato quest'immobile?</h3>
+  <app-review-form id="review" [annuncioId]="annuncio?.id"></app-review-form>
+
+</section>

@@ -1,77 +1,39 @@
-nav {
-  position: absolute;
-  right: 20px; /* Distanza dal bordo destro */
-  top: 50px; /* Distanza dall'alto */
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-}
-
-nav li {
-  margin: 10px 0; /* Spazio tra i link */
-}
-
-nav a {
-  display: block;
-  padding: 10px;
-  text-decoration: none;
-  color: black;
-}
-
-nav a.active {
-  font-weight: bold;
-  color: blue;
-}
-
-#annunci-container {
-  display: flex;  /* Disposizione in linea */
-  overflow-x: auto; /* Abilita lo scroll orizzontale */
-  white-space: nowrap; /* Evita il ritorno a capo */
-  gap: 10px; /* Distanza tra gli elementi */
-  padding: 20px;
-  width: 100%; /* Occupa tutta la larghezza */
-  scroll-snap-type: x mandatory; /* (opzionale) Snap per uno scrolling più fluido */
-}
-
-.annuncio {
-  flex: 0 0 300px; /* impedisco che le cards vengano ridimensionate per entrare nello spazio disponibile. Quando si raggionge il limite di spazio va fatto lo scroll */
-  background: #f8f9fa; /* Colore di sfondo chiaro */
-  border: 2px solid #007bff; /* Bordo blu */
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  padding: 15px;
-  text-align: center;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.annuncio:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.annuncio h2 {
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.annuncio p {
-  font-size: 1rem;
-  color: #666;
-  margin: 10px 0;
-}
-
-.annuncio img {
+.page-container {
   width: 100%;
-  height: auto;
-  border-radius: 5px;
-  margin-top: 10px;
-  border: 1px solid #ddd; /* Bordo sottile attorno all'immagine */
+  max-width: 1200px;
+  margin: 40px auto;
+  background-color: #f5f7fa;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.annuncio strong {
-  color: #e63946;
-  font-size: 1.2rem;
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1.5rem;
+}
+
+.filters {
+  flex: 1 1 250px;
+  max-width: 450px;
+  background-color: #ffffff;
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Sezione risultati */
+.main-content {
+  flex: 2 1 400px;
+  min-height: 300px;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
 }
