@@ -43,8 +43,8 @@ function validateProperties(props: properties.Properties) {
 function updateAngularJson(props: properties.Properties) {
   const angularJson = JSON.parse(readFileSync(ANGULAR_JSON_PATH, 'utf8'));
 
-  angularJson.projects.frontend.architect.serve.options.port = parseInt(props['frontend.port']);
-  writeFileSync(ANGULAR_JSON_PATH, JSON.stringify(angularJson, null, 2) + EOL, 'utf8');
+  angularJson.projects.frontend.architect.serve.options.port = parseInt(props['frontend.port'], 10);
+  writeFileSync(ANGULAR_JSON_PATH, JSON.stringify(angularJson, null, 2), 'utf8');
   console.log(`Updated "${ANGULAR_JSON_PATH}" with serve port: ${props['frontend.port']}`);
 }
 
