@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b1f5fa50-3240-4881-8abc-1c7f4c801c01" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/frontend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/frontend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sito-annunci.iml" beforeDir="false" afterPath="$PROJECT_DIR$/sito-annunci.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sito-annunci.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/sito-annunci.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sito-annunci.iws" beforeDir="false" afterPath="$PROJECT_DIR$/sito-annunci.iws" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -263,22 +259,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;front-test-iorio&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/franc/IdeaProjects/SitoAnnunci/frontend/src/app/components/api/annuncio&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\franc\\IdeaProjects\\SitoAnnunci\\frontend\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.be-dev.executor": "Run",
+    "git-widget-placeholder": "front-test-iorio",
+    "last_opened_file_path": "C:/Users/franc/IdeaProjects/SitoAnnunci/frontend/src/app/components/api/annuncio",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.fe-start:dev.executor": "Run",
+    "ts.external.directory.path": "C:\\Users\\franc\\IdeaProjects\\SitoAnnunci\\frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\franc\IdeaProjects\SitoAnnunci\frontend\src\app\components\api\annuncio" />
@@ -294,7 +292,7 @@
       <recent name="C:\Users\franc\IdeaProjects\SitoAnnunci\frontend\src\app\components\api\annuncio\review\review-form" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.start:dev">
+  <component name="RunManager" selected="Compound.SitoAnnunci-dev">
     <configuration selected="false" default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -421,6 +419,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="app.properties" />
   </component>
   <component name="VssConfiguration">
     <CheckoutOptions>

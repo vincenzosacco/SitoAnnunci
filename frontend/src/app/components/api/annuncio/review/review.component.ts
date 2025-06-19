@@ -1,7 +1,7 @@
 import {Component, Input, numberAttribute} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {NgForOf, NgIf} from '@angular/common';
-import {ReviewService} from '../../../../services/api/review.service';
+import {ReviewService} from '../../../../services/review.service';
 import {ReviewModel} from './review.model';
 
 @Component({

@@ -5,7 +5,7 @@ import {AnnuncioModel} from "./annuncio.model";
 import {ContactSellerComponent} from './contact-seller/contact-seller.component';
 import {ReviewComponent} from './review/review.component';
 import { UtenteService } from "../../../services/api/utente.service";
-import {ReviewService} from '../../../services/api/review.service';
+import {ReviewService} from '../../../services/review.service';
 import {ReviewModel} from './review/review.model';
 import {DecimalPipe} from '@angular/common';
 

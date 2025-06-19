@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {ReviewModel} from "../../components/api/annuncio/review/review.model";
-import {BaseApiService} from "./base-api.service";
+import {ReviewModel} from "../components/api/annuncio/review/review.model";
+import {BaseApiService} from "./api/base-api.service";
 import {Observable} from 'rxjs';
 
 @Injectable({
