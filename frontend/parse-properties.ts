@@ -7,10 +7,10 @@ import {EOL} from 'os';
 import path from 'path';
 
 // Constants
-const PROPERTIES_PATH = '../app.properties';
-const ANGULAR_JSON_PATH = './angular.json';
-const ENV_DEV_PATH = './src/environments/environment.ts';
-const ENV_PROD_PATH = './src/environments/environment.prod.ts';
+const PROPERTIES_PATH = path.join(__dirname, '..', 'app.properties');
+const ANGULAR_JSON_PATH = path.join(__dirname, 'angular.json');
+const ENV_DEV_PATH = path.join(__dirname, 'src', 'environments', 'environment.ts');
+const ENV_PROD_PATH = path.join(__dirname, 'src', 'environments', 'environment.prod.ts');
 
 function main() {
   // Read properties file
@@ -44,7 +44,7 @@ function updateAngularJson(props: properties.Properties) {
   const angularJson = JSON.parse(readFileSync(ANGULAR_JSON_PATH, 'utf8'));
 
   angularJson.projects.frontend.architect.serve.options.port = parseInt(props['frontend.port']);
-  writeFileSync(ANGULAR_JSON_PATH, JSON.stringify(angularJson, null, 2));
+  writeFileSync(ANGULAR_JSON_PATH, JSON.stringify(angularJson, null, 2) + EOL);
   console.log(`Updated "${ANGULAR_JSON_PATH}" with serve port: ${props['frontend.port']}`);
 }
 
