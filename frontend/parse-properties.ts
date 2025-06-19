@@ -44,7 +44,7 @@ function updateAngularJson(props: properties.Properties) {
   const angularJson = JSON.parse(readFileSync(ANGULAR_JSON_PATH, 'utf8'));
 
   angularJson.projects.frontend.architect.serve.options.port = parseInt(props['frontend.port']);
-  writeFileSync(ANGULAR_JSON_PATH, JSON.stringify(angularJson, null, 2) + EOL);
+  writeFileSync(ANGULAR_JSON_PATH, JSON.stringify(angularJson, null, 2) + EOL, 'utf8');
   console.log(`Updated "${ANGULAR_JSON_PATH}" with serve port: ${props['frontend.port']}`);
 }
 
@@ -63,7 +63,7 @@ function updateEnvironmentFiles(props: properties.Properties) {
 
   environments.forEach(env => {
     ensureDirectoryExist(env.path);
-    writeFileSync(env.path, env.content);
+    writeFileSync(env.path, env.content, 'utf8');
   });
   console.log(`Updated :${environments.map(env => '\n\t'+ env.path)}`);
 }
