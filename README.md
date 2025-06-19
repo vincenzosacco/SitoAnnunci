@@ -7,30 +7,36 @@
 >- Francesco Iorio - Aggiungere
 >- Francesco Ferraro - Aggiungere
 
-# Descrizione
+## Descrizione
 Il progetto è un'applicazione web che ...
 
+## Configurazione
+Per prima cosa dopo avere clonato il repository, eseguire dall root del progetto:
+```bash
+mvn clean install
+```
+Questo comando installa le dipendenze e compila il progetto.
 
 
-# Configurazione
 L'applicazione ha due configurazioni 
-## Development
-In questa configurazione l'applicazione
+- **dev (Development)**: 
+  - Il _frontend_ non cambia.
+  - Il backend interroga un database in memoria (H2) per lo sviluppo rapido.
+  - Configurazioni di debug attivate.
+  - Adatta per lo sviluppo e il testing locale.
+- **prod (Production)** 
+  - Il _frontend_ non cambia.
+  - Il backend interroga un database PostgreSQL per la produzione.
+  - Configurazioni di sicurezza e performance ottimizzate.
+- Adatta per l'ambiente di produzione.
+ 
+>[Run](./run.md) in modalità *development* o *production*.
 
 
-# Run
-[Run](./run.md) l'applicazione in modalità *development* o *production*.
+## Frameworks and Technologies
 
-# Troubleshooting
-- [Problemi comuni con il backend](./backend/troubleshooting.md)
-- [Problemi comuni con il frontend](./frontend/troubleshooting.md)
-
-
-
-# Frameworks and Technologies
-
-## Maven
-Il progetto è gestito con [Maven](https://maven.apache.org), ed è diviso in due moduli: [fronted](#frontend) e [backend](#backend).
+### Maven
+Il progetto è gestito con [Maven](https://maven.apache.org), ed è diviso in due sottomoduli:
 
 *[pom.xml (root)](./pom.xml)*
 ``` xml 
@@ -40,65 +46,28 @@ Il progetto è gestito con [Maven](https://maven.apache.org), ed è diviso in du
 </modules>
 ```
 
-## Frontend
-Il *[frontend](./frontend)* creato con [Spring Boot](https://spring.io/projects/spring-boot) 
+### Angular
+Il frontend è sviluppato con [Angular](https://angular.io/), un framework per applicazioni web single-page (SPA).
+- AngularCLI version: 19.2.15
+- Node.js version: v22.11.0
+- npm version: 11.2.0
 
-*[pom.xml (frontend)](./frontend/pom.xml)*
+Maggiori dettagli nel *[(frontend)](./frontend)* *[pom.xml ](./frontend/pom.xml)*
 
-[//]: # (```xml)
-[//]: # (BACKEND)
-## Backend
-Il *[backend](./backend)* creato con Spring Boot
+### Spring Boot
+Il backend è sviluppato con [Spring Boot](https://spring.io/projects/spring-boot), un framework per applicazioni Java che semplifica la configurazione e l'avvio di applicazioni web.
+- Spring Boot version: 3.4.4
 
-*[pom.xml (backend) ](./backend/pom.xml)*
+Maggiori dettagli nel *[(backend)](./backend)* *[pom.xml](./backend/pom.xml)*
 
-[//]: # (```xml )
+### PostgresSQL
+...
 
-[//]: # (<dependencies>)
-
-[//]: # (    <dependency>)
-
-[//]: # (        <groupId>org.springframework.boot</groupId>)
-
-[//]: # (        <artifactId>spring-boot-starter-jdbc</artifactId>)
-
-[//]: # (    </dependency>)
-
-[//]: # (    <dependency>)
-
-[//]: # (        <groupId>org.springframework.boot</groupId>)
-
-[//]: # (        <artifactId>spring-boot-starter-web</artifactId>)
-
-[//]: # (    </dependency>)
-
-[//]: # ()
-[//]: # (    <dependency>)
-
-[//]: # (        <groupId>org.springframework.boot</groupId>)
-
-[//]: # (        <artifactId>spring-boot-devtools</artifactId>)
-
-[//]: # (        <scope>runtime</scope>)
-
-[//]: # (        <optional>true</optional>)
-
-[//]: # (    </dependency>)
-
-[//]: # (    <dependency>)
-
-[//]: # (        <groupId>org.springframework.boot</groupId>)
-
-[//]: # (        <artifactId>spring-boot-starter-test</artifactId>)
-
-[//]: # (        <scope>test</scope>)
-
-[//]: # (    </dependency>)
-
-[//]: # (</dependencies>)
-
-[//]: # (```)
+### H2 Database
+...
 
 
-
-
+---
+## Troubleshooting
+- [Problemi comuni con il backend](./backend/troubleshooting.md)
+- [Problemi comuni con il frontend](./frontend/troubleshooting.md)

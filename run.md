@@ -1,43 +1,49 @@
 # Run Configuration
+Prima di eseguire l'applicazione, assicurati di avere installato le dipendenze necessarie. 
+Puoi farlo eseguendo il comando `mvn install`(_[troubleshooting](backend/troubleshooting.md#compilation-errors)_) nella directory principale del progetto.
+
+
 ## IntelliJIDEA
 Nella cartella [.run](./.run) sono presenti le runConfigurations:
-- [BackendApplication.run.xml](.run/BackendApplication.run.xml) => backend
-
-
-- [start_dev.run.xml](.run/start_dev.run.xml) => frontend --development
-- [start_prod.run.xml](.run/start_prod.run.xml) => frontend --production
+- [SitoAnnunci-dev](.run/SitoAnnunci-dev.run.xml) - WebApp (be+fe) in modalità dev
+- [SitoAnnunci-prod](.run/SitoAnnunci-prod.run.xml) - WebApp (be+fe) in modalità prod
+- [be-dev](.run/be-dev.run.xml) - solo backend in modalità dev
+- [fe-dev](.run/fe-dev.run.xml) - solo frontend in modalità dev
+- [be-prod](.run/be-prod.run.xml) - solo backend in modalità prod
+- [fe-prod](.run/fe-prod.run.xml) - solo frontend in modalità prod
 
 ## Shell
-Per avviare l'applicazione al di fuori di IntelliJ, è necessario eseguire i seguenti comandi:
-
-### Application
-Per avviare l'applicazione in modalità production dalla `project root` directory
-- production : run section [production](#production)
-- development : run section [development](#development)
-
-
 >#### Production
 >Per avviare il server `backend` (production)`project root` directory
 >``` shell
->mvn -pl backend spring-boot:run
+># Windows
+>./run-be.cmd prod
+># Linux/Mac
+>./run-be.sh prod
 >```
->*NOTE: il server backend reale è interrogato solo in modalità production. 
->In modalità development il server backend è simulato da un server mock (json-server) nella cartella frontend.*
 >
 >Per avviare il server `frontend` (production) dalla `project root` directory
 >``` shell
->cd frontend ; npm run start:prod
+># Windows
+>./run-fe.cmd prod
+># Linux/Mac
+>./run-fe.sh prod
 >```
 
 >#### Development
 >Per avviare il server `backend` (development) dalla `project root` directory
 >``` shell
->cd frontend ; npm run mock-be
+># Windows
+>./run-be.cmd dev
+># Linux/Mac
+>./run-be.sh dev
 >```
->*NOTE:In modalità development il server backend è simulato da un server mock (json-server) nella cartella frontend.*
->Per avviare il server `frontend` (development) `project root` directory
+>Per avviare il server `frontend` (development) dalla `project root` directory
 >``` bash
->cd frontend ; npm run start:dev
+># Windows
+>./run-fe.cmd dev
+># Linux/Mac
+>./run-fe.sh dev
 >```
 
 

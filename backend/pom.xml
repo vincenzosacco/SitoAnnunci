@@ -71,7 +71,6 @@
             <version>42.7.5</version>
         </dependency>
 
-
 <!--     TEST   -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -114,11 +113,11 @@
 
     <build>
         <resources>
-<!--    ADD .properties (in root dir) the resource scope    -->
+<!--    ADD app.properties (in root dir) to the resource scope    -->
             <resource>
                 <directory>${project.basedir}/..</directory>
                 <includes>
-                    <include>.properties</include>
+                    <include>app.properties</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
