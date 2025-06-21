@@ -32,15 +32,14 @@ export class SidemenuContentComponent {
                 route: '/dashboard',
             },
             {
+                icon: 'account_circle',
+                label: 'Profile',
+                route:'/user-profile',
+            },
+
+            {
                 icon: 'settings',
                 label: 'Settings',
-                subItems: [
-                    {
-                        icon: 'account_circle',
-                        label: 'Profile',
-                        route:'/settings/profile',
-                    },
-                ],
             },
         ]
     );

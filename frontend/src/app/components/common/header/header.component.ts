@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
-import {LoginButtonComponent} from "../../other/login-button/login-button.component";
+import {AuthButtonComponent} from "../../other/auth-button/auth-button.component";
 
 @Component({
   selector: 'app-header',
@@ -10,7 +10,7 @@ import {LoginButtonComponent} from "../../other/login-button/login-button.compon
     MatToolbarModule,
     MatIcon,
     MatIconButton,
-    LoginButtonComponent,
+    AuthButtonComponent,
   ],
   templateUrl: './header.component.html',
   standalone: true,

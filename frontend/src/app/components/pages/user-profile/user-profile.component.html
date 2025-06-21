@@ -1,0 +1,16 @@
+<p>user-profile works!</p>
+
+<ul *ngIf="auth.user$ | async as user; else noUser">
+  <li>name:{{ user.name }}</li>
+  <li>email:{{ user.email }}</li>
+</ul>
+<!--ELSE-->
+<ng-template #noUser>
+  <p>No user profile available. Please log in.</p>
+</ng-template>
+
+<!--The user$ observable contains sensitive information and artifacts related to the user's identity.
+As such, its availability depends on the user's authentication status.
+Fortunately, the user$ observable is configured so that it only starts to emit values
+once the isAuthenticated$ observable is true, so there is no need to manually check the authentication state before
+accessing the user profile data.-->
