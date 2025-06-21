@@ -9,7 +9,13 @@ import {MenuItem, MenuItemComponent} from "../menu-item/menu-item.component";
         MatNavList,
         MenuItemComponent,
     ],
-    templateUrl: './sidemenu-content.component.html',
+    template:`
+      <mat-nav-list>
+        @for (item of menuItems(); track item.label){
+          <app-menu-item [item]="item"> </app-menu-item>
+        }
+      </mat-nav-list>
+    `,
     standalone: true,
     styleUrl: './sidemenu-content.component.css'
 })
@@ -22,24 +28,29 @@ export class SidemenuContentComponent {
     menuItems = signal<MenuItem[]>(
         [
             {
-                icon: 'home',
                 label: 'Home',
+                authRequired: false,
+                icon: 'home',
                 route: '/home',
             },
             {
-                icon: 'dashboard',
                 label: 'Dashboard',
+                authRequired: false,
+                icon: 'dashboard',
                 route: '/dashboard',
             },
             {
-                icon: 'account_circle',
                 label: 'Profile',
+                authRequired: true,
+                icon: 'account_circle',
                 route:'/user-profile',
             },
 
             {
-                icon: 'settings',
                 label: 'Settings',
+                authRequired: false,
+                icon: 'settings',
+                route: '/settings',
             },
         ]
     );

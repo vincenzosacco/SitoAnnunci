@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
-import {AuthButtonComponent} from "../../other/auth-button/auth-button.component";
+import {AuthButtonComponent} from "../../../other/auth-button/auth-button.component";
 
 @Component({
   selector: 'app-header',
