@@ -4,9 +4,13 @@
 import properties from 'properties-parser';
 import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'fs';
 import {EOL} from 'os';
+import {dirname } from 'path';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Constants
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const PROPERTIES_PATH = path.join(__dirname, '..', 'app.properties');
 const ANGULAR_JSON_PATH = path.join(__dirname, 'angular.json');
 const ENV_DEV_PATH = path.join(__dirname, 'src', 'environments', 'environment.ts');

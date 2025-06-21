@@ -9,7 +9,7 @@ import {BaseApiService} from "./base-api.service";
 })
 export class AnnuncioService extends BaseApiService<AnnuncioModel> {
 
-    constructor() {
+  constructor() {
         super('annunci')
     }
 

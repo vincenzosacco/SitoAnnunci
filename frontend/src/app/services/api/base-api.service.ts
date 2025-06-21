@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from "../../../environments/environment";
 import {inject, Injectable} from "@angular/core";
+import {HttpContext, HttpHeaders, HttpParams} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -30,18 +31,37 @@ export abstract class BaseApiService<T> {
     return this.http.get<T[]>(this.endpointUrl);
   }
 
+  // CRUD operations
   create(item: T): Observable<T> {
-    console.debug("[Angular] Http request to: ", `${this.endpointUrl}`);
+    console.debug("[Angular] Http POST to: ", `${this.endpointUrl}`);
     return this.http.post<T>(this.endpointUrl, item);
   }
 
+  read(id: number | string, options?: {
+    // copied from HttpClient.get<T>
+    headers?: HttpHeaders | Record<string, string | string[]>;
+    context?: HttpContext;
+    observe?: 'body';
+    params?: HttpParams | Record<string, string | number | boolean | ReadonlyArray<string | number | boolean>>;
+    reportProgress?: boolean;
+    responseType?: 'json';
+    withCredentials?: boolean;
+    transferCache?: {
+      includeHeaders?: string[];
+    } | boolean;
+  }): Observable<T> {
+
+    console.debug("[Angular] Http GET to: ", `${this.endpointUrl}/${id}`);
+    return this.http.get<T>(`${this.endpointUrl}/${id}`, options);
+  }
+
   update(id: number, item: T): Observable<T> {
-    console.debug("[Angular] Http request to: ", `${this.endpointUrl}`);
+    console.debug("[Angular] Http PUT to: ", `${this.endpointUrl}`);
     return this.http.put<T>(`${this.endpointUrl}/${id}`, item);
   }
 
   delete(id: number): Observable<void> {
-    console.debug("[Angular] Http request to: ", `${this.endpointUrl}`);
+    console.debug("[Angular] Http DELETE to: ", `${this.endpointUrl}`);
     return this.http.delete<void>(`${this.endpointUrl}/${id}`);
   }
 }
