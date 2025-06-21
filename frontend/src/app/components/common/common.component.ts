@@ -1,9 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {HeaderComponent} from "./header/header.component";
+import {HeaderComponent} from "./_internal/header/header.component";
 import {MatToolbar} from "@angular/material/toolbar";
 import {APP_TITLE} from "../../app.constants";
 import {MatSidenav, MatSidenavContainer, MatSidenavContent} from "@angular/material/sidenav";
-import {SidemenuContentComponent} from "./sidemenu-content/sidemenu-content.component";
+import {SidemenuContentComponent} from "./_internal/sidemenu-content/sidemenu-content.component";
 import {NgTemplateOutlet} from "@angular/common";
 
 @Component({
