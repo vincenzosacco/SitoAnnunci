@@ -11,20 +11,28 @@ import org.unical.backend.exceptions.NotImplementedException;
 import org.unical.backend.persistance._impl.dao.IDao;
 import org.unical.backend.model.Annuncio;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 
 @Repository
-public class AnnuncioDaoJDBC extends ABaseJDBC implements IDao<Annuncio, Integer> {
+public class AnnuncioDaoJDBC extends AbsBaseJDBC implements IDao<Annuncio, Integer> {
 
     @Override
     protected RowMapper<Annuncio> getRowMapper() {
         return (rs, rowNum) -> new Annuncio(
                 rs.getInt("id"),
-                rs.getString("title"),
-                rs.getString("description"),
-                rs.getString("price")
+                rs.getString("titolo"),
+                rs.getString("descrizione"),
+                rs.getBigDecimal("prezzo"),
+                rs.getBigDecimal("prezzo_asta"),
+                rs.getInt("metri_quadri"),
+                rs.getString("indirizzo"),
+                rs.getBoolean("in_vendita"),
+                rs.getInt("categoria_id"),
+                rs.getInt("venditore_id"),
+                rs.getTimestamp("data_creazione"),
+                rs.getBytes("foto"),
+                rs.getBoolean("promozione")
         );
     }
 
