@@ -10,7 +10,7 @@
     "build:dev": "npm run env && ng build --configuration development",
     "watch": "ng build --watch --configuration development",
     "test": "npm run env && ng test",
-    "env": "ts-node parse-properties.ts",
+    "env": "tsx parse-properties.ts",
     "mock-be": "json-server -p 3000 -h localhost .\\json_server\\backend_mock.json",
     "mock_db": "json-server -p 3000 -h localhost .\\json_server\\db_mock.json"
   },
@@ -47,7 +47,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
     "typescript": "~5.7.2"
   }
 }
