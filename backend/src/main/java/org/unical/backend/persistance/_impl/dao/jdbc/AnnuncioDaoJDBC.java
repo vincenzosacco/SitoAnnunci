@@ -44,7 +44,7 @@ public class AnnuncioDaoJDBC extends AbsBaseJDBC implements IDao<Annuncio, Integ
 
     @Override
     public Annuncio findByPrimaryKey(Integer id) {
-        String sql = "SELECT id, title, description, price FROM annuncio WHERE id = ?";
+        String sql = "SELECT * FROM annuncio WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, this.getRowMapper(), id);
     }
 
@@ -60,12 +60,14 @@ public class AnnuncioDaoJDBC extends AbsBaseJDBC implements IDao<Annuncio, Integ
 
 
         // INSERT
-        String sql = "INSERT INTO annuncio (title, description, price) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO annuncio (titolo, descrizione, prezzo, prezzo_asta, metri_quadri, indirizzo, " +
+            "in_vendita, categoria_id, venditore_id, data_creazione, foto, promozione) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, ann.getTitle(), ann.getDescription(), ann.getPrice());
 
         // SELECT and RETURN
-        sql = "SELECT id, title, description, price FROM annuncio WHERE title = ? AND description = ? AND price = ?";
-        return jdbcTemplate.queryForObject(sql, this.getRowMapper(), ann.getTitle(), ann.getDescription(), ann.getPrice());
+        sql = "SELECT * FROM annuncio WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, this.getRowMapper(), ann.getId());
 
     }
 
