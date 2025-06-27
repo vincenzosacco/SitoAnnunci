@@ -1,1 +1,43 @@
-<p>chat works!</p>
+<div class="page-container chat-container">
+    <div class="content">
+        <div class="filters chat-sidebar">
+            <ul>
+                <li *ngFor="let u of utenti" (click)="selezionaUtente(u)" [class.active]="utenteSelezionato?.id === u.id">
+                    {{ u.nome }}
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="main-content chat-main">
+            <div class="chat-header">
+                <strong *ngIf="utenteSelezionato">Conversazione con {{ utenteSelezionato.nome }}</strong>
+            </div>
+
+            <div class="chat-messages">
+                <div *ngFor="let m of messaggi"
+                     [class.sent]="m.senderId === mioId"
+                     [class.received]="m.senderId !== mioId"
+                     class="message">
+
+                    <div class="message-text">{{ m.text }}</div>
+                    <div class="message-time">{{ formatDate(m.date) }}</div>
+
+                </div>
+
+            </div>
+
+            <form class="d-flex mt-3" (submit)="inviaMessaggio(); $event.preventDefault()">
+                <input
+                    [(ngModel)]="nuovoMessaggio"
+                    name="msg"
+                    class="form-control me-2"
+                    placeholder="Scrivi un messaggio..."
+                    required
+                />
+                <button type="submit" class="btn btn-primary">Invia</button>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -4,6 +4,7 @@ import {AnnuncioComponent} from './components/api/annuncio/annuncio.component';
 import {UserProfileComponent} from './components/pages/user-profile/user-profile.component';
 import {AuthGuard} from './services/auth-guard.service';
 import {NoAuthRedirectComponent} from './components/pages/no-auth-redirect/no-auth-redirect.component';
+import {ChatComponent} from "./components/pages/chat/chat.component";
 
 
 export const routes: Routes = [
@@ -13,6 +14,7 @@ export const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'user-profile', component: UserProfileComponent, canActivate :[AuthGuard]},
   {path: 'no-auth-redirect', component: NoAuthRedirectComponent},
+    {path: 'chat', component: ChatComponent},
 
   // API
   { path: 'annuncio/:id', component: AnnuncioComponent },
