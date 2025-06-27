@@ -47,6 +47,13 @@ export class SidemenuContentComponent {
             },
 
             {
+                label: 'Chat',
+                authRequired: false, //#TODO true
+                icon: 'chat',
+                route: '/chat', //
+            },
+
+            {
                 label: 'Settings',
                 authRequired: false,
                 icon: 'settings',

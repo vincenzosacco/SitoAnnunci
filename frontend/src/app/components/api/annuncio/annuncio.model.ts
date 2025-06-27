@@ -1,12 +1,12 @@
 export interface AnnuncioModel {
   id: number;
-  title: string;
-  forSale: boolean;
-  citta: string;
-  price: number;
-  description: string;
-  image: string;
-  categoria: string;
+  titolo: string;
+  in_vendita: boolean;
+  indirizzo: string;
+  prezzo: number;
+  descrizione: string;
+  foto: string;
+  categoria_id: number;
   superficie: number;
   data: number;
   utenteId: number;

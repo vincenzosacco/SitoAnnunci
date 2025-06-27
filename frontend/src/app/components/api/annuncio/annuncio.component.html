@@ -1,19 +1,28 @@
 <section class="annuncio-dettaglio-container">
 
-  <h2 class="titolo-annuncio">{{ annuncio?.title }}</h2>
+  <h2 class="titolo-annuncio">{{ annuncio?.titolo }}</h2>
 
   <!-- Sezione superiore -->
   <section class="riga-annuncio">
 
-    <img [src]="annuncio?.image" alt="Immagine annuncio" class="img-principale" />
+    <img [src]="annuncio?.foto" alt="Immagine annuncio" class="img-principale" />
 
 
     <!-- Info venditore -->
     <section class="info-venditore">
-      <p><i class="bi bi-person"></i> <strong>Utente:</strong> {{ venditore.nome }}</p>
-      <p><i class="bi bi-telephone"></i> <strong>Cellulare:</strong> {{ venditore.telefono }}</p>
-      <p><i class="bi bi-envelope"></i> <strong>Email:</strong> {{ venditore.email }}</p>
-      <p><i class="bi bi-star-fill text-warning"></i> <strong>Recensioni medie:</strong> {{mediaRecensioni | number:'1.1-1' }}/5 ⭐ </p>
+      <p><i class="bi bi-person"></i> <strong>Utente:</strong> {{ venditore?.nome }}</p>
+      <p><i class="bi bi-telephone"></i> <strong>Cellulare:</strong> {{ venditore?.telefono }}</p>
+      <p><i class="bi bi-envelope"></i> <strong>Email:</strong> {{ venditore?.email }}</p>
+      <p>
+          <i class="bi bi-star-fill text-warning"></i>
+          <strong>Recensioni medie:</strong>
+          <ng-container *ngIf="numeroRecensioni > 0; else noRecensioni">
+              {{ mediaRecensioni | number:'1.1-1' }} su 5 ⭐ ({{ numeroRecensioni }} recensioni)
+          </ng-container>
+          <ng-template #noRecensioni>
+              Nessuna recensione disponibile
+          </ng-template>
+      </p>
 
       <div class="bottoni-venditore">
         <a class="btn btn-primary" href="#contact" ><i class="bi bi-chat-dots"></i> Contatta</a>
@@ -24,11 +33,11 @@
 
   <!-- Dettagli annuncio -->
   <section class="dettagli-annuncio">
-    <p><strong>Descrizione:</strong> {{ annuncio?.description }}</p>
-    <p><strong>Prezzo:</strong> {{ annuncio?.price }} €</p>
-    <p><strong>Categoria:</strong> {{ annuncio?.categoria }}</p>
+    <p><strong>Descrizione:</strong> {{ annuncio?.descrizione }}</p>
+    <p><strong>Prezzo:</strong> {{ annuncio?.prezzo }} €</p>
+    <p><strong>Categoria:</strong> {{ categoriaMap[annuncio?.categoria_id || 0] }}</p>
     <p><strong>Superficie:</strong> {{ annuncio?.superficie }} mq</p>
-    <p><strong>Località:</strong> {{ annuncio?.citta }}</p>
+    <p><strong>Indirizzo:</strong> {{ annuncio?.indirizzo }}</p>
   </section>
 
   <app-contact-seller id="contact" [venditoreId]="annuncio?.utenteId"></app-contact-seller>

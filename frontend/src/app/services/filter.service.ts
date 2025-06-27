@@ -14,7 +14,7 @@ export class FilterService {
   searchFilters$ = this.searchFiltersSubject.asObservable();
 
   private advancedFiltersSubject = new BehaviorSubject<any>({
-    forSale: null, // true = in vendita, false = cercasi
+      in_vendita: null, // true = in vendita, false = cercasi
     prezzoDa: null,
     prezzoA: null,
     superficieDa: null,
@@ -23,7 +23,7 @@ export class FilterService {
   advancedFilters$ = this.advancedFiltersSubject.asObservable();
 
 
-  aggiornaFiltriRicerca(filtroTitolo: string, filtroCategoria: string, filtroCitta: string) {
+  aggiornaFiltriRicerca(filtroTitolo: string, filtroCategoria: number, filtroCitta: string) {
     this.searchFiltersSubject.next({
       titolo: filtroTitolo,
       categoria: filtroCategoria,
@@ -34,7 +34,7 @@ export class FilterService {
 
   //Metodi per aggiornare i filtri del pannello laterale
   aggiornaFiltroForSale(valore: boolean | null) {
-    this.updateAdvancedFilters({ forSale: valore });
+    this.updateAdvancedFilters({ in_vendita: valore });
   }
 
   aggiornaFiltroPrezzoDa(valore: number | null) {

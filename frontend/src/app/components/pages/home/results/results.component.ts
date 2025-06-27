@@ -26,6 +26,17 @@ export class ResultsComponent implements OnInit {
     private annuncioService: AnnuncioService
   ) {}
 
+
+  categoriaMap: Record<number, string> = {
+      1: 'Appartamento',
+      2: 'Villa',
+      3: 'Attico',
+      4: 'Monolocale',
+      5: 'Terreno',
+      6: 'Box Auto',
+      7: 'Ufficio'
+  };
+
   ngOnInit() {
     this.annuncioService.getAll().subscribe((data) => {
       this.allResults = data;
@@ -47,14 +58,14 @@ export class ResultsComponent implements OnInit {
       let match = true;
 
       // Filtri della barra di ricerca
-      if (this.searchFilters.titolo && !result.title.includes(this.searchFilters.titolo)) match = false;
-      if (this.searchFilters.categoria && result.categoria !== this.searchFilters.categoria) match = false;
-      if (this.searchFilters.citta && result.citta !== this.searchFilters.citta) match = false;
+      if (this.searchFilters.titolo && !result.titolo.includes(this.searchFilters.titolo)) match = false;
+      if (this.searchFilters.categoria && result.categoria_id !== this.searchFilters.categoria) match = false;
+      if (this.searchFilters.indirizzo && result.indirizzo !== this.searchFilters.indirizzo) match = false;
 
       // Filtri avanzati laterali
-      if (this.advancedFilters.forSale != null && result.forSale !== this.advancedFilters.forSale) match = false;
-      if (this.advancedFilters.prezzoDa && result.price < this.advancedFilters.prezzoDa) match = false;
-      if (this.advancedFilters.prezzoA && result.price > this.advancedFilters.prezzoA) match = false;
+      if (this.advancedFilters.in_vendita != null && result.in_vendita !== this.advancedFilters.in_vendita) match = false;
+      if (this.advancedFilters.prezzoDa && result.prezzo < this.advancedFilters.prezzoDa) match = false;
+      if (this.advancedFilters.prezzoA && result.prezzo > this.advancedFilters.prezzoA) match = false;
       if (this.advancedFilters.superficieDa && result.superficie < this.advancedFilters.superficieDa) match = false;
       if (this.advancedFilters.superficieA && result.superficie > this.advancedFilters.superficieA) match = false;
 
@@ -63,7 +74,7 @@ export class ResultsComponent implements OnInit {
     });
   }
 
-  ordinaPer(campo: 'price' | 'superficie', ordine: 'asc' | 'desc') {
+  ordinaPer(campo: 'prezzo' | 'superficie', ordine: 'asc' | 'desc') {
     this.results.sort((a, b) => {
       if (ordine === 'asc') {
         return a[campo] - b[campo];

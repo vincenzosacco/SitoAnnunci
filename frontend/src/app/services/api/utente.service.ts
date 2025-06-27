@@ -1,6 +1,5 @@
 // src/app/services/utente.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { BaseApiService } from './base-api.service';
 
 @Injectable({
@@ -8,7 +7,7 @@ import { BaseApiService } from './base-api.service';
 })
 export class UtenteService extends BaseApiService<any> {
   constructor() {
-    super('utenti'); // punto al mock json-server: /utenti
+    super('utenti');
   }
 
   getById(id: number) {

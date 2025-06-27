@@ -15,7 +15,7 @@ import {FilterService} from '../../../../services/filter.service';
 export class SearchBarComponent {
 
   filtroTitolo: string = '';
-  filtroCategoria: string = '';
+  filtroCategoria: number = 0;
   filtroCitta: string = '';
 
   constructor(private filtersService: FilterService) {}

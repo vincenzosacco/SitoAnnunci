@@ -14,20 +14,20 @@ import java.sql.Timestamp;
 @EqualsAndHashCode // for testing purposes (but not only)
 public class Annuncio {
     private int id; // must be set only by db
-    private String title;
-    private String description;
-    private BigDecimal price;
-    private BigDecimal auctionPrice;
-    private int squareMeters;
-    private String address;
-    private boolean isForSale;
+    private String titolo;
+    private String descrizione;
+    private BigDecimal prezzo;
+    private BigDecimal prezzo_asta;
+    private int superficie;
+    private String indirizzo;
+    private boolean in_vendita;
     /** foreign key to the category table */
-    private int categoryId;
+    private int categoria_id;
     /** foreign key to the user table */
-    private int sellerId;
-    private Timestamp creationDate;
-    private byte[] image;
-    private boolean isPromoted;
+    private int venditore_id;
+    private Timestamp data_creazione;
+    private String foto;
+    private boolean promozione;
 
 
 //    public Annuncio(int id, @NotNull String title, @NotNull String description, @NotNull String price) {

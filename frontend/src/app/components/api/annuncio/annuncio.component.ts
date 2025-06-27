@@ -21,6 +21,17 @@ import {DecimalPipe} from '@angular/common';
   styleUrl: './annuncio.component.css'
 })
 export class AnnuncioComponent {
+
+  categoriaMap: Record<number, string> = {
+      1: 'Appartamento',
+      2: 'Villa',
+      3: 'Attico',
+      4: 'Monolocale',
+      5: 'Terreno',
+      6: 'Box Auto',
+      7: 'Ufficio'
+  };
+
   private annuncioService = inject(AnnuncioService);
   private utenteService = inject(UtenteService);
   private route = inject(ActivatedRoute);
@@ -29,8 +40,10 @@ export class AnnuncioComponent {
   annuncio: AnnuncioModel | undefined;
   venditore: any;
 
-  mediaRecensioni: number | null = null;
+  numeroRecensioni: number = 0;
+  mediaRecensioni: number = 0;
   recensioni: ReviewModel[] = [];
+
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -44,7 +57,7 @@ export class AnnuncioComponent {
         });
       }
 
-      // Dopo aver ottenuto l'annuncio, prendi le sue recensioni
+
       this.reviewService.getAll().subscribe(recensioni => {
         this.recensioni = recensioni.filter(r => r.annuncioId === id);
         this.calcolaMedia();
@@ -54,7 +67,7 @@ export class AnnuncioComponent {
 
   calcolaMedia(){
     if(this.recensioni.length === 0){
-      this.mediaRecensioni = null;
+      this.mediaRecensioni = 0;
       return;
     }
     const somma = this.recensioni.reduce((acc, r) => acc + Number(r.voto), 0);

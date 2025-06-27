@@ -25,13 +25,13 @@ public class AnnuncioDaoJDBC extends AbsBaseJDBC implements IDao<Annuncio, Integ
                 rs.getString("descrizione"),
                 rs.getBigDecimal("prezzo"),
                 rs.getBigDecimal("prezzo_asta"),
-                rs.getInt("metri_quadri"),
+                rs.getInt("superficie"),
                 rs.getString("indirizzo"),
                 rs.getBoolean("in_vendita"),
                 rs.getInt("categoria_id"),
                 rs.getInt("venditore_id"),
                 rs.getTimestamp("data_creazione"),
-                rs.getBytes("foto"),
+                rs.getString("foto"),
                 rs.getBoolean("promozione")
         );
     }
@@ -60,10 +60,10 @@ public class AnnuncioDaoJDBC extends AbsBaseJDBC implements IDao<Annuncio, Integ
 
 
         // INSERT
-        String sql = "INSERT INTO annuncio (titolo, descrizione, prezzo, prezzo_asta, metri_quadri, indirizzo, " +
+        String sql = "INSERT INTO annuncio (titolo, descrizione, prezzo, prezzo_asta, superficie, indirizzo, " +
             "in_vendita, categoria_id, venditore_id, data_creazione, foto, promozione) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, ann.getTitle(), ann.getDescription(), ann.getPrice());
+        jdbcTemplate.update(sql, ann.getTitolo(), ann.getDescrizione(), ann.getPrezzo());
 
         // SELECT and RETURN
         sql = "SELECT * FROM annuncio WHERE id = ?";
@@ -81,10 +81,10 @@ public class AnnuncioDaoJDBC extends AbsBaseJDBC implements IDao<Annuncio, Integ
         if (ann == null) {
             throw new AnnuncioNotValidException("Annuncio is null");
         }
-        else if (ann.getTitle() == null || ann.getTitle().isBlank()) {
+        else if (ann.getTitolo() == null || ann.getTitolo().isBlank()) {
             throw new AnnuncioNotValidException("Annuncio title is null or blank");
         }
-        else if (ann.getDescription() == null || ann.getDescription().isBlank()) {
+        else if (ann.getDescrizione() == null || ann.getDescrizione().isBlank()) {
             throw new AnnuncioNotValidException("Annuncio description is null or blank");
         }
     }
