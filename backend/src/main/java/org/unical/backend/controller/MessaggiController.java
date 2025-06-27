@@ -24,7 +24,11 @@ public class MessaggiController {
         @RequestParam int utente1,
         @RequestParam int utente2) {
 
-        int conversazioneId = messaggioService.getOrCreateConversazioneId(utente1, utente2);
+        int conversazioneId = messaggioService.getConversazioneId(utente1, utente2);
+
+        if (conversazioneId == 0) {
+            return ResponseEntity.ok(List.of());
+        }
         List<Messaggio> messaggi = messaggioService.getMessaggiByConversazione(conversazioneId);
         return ResponseEntity.ok(messaggi);
     }

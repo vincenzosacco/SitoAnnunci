@@ -23,13 +23,13 @@ public class MessaggioServiceDao implements IMessaggioService {
     }
 
     @Override
-    public int getOrCreateConversazioneId(int utente1Id, int utente2Id) {
-        return dao.getOrCreateConversazioneId(utente1Id, utente2Id);
-    }
-
-    @Override
     public Messaggio inviaMessaggio(Messaggio messaggio) {
-        int conversazioneId = dao.getOrCreateConversazioneId(messaggio.getSenderId(), messaggio.getAddresseeId());
+        int conversazioneId = dao.getConversazioneId(messaggio.getSenderId(), messaggio.getAddresseeId());
+
+        if (conversazioneId == 0) {
+            conversazioneId = dao.createConversazione(messaggio.getSenderId(), messaggio.getAddresseeId());
+        }
+
         messaggio.setConversationId(conversazioneId);
         return dao.save(messaggio);
     }
@@ -37,6 +37,12 @@ public class MessaggioServiceDao implements IMessaggioService {
     @Override
     public List<Utente> getConversazioniUtente(int utenteId) {
         return dao.getConversazioniUtente(utenteId);
+    }
+
+    @Override
+    public int getConversazioneId(int utente1Id, int utente2Id) {
+        Integer id = dao.getConversazioneId(utente1Id, utente2Id);
+        return id != null ? id : dao.createConversazione(utente1Id, utente2Id);
     }
 
 }

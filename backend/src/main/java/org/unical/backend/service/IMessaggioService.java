@@ -9,9 +9,9 @@ public interface IMessaggioService {
 
     List<Messaggio> getMessaggiByConversazione(int conversazioneId);
 
-    int getOrCreateConversazioneId(int utente1Id, int utente2Id);
-
     Messaggio inviaMessaggio(Messaggio messaggio);
 
     List<Utente> getConversazioniUtente(int utenteId);
+
+    int getConversazioneId(int utente1Id, int utente2Id);
 }

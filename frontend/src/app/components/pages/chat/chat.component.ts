@@ -17,7 +17,7 @@ export class ChatComponent {
 
     utenti: any[] = [];
     messaggi: any[] = [];
-    mioId = 2; // #TODO Da sostituire con ID dell’utente loggato
+    mioId = 9; // #TODO Da sostituire con ID dell’utente loggato
     utenteSelezionato: any = null;
     nuovoMessaggio: string = '';
 

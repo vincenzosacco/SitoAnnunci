@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -96,22 +97,22 @@ public class MessaggioDaoJDBC extends AbsBaseJDBC implements IDao<Messaggio, Int
         return jdbcTemplate.query(sql, new UtenteRowMapper(), utenteId, utenteId);
     }
 
-    // se non esiste, crea una conversazione tra due utenti
-    public int getOrCreateConversazioneId(int utente1Id, int utente2Id) {
+    public Integer getConversazioneId(int utente1Id, int utente2Id) {
         int minId = Math.min(utente1Id, utente2Id);
         int maxId = Math.max(utente1Id, utente2Id);
 
-
-        String selectSql = """
+        String sql = """
         SELECT id FROM conversazione
         WHERE utente1_id = ? AND utente2_id = ?
     """;
 
-        List<Integer> results = jdbcTemplate.query(selectSql, (rs, rowNum) -> rs.getInt("id"), minId, maxId);
-        if (!results.isEmpty()) {
-            return results.get(0);
-        }
+        List<Integer> results = jdbcTemplate.query(sql, (rs, rowNum) -> rs.getInt("id"), minId, maxId);
+        return results.isEmpty() ? null : results.get(0);
+    }
 
+    public int createConversazione(int utente1Id, int utente2Id) {
+        int minId = Math.min(utente1Id, utente2Id);
+        int maxId = Math.max(utente1Id, utente2Id);
 
         String insertSql = "INSERT INTO conversazione (utente1_id, utente2_id) VALUES (?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -123,7 +124,7 @@ public class MessaggioDaoJDBC extends AbsBaseJDBC implements IDao<Messaggio, Int
             return ps;
         }, keyHolder);
 
-        return keyHolder.getKey().intValue();
+        return ((Number) keyHolder.getKeys().get("id")).intValue();
     }
 
 
