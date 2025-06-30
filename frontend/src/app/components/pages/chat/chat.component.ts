@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../../services/api/chat.service';
-import {ActivatedRoute} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 
 @Component({
@@ -17,7 +16,7 @@ export class ChatComponent {
 
     utenti: any[] = [];
     messaggi: any[] = [];
-    mioId = 9; // #TODO Da sostituire con ID dell’utente loggato
+    mioId = 2; // #TODO Da sostituire con ID dell’utente loggato
     utenteSelezionato: any = null;
     nuovoMessaggio: string = '';
 

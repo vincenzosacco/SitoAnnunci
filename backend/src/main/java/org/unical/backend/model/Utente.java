@@ -12,6 +12,7 @@ import lombok.*;
 public class Utente {
     private Integer id;
     private String nome;
+    private String cellulare;
     private String email;
     private String password;
     /** foreign key to the role table */

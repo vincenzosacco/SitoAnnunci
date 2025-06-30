@@ -5,9 +5,8 @@ import {AnnuncioModel} from "./annuncio.model";
 import {ContactSellerComponent} from './contact-seller/contact-seller.component';
 import {ReviewComponent} from './review/review.component';
 import { UtenteService } from "../../../services/api/utente.service";
-import {ReviewService} from '../../../services/review.service';
+import {ReviewService} from '../../../services/api/review.service';
 import {ReviewModel} from './review/review.model';
-import {DecimalPipe} from '@angular/common';
 
 
 @Component({
@@ -15,7 +14,6 @@ import {DecimalPipe} from '@angular/common';
   imports: [
     ContactSellerComponent,
     ReviewComponent,
-    DecimalPipe
   ],
   templateUrl: './annuncio.component.html',
   styleUrl: './annuncio.component.css'
@@ -40,40 +38,31 @@ export class AnnuncioComponent {
   annuncio: AnnuncioModel | undefined;
   venditore: any;
 
-  numeroRecensioni: number = 0;
-  mediaRecensioni: number = 0;
+
   recensioni: ReviewModel[] = [];
 
 
-  ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    ngOnInit() {
+        this.route.paramMap.subscribe(params => {
+            const id = Number(params.get('id'));
+            if (!id) return;
 
-    this.annuncioService.getById(id).subscribe(data => {
-      this.annuncio = data;
+            this.annuncioService.getById(id).subscribe(data => {
+                this.annuncio = data;
 
-      if (data.utenteId) {
-        this.utenteService.getById(data.utenteId).subscribe(utente => {
-          this.venditore = utente;
+                if (data.venditore_id) {
+                    this.utenteService.getById(data.venditore_id).subscribe(utente => {
+                        this.venditore = utente;
+                    });
+                }
+
+                this.reviewService.getByAnnuncioId(id).subscribe(recensioni => {
+                    this.recensioni = recensioni;
+                });
+            });
         });
-      }
-
-
-      this.reviewService.getAll().subscribe(recensioni => {
-        this.recensioni = recensioni.filter(r => r.annuncioId === id);
-        this.calcolaMedia();
-      });
-    });
-  }
-
-  calcolaMedia(){
-    if(this.recensioni.length === 0){
-      this.mediaRecensioni = 0;
-      return;
     }
-    const somma = this.recensioni.reduce((acc, r) => acc + Number(r.voto), 0);
 
-    this.mediaRecensioni = somma / this.recensioni.length;
 
-  }
 }
 

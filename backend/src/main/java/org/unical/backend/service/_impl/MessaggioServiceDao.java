@@ -24,9 +24,9 @@ public class MessaggioServiceDao implements IMessaggioService {
 
     @Override
     public Messaggio inviaMessaggio(Messaggio messaggio) {
-        int conversazioneId = dao.getConversazioneId(messaggio.getSenderId(), messaggio.getAddresseeId());
+        Integer conversazioneId = dao.getConversazioneId(messaggio.getSenderId(), messaggio.getAddresseeId());
 
-        if (conversazioneId == 0) {
+        if (conversazioneId == null) {
             conversazioneId = dao.createConversazione(messaggio.getSenderId(), messaggio.getAddresseeId());
         }
 
@@ -43,6 +43,28 @@ public class MessaggioServiceDao implements IMessaggioService {
     public int getConversazioneId(int utente1Id, int utente2Id) {
         Integer id = dao.getConversazioneId(utente1Id, utente2Id);
         return id != null ? id : dao.createConversazione(utente1Id, utente2Id);
+    }
+
+
+    @Override
+    public List<Messaggio> findAll() {
+        return dao.findAll();
+    }
+
+    @Override
+    public Messaggio findById(int id) {
+        return dao.findByPrimaryKey(id);
+    }
+
+
+    @Override
+    public void deleteMessaggio(int id) {
+        Messaggio messaggio = dao.findByPrimaryKey(id);
+        if (messaggio != null) {
+            dao.delete(messaggio);
+        } else {
+            throw new IllegalArgumentException("Messaggio con id " + id + " non trovato");
+        }
     }
 
 }

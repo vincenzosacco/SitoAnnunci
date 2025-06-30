@@ -1,7 +1,7 @@
 import {Component, Input, numberAttribute} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {NgForOf, NgIf} from '@angular/common';
-import {ReviewService} from '../../../../services/review.service';
+import {ReviewService} from '../../../../services/api/review.service';
 import {ReviewModel} from './review.model';
 
 @Component({
@@ -15,30 +15,31 @@ import {ReviewModel} from './review.model';
   styleUrls: ['./review.component.css']
 })
 export class ReviewComponent {
-  @Input({transform: numberAttribute}) annuncioId!: number;
+  @Input({transform: numberAttribute}) annuncio_id!: number;
 
-  nome: string = '';
+  nome_autore: string = '';
   voto: number | null = null;
-  commento: string = '';
+  testo: string = '';
   recensioneInviata: boolean = false;
 
-  utenteId: number = 1;//temporaneamente tutte le recensioni provengono dall'utente 1
+  autore_id: number = 10; //temporaneamente tutte le recensioni provengono dall'utente 9
 
   constructor(private reviewService: ReviewService) {}
 
   inviaRecensione() {
-    if (!this.nome || !this.voto) {
-      // magari qui metti un alert o messaggio di validazione
+    if (!this.nome_autore || !this.voto) {
       return;
     }
 
-    const nuovaRecensione: Omit<ReviewModel, 'id'> = {
-      annuncioId: this.annuncioId,
-      utenteId: this.utenteId,
-      nome: this.nome,
+    const nuovaRecensione = {
+      annuncio_id: this.annuncio_id,
+      autore_id: this.autore_id,
+      nome_autore: this.nome_autore,
       voto: this.voto,
-      commento: this.commento
+      testo: this.testo
     };
+
+      console.log("Payload recensione da inviare:", nuovaRecensione);
 
     this.reviewService.addReview(nuovaRecensione).subscribe({
       next: (res) => {
@@ -48,15 +49,14 @@ export class ReviewComponent {
       },
       error: (err) => {
         console.error('Errore nell\'invio della recensione:', err);
-        // qui puoi mostrare un messaggio d'errore all'utente
       }
     });
   }
 
   resetForm() {
-    this.nome = '';
+    this.nome_autore = '';
     this.voto = null;
-    this.commento = '';
+    this.testo = '';
 
     setTimeout(() => {
       this.recensioneInviata = false;

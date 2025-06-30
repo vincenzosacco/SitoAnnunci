@@ -9,6 +9,6 @@ export interface AnnuncioModel {
   categoria_id: number;
   superficie: number;
   data: number;
-  utenteId: number;
+  venditore_id: number;
 }
 

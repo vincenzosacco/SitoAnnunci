@@ -14,4 +14,10 @@ public interface IMessaggioService {
     List<Utente> getConversazioniUtente(int utenteId);
 
     int getConversazioneId(int utente1Id, int utente2Id);
+
+    List<Messaggio> findAll();
+    Messaggio findById(int id);
+    void deleteMessaggio(int id);
+
+
 }

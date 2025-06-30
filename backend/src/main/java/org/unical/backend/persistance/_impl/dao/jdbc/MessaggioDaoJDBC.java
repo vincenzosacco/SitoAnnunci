@@ -4,6 +4,7 @@ DAO implementation for Messaggio
 
 package org.unical.backend.persistance._impl.dao.jdbc;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -21,6 +22,9 @@ import java.util.Map;
 
 @Repository
 public class MessaggioDaoJDBC extends AbsBaseJDBC implements IDao<Messaggio, Integer> {
+
+    @Autowired
+    private UtenteDaoJDBC utenteDao;
 
     @Override
     protected RowMapper<Messaggio> getRowMapper() {
@@ -85,7 +89,6 @@ public class MessaggioDaoJDBC extends AbsBaseJDBC implements IDao<Messaggio, Int
         return jdbcTemplate.query(sql, this.getRowMapper(), conversazioneId);
     }
 
-    // trova tutte le conversazioni di un utente
     public List<Utente> getConversazioniUtente(int utenteId) {
         String sql = """
         SELECT u.*, c.id as conversazione_id
@@ -94,7 +97,7 @@ public class MessaggioDaoJDBC extends AbsBaseJDBC implements IDao<Messaggio, Int
         WHERE ? IN (c.utente1_id, c.utente2_id)
         AND u.id != ?
     """;
-        return jdbcTemplate.query(sql, new UtenteRowMapper(), utenteId, utenteId);
+        return jdbcTemplate.query(sql, utenteDao.getRowMapper(), utenteId, utenteId);
     }
 
     public Integer getConversazioneId(int utente1Id, int utente2Id) {
