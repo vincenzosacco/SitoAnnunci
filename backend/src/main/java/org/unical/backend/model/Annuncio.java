@@ -1,7 +1,6 @@
 package org.unical.backend.model;
 
 import lombok.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;

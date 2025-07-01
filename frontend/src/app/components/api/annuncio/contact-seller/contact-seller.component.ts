@@ -1,6 +1,7 @@
-import {Component, Input, numberAttribute} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
+import {ChatService} from "../../../../services/api/chat.service";
 
 @Component({
   selector: 'app-contact-seller',
@@ -12,29 +13,38 @@ import {NgIf} from '@angular/common';
   styleUrls: ['./contact-seller.component.css']
 })
 export class ContactSellerComponent {
-  @Input({transform: numberAttribute}) venditoreId!: number;
+    private chatService = inject(ChatService);
 
-  nome: string = '';
-  email: string = '';
-  messaggio: string = '';
-  messaggioInviato: boolean = false;
+    @Input() venditoreId: number = 0;
+    @Input() annuncioId: number = 0;
+    @Input() annuncioTitolo: string = '';
 
-  invioMessaggio() {
-    console.log('Messaggio inviato:', {
-      nome: this.nome,
-      email: this.email,
-      messaggio: this.messaggio
-    });
+    mioId = 2; // TODO: da sostituire con id utente loggato
 
-    // Simula l'invio del messaggio e mostra conferma
-    this.messaggioInviato = true;
+    nome = '';
+    email = '';
+    messaggio = '';
+    messaggioInviato = false;
 
-    // Reset form dopo 3 secondi
-    setTimeout(() => {
-      this.messaggioInviato = false;
-      this.nome = '';
-      this.email = '';
-      this.messaggio = '';
-    }, 3000);
-  }
+    invioMessaggio() {
+        if (!this.messaggio.trim()) return;
+
+        const msg = {
+            senderId: this.mioId,
+            addresseeId: this.venditoreId,
+            text: `Codice Annuncio #${this.annuncioId} - ${this.annuncioTitolo}\n\n${this.messaggio}`
+        };
+
+        this.chatService.inviaMessaggio(msg).subscribe({
+            next: () => {
+                this.messaggioInviato = true;
+                this.nome = '';
+                this.email = '';
+                this.messaggio = '';
+            },
+            error: (err) => {
+                console.error('Errore invio messaggio:', err);
+            }
+        });
+    }
 }

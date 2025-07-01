@@ -14,8 +14,8 @@
 
 
       <div class="bottoni-venditore">
-        <a class="btn btn-primary" href="#contact" ><i class="bi bi-chat-dots"></i> Contatta</a>
-        <a class="btn btn-outline-secondary" href="#review"> <i class="bi bi-pencil-square"></i> Scrivi una recensione</a>
+          <a class="btn btn-primary" (click)="scrollTo('contact')"><i class="bi bi-chat-dots"></i> Contatta</a>
+          <a class="btn btn-outline-secondary" (click)="scrollTo('review')"><i class="bi bi-pencil-square"></i> Scrivi una recensione</a>
       </div>
     </section>
   </section>
@@ -28,9 +28,26 @@
     <p><strong>Indirizzo:</strong> {{ annuncio?.indirizzo }}</p>
   </section>
 
-  <app-contact-seller id="contact" [venditoreId]="annuncio?.venditore_id"></app-contact-seller>
 
-  <h3>Hai già visitato quest'immobile?</h3>
+  <app-contact-seller id="contact" *ngIf="annuncio"
+    [venditoreId]="annuncio.venditore_id"
+    [annuncioId]="annuncio.id"
+    [annuncioTitolo]="annuncio.titolo">
+  </app-contact-seller>
+
+
+  <h3>Recensioni dell'annuncio:</h3>
+  <p *ngIf="recensioni.length === 0">Ancora nessuna recensione.</p>
+
+  <section class="recensioni" *ngIf="recensioni.length > 0">
+      <div *ngFor="let r of recensioni" class="recensione">
+          <p>Nome: {{ r.nome_autore }}</p>
+          <p>Commento: {{ r.testo }}</p>
+          <small>Voto: {{ r.voto }}/5 </small>
+          <hr>
+      </div>
+  </section>
+
+  <h4>Hai già visitato quest'immobile?</h4>
   <app-review-form id="review" [annuncio_id]="annuncio?.id"></app-review-form>
-
 </section>

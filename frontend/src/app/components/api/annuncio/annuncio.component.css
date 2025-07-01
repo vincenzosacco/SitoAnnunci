@@ -51,3 +51,22 @@
   padding: 1.5rem;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }
+
+section.recensioni {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.recensione {
+    border-bottom: 1px solid #ddd;
+    padding: 0.75rem 0;
+}
+
+.recensione p {
+    margin: 0;
+    color: #555;
+    font-size: 0.95rem;
+}

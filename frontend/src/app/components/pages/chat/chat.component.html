@@ -20,14 +20,16 @@
                      [class.received]="m.senderId !== mioId"
                      class="message">
 
-                    <div class="message-text">{{ m.text }}</div>
+                    <div class="message-text" style="white-space: pre-wrap; word-break: break-word;">
+                        {{ m.text }}
+                    </div>
                     <div class="message-time">{{ formatDate(m.date) }}</div>
 
                 </div>
 
             </div>
 
-            <form class="d-flex mt-3" (submit)="inviaMessaggio(); $event.preventDefault()">
+            <form *ngIf="utenteSelezionato" class="d-flex mt-3" (submit)="inviaMessaggio(); $event.preventDefault()">
                 <input
                     [(ngModel)]="nuovoMessaggio"
                     name="msg"

@@ -22,7 +22,7 @@ export class ReviewComponent {
   testo: string = '';
   recensioneInviata: boolean = false;
 
-  autore_id: number = 10; //temporaneamente tutte le recensioni provengono dall'utente 9
+  autore_id: number = 2; // #TODO: da sostituire con id utente loggato
 
   constructor(private reviewService: ReviewService) {}
 
