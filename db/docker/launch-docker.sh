@@ -3,7 +3,7 @@ set -e
 
 ## VARIABLES
     ENV_PATH=../pg.env
-    DUMP_PATH=../dump-sito_annunci-202506151937.sql
+    DUMP_PATH=../dump-sito_annuncisql
 
 ## Load pg.env file
     set -a

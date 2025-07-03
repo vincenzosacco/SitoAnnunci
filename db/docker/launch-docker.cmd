@@ -51,7 +51,8 @@ if not exist "%DUMP_PATH%" (
     exit /b 1
 )
 set CP_DUMP_PATH=%DOCKERFILE_PARENT_PATH%\dump-sito_annunci.sql
-copy "%DUMP_PATH%" %CP_DUMP_PATH%
+@REM Copy dump file to Dockerfile parent directory and overwrite if it exists
+COPY /Y "%DUMP_PATH%" %CP_DUMP_PATH% > NUL
 
 REM Build Docker image from Dockerfile
 docker build -t %IMAGE_NAME% %DOCKERFILE_PARENT_PATH%
