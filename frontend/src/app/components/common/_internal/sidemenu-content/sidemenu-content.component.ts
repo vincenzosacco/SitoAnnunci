@@ -48,7 +48,7 @@ export class SidemenuContentComponent {
 
             {
                 label: 'Chat',
-                authRequired: false, //#TODO true
+                authRequired: true,
                 icon: 'chat',
                 route: '/chat', //
             },
@@ -59,6 +59,13 @@ export class SidemenuContentComponent {
                 icon: 'settings',
                 route: '/settings',
             },
+
+            {
+                label: 'Admin',
+                authRequired: true,
+                icon: 'admin_panel_settings',
+                route: '/admin',
+            }
         ]
     );
 

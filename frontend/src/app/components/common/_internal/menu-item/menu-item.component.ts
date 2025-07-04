@@ -3,7 +3,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatListItem} from "@angular/material/list";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {AsyncPipe, NgClass} from "@angular/common";
-import {AuthFacadeService} from '../../../../services/auth-facade.service';
+import {AuthFacadeService} from "../../../../services/auth/auth-facade.service";
 
 /**
  * Represents a menu item in the application sidebar or navigation.
