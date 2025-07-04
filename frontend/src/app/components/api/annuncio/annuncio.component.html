@@ -28,6 +28,8 @@
     <p><strong>Indirizzo:</strong> {{ annuncio?.indirizzo }}</p>
   </section>
 
+  <div id="map" style="height: 300px; width: 100%;"></div>
+
 
   <app-contact-seller id="contact" *ngIf="annuncio"
     [venditoreId]="annuncio.venditore_id"

@@ -19,6 +19,8 @@ public class Annuncio {
     private BigDecimal prezzo_asta;
     private int superficie;
     private String indirizzo;
+    private Double latitudine;
+    private Double longitudine;
     private boolean in_vendita;
     /** foreign key to the category table */
     private int categoria_id;

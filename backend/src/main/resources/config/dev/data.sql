@@ -21,25 +21,25 @@ INSERT INTO utente (nome, cellulare, email, "password", ruolo_id, bannato)
 VALUES ('Seller2 User', 4444444444,'seller2@gmail.com', 'seller2123', 3, false);
 -- ANNUNCIO DATA ----------
 
-INSERT INTO annuncio (titolo, descrizione, prezzo, prezzo_asta, superficie, indirizzo, in_vendita, categoria_id,
+INSERT INTO annuncio (titolo, descrizione, prezzo, prezzo_asta, superficie, indirizzo, latitudine, longitudine, in_vendita, categoria_id,
                       venditore_id, foto, promozione)
 VALUES ('First Annuncio',
      'This is the first annuncio',
-    100000.55,     95000.00, 300, 'Via Roma 1, Milano', true, 1,
+    100000.55,     95000.00, 300, 'Via Roma 1, Milano', 45.52007, 9.00447, true, 1,
     3, 'https://picsum.photos/200', false);
 
-INSERT INTO annuncio (titolo, descrizione, prezzo, prezzo_asta, superficie, indirizzo, in_vendita, categoria_id,
+INSERT INTO annuncio (titolo, descrizione, prezzo, prezzo_asta, superficie, indirizzo, latitudine, longitudine, in_vendita, categoria_id,
                       venditore_id, data_creazione, foto, promozione)
 VALUES ('Second Annuncio',
      'This is the second annuncio',
-    200000.00,     NULL, 150, 'Via Milano 2, Roma', true, 2,
+    200000.00,     NULL, 150, 'Via Milano 2, Roma', 41.89948, 12.48965, true, 2,
     3, CURRENT_TIMESTAMP, 'https://picsum.photos/201', true);
 
-INSERT INTO annuncio (titolo, descrizione, prezzo, prezzo_asta, superficie, indirizzo, in_vendita, categoria_id,
+INSERT INTO annuncio (titolo, descrizione, prezzo, prezzo_asta, superficie, indirizzo, latitudine, longitudine, in_vendita, categoria_id,
                       venditore_id, foto, promozione)
 VALUES ('Third Annuncio',
         'This is the third annuncio',
-        1000.55,     5000.00, 130, 'Via Roma 5, Bergamo', false, 1,
+        1000.55,     5000.00, 130, 'Via Roma 5, Bergamo', 45.67755, 9.60839, false, 1,
         4, 'https://picsum.photos/202', false);
 
 

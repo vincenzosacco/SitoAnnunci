@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import {Component, inject} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
 import {AnnuncioService} from "../../../services/api/annuncio.service";
 import {AnnuncioModel} from "./annuncio.model";
 import {ContactSellerComponent} from './contact-seller/contact-seller.component';
@@ -21,7 +21,7 @@ import {NgForOf, NgIf} from "@angular/common";
   templateUrl: './annuncio.component.html',
   styleUrl: './annuncio.component.css'
 })
-export class AnnuncioComponent {
+export class AnnuncioComponent{
 
     categoriaMap: Record<number, string> = {
         1: 'Appartamento',
@@ -44,6 +44,12 @@ export class AnnuncioComponent {
     recensioni: ReviewModel[] = [];
 
 
+    @Input() lat!: number;
+    @Input() lng!: number;
+
+    map!: google.maps.Map;
+
+
     ngOnInit() {
         this.route.paramMap.subscribe(params => {
             const id = Number(params.get('id'));
@@ -51,6 +57,11 @@ export class AnnuncioComponent {
 
             this.annuncioService.getById(id).subscribe(data => {
                 this.annuncio = data;
+
+                this.lat = data.latitudine;
+                this.lng = data.longitudine;
+                this.loadMap();
+
 
                 this.utenteService.getById(data.venditore_id).subscribe(utente => {
                     this.venditore = utente;
@@ -63,6 +74,19 @@ export class AnnuncioComponent {
         });
     }
 
+    loadMap() {
+        const mapOptions = {
+            center: new google.maps.LatLng(this.lat, this.lng),
+            zoom: 15
+        };
+
+        this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, mapOptions);
+
+        new google.maps.Marker({
+            position: new google.maps.LatLng(this.lat, this.lng),
+            map: this.map
+        });
+    }
 
     scrollTo(id: string) {
         const el = document.getElementById(id);

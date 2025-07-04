@@ -27,6 +27,8 @@ public class AnnuncioDaoJDBC extends AbsBaseJDBC implements IDao<Annuncio, Integ
                 rs.getBigDecimal("prezzo_asta"),
                 rs.getInt("superficie"),
                 rs.getString("indirizzo"),
+                rs.getDouble("latitudine"),
+                rs.getDouble("longitudine"),
                 rs.getBoolean("in_vendita"),
                 rs.getInt("categoria_id"),
                 rs.getInt("venditore_id"),
@@ -58,12 +60,12 @@ public class AnnuncioDaoJDBC extends AbsBaseJDBC implements IDao<Annuncio, Integ
         // CHECK VALIDITY
         checkAnnuncioValidity(ann);
 
-
         // INSERT
         String sql = "INSERT INTO annuncio (titolo, descrizione, prezzo, prezzo_asta, superficie, indirizzo, " +
-            "in_vendita, categoria_id, venditore_id, data_creazione, foto, promozione) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, ann.getTitolo(), ann.getDescrizione(), ann.getPrezzo());
+            "latitudine, longitudine, in_vendita, categoria_id, venditore_id, data_creazione, foto, promozione) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, ann.getTitolo(), ann.getDescrizione(), ann.getPrezzo(),
+            ann.getSuperficie(), ann.getIndirizzo(), ann.getLatitudine(), ann.getLongitudine());
 
         // SELECT and RETURN
         sql = "SELECT * FROM annuncio WHERE id = ?";

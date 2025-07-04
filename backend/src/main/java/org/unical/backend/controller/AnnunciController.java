@@ -15,7 +15,7 @@ public class AnnunciController {
     }
 
     @GetMapping(value = {"/",""})
-    ResponseEntity<Iterable<Annuncio>> getAllAnnunci() {
+    public ResponseEntity<Iterable<Annuncio>> getAllAnnunci() {
         return ResponseEntity.ok(this.annService.findAll());
     }
 

@@ -47,16 +47,16 @@ public class AnnunciControllerTest {
         // GIVEN
         List<Annuncio> allAnnunci = List.of(
                 new Annuncio(0, "Titolo", "Descrizione", new BigDecimal(100000),
-                    new BigDecimal(1000), 50, "Via Roma 1", true, 1, 1,
+                    new BigDecimal(1000), 50, "Via Roma 1", null, null, true, 1, 1,
                     null, null, false),
                 new Annuncio(1, "Titolo2", "Descrizione2", new BigDecimal(200000),
-                    new BigDecimal(2000), 60, "Via Milano 2", true, 2, 1,
+                    new BigDecimal(2000), 60, "Via Milano 2", null, null, true, 2, 1,
                     null, null, false),
                 new Annuncio(2, "Titolo3", "Descrizione3", new BigDecimal(300000),
-                    new BigDecimal(3000), 70, "Via Napoli 3", true, 3, 1,
+                    new BigDecimal(3000), 70, "Via Napoli 3", null, null, true, 3, 1,
                     null, null, false),
                 new Annuncio(3, "Titolo4", "Descrizione4", new BigDecimal(400000),
-                    new BigDecimal(4000), 80, "Via Torino 4", true, 4, 1,
+                    new BigDecimal(4000), 80, "Via Torino 4", null, null, true, 4, 1,
                     null, null, false)
         );
         given(mockService.findAll()).willReturn(allAnnunci);
@@ -82,7 +82,7 @@ public class AnnunciControllerTest {
     public void getAnnuncioById_returnExpected() throws Exception {
         // GIVEN
         Annuncio ann = new Annuncio(0, "Titolo", "Descrizione", new BigDecimal(100000),
-            new BigDecimal(1000), 50, "Via Roma 1", true, 1, 1,
+            new BigDecimal(1000), 50, "Via Roma 1", null, null, true, 1, 1,
             null, null, false);
 
         given(mockService.findById(0)).willReturn(ann);

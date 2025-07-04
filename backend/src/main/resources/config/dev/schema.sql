@@ -42,6 +42,8 @@ CREATE TABLE annuncio (
       prezzo_asta numeric(12, 2) NULL,
       superficie int4 NOT NULL,
       indirizzo text NOT NULL,
+      longitudine float,
+      latitudine float,
       in_vendita bool DEFAULT true NULL,
       categoria_id int4 NULL,
       venditore_id int4 NULL,
