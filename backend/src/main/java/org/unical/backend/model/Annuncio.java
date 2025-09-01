@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,7 +28,7 @@ public class Annuncio {
     /** foreign key to the user table */
     private int venditore_id;
     private Timestamp data_creazione;
-    private String foto;
+    private Collection<Foto> foto;
     private boolean promozione;
 
 

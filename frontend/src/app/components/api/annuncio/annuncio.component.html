@@ -4,20 +4,50 @@
 
   <section class="riga-annuncio">
 
-    <img [src]="annuncio?.foto" alt="Immagine annuncio" class="img-principale" />
+      <div class="left-col">
+          <div *ngIf="(annuncio?.foto?.length ?? 0) > 0; else noFoto" id="carouselAnnuncio" class="carousel slide fixed-carousel" data-bs-ride="carousel">
+              <div class="carousel-inner h-100">
+                  <div *ngFor="let f of (annuncio?.foto ?? []); let i = index"
+                       class="carousel-item h-100"
+                       [class.active]="i === 0">
+                      <img [src]="'data:image/jpeg;base64,' + f.dati"
+                           class="d-block w-100 carousel-image"
+                           [alt]="'Foto ' + (i + 1)">
+                  </div>
+              </div>
 
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselAnnuncio" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselAnnuncio" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+              </button>
+          </div>
 
-    <section class="info-venditore">
-      <p><i class="bi bi-person"></i> <strong>Utente:</strong> {{ venditore?.nome }}</p>
-      <p><i class="bi bi-telephone"></i> <strong>Cellulare:</strong> {{ venditore?.cellulare }}</p>
-      <p><i class="bi bi-envelope"></i> <strong>Email:</strong> {{ venditore?.email }}</p>
-
-
-      <div class="bottoni-venditore">
-          <a class="btn btn-primary" (click)="scrollTo('contact')"><i class="bi bi-chat-dots"></i> Contatta</a>
-          <a class="btn btn-outline-secondary" (click)="scrollTo('review')"><i class="bi bi-pencil-square"></i> Scrivi una recensione</a>
+          <ng-template #noFoto>
+              <div class="no-foto fixed-carousel d-flex align-items-center justify-content-center">
+                  <p class="mb-0">Nessuna immagine disponibile</p>
+              </div>
+          </ng-template>
       </div>
-    </section>
+
+
+
+
+      <aside class="right-col">
+          <section class="info-venditore">
+              <p><i class="bi bi-person"></i> <strong>Utente:</strong> {{ venditore?.nome }}</p>
+              <p><i class="bi bi-telephone"></i> <strong>Cellulare:</strong> {{ venditore?.cellulare }}</p>
+              <p><i class="bi bi-envelope"></i> <strong>Email:</strong> {{ venditore?.email }}</p>
+
+              <div class="bottoni-venditore mt-3">
+                  <a class="btn btn-primary me-2" (click)="scrollTo('contact')"><i class="bi bi-chat-dots"></i> Contatta</a>
+                  <a class="btn btn-outline-secondary" (click)="scrollTo('review')"><i class="bi bi-pencil-square"></i> Scrivi una recensione</a>
+              </div>
+          </section>
+      </aside>
   </section>
 
   <section class="dettagli-annuncio">

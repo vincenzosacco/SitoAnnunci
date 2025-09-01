@@ -2,10 +2,10 @@ package org.unical.backend.service._impl;
 
 import org.springframework.stereotype.Service;
 import org.unical.backend.exceptions.NotImplementedException;
-import org.unical.backend.model.GeoLocation;
 import org.unical.backend.persistance._impl.dao.IDao;
 import org.unical.backend.model.Annuncio;
 import org.unical.backend.service.IAnnuncioService;
+import org.unical.backend.service.IFotoService;
 
 import java.util.Collection;
 
@@ -13,28 +13,31 @@ import java.util.Collection;
 class AnnuncioServiceDao implements IAnnuncioService {
 
     private final IDao<Annuncio, Integer> dao;
-    private final GeoService geoService;
+    private final IFotoService fotoService;
 
-    AnnuncioServiceDao(IDao<Annuncio,Integer> annDao, GeoService geoService) {
+    public AnnuncioServiceDao(IDao<Annuncio,Integer> annDao, IFotoService fotoService) {
         this.dao = annDao;
-        this.geoService = geoService;
+        this.fotoService = fotoService;
     }
 
     @Override
     public Collection<Annuncio>findAll() {
-        return dao.findAll();
+        Collection<Annuncio> annunci = dao.findAll();
+        for (Annuncio ann : annunci) {
+            ann.setFoto(fotoService.findByAnnuncioId(ann.getId()));
+        }
+        return annunci;
     }
 
     @Override
     public Annuncio findById(int id) {
-        return dao.findByPrimaryKey(id);
+        Annuncio ann = dao.findByPrimaryKey(id);
+        ann.setFoto(fotoService.findByAnnuncioId(id));
+        return ann;
     }
 
     @Override
     public Annuncio createAnnuncio(Annuncio ann) throws Exception {
-        GeoLocation geo = geoService.getCoordinates(ann.getIndirizzo());
-        ann.setLatitudine(geo.getLat());
-        ann.setLongitudine(geo.getLng());
         return dao.save(ann);
     }
 

@@ -19,15 +19,12 @@
   justify-content: center;
 }
 
-.img-principale {
-  max-width: 550px;
-  width: 100%;
-  border-radius: 8px;
-  object-fit: cover;
+.left-col {
+    flex: 0 0 560px;
+    max-width: 560px;
 }
 
-
-.info-venditore {
+.right-col {
   border: 1px solid #ccc;
   padding: 16px;
   border-radius: 8px;
@@ -43,6 +40,33 @@
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 1rem;
+}
+
+.fixed-carousel {
+    height: 360px;
+    overflow: hidden;
+    background: #f5f5f5;
+    border-radius: 6px;
+    position: relative;
+}
+
+.fixed-carousel .carousel-inner,
+.fixed-carousel .carousel-item {
+    height: 100%;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.no-foto {
+    height: 100%;
+    text-align: center;
+    color: #666;
 }
 
 .dettagli-annuncio {

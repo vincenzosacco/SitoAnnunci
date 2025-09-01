@@ -8,6 +8,7 @@ import { UtenteService } from "../../../services/api/utente.service";
 import {ReviewService} from '../../../services/api/review.service';
 import {ReviewModel} from './review/review.model';
 import {NgForOf, NgIf} from "@angular/common";
+import {GOOGLE_MAPS_API_KEY} from "../../../../environments/google-maps-key";
 
 
 @Component({
@@ -60,7 +61,14 @@ export class AnnuncioComponent{
 
                 this.lat = data.latitudine;
                 this.lng = data.longitudine;
-                this.loadMap();
+
+                this.loadGoogleMapsScript()
+                    .then(() => {
+                        this.loadMap();
+                    })
+                    .catch(err => {
+                        console.error('Errore caricando Google Maps', err);
+                    });
 
 
                 this.utenteService.getById(data.venditore_id).subscribe(utente => {
@@ -93,6 +101,24 @@ export class AnnuncioComponent{
         if (el) {
             el.scrollIntoView({behavior: 'smooth'});
         }
+    }
+
+    private loadGoogleMapsScript(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (document.getElementById('google-maps-script')) {
+                resolve();
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.id = 'google-maps-script';
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=marker`;
+            script.async = true;
+            script.defer = true;
+            script.onload = () => resolve();
+            script.onerror = () => reject();
+            document.head.appendChild(script);
+        });
     }
 }
 

@@ -1,3 +1,5 @@
+import {FotoModel} from "./foto.model";
+
 export interface AnnuncioModel {
   id: number;
   titolo: string;
@@ -7,7 +9,7 @@ export interface AnnuncioModel {
   longitudine: number;
   prezzo: number;
   descrizione: string;
-  foto: string;
+  foto?: FotoModel[];
   categoria_id: number;
   superficie: number;
   data: number;
