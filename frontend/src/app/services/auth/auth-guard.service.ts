@@ -1,37 +1,115 @@
 import {Injectable} from '@angular/core';
-import {Router, CanActivate } from '@angular/router';
-import {map, Observable, tap} from 'rxjs';
+import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
 import {AuthFacadeService} from './auth-facade.service';
+import {catchError, first, firstValueFrom, map, of} from "rxjs";
+import {switchMap} from "rxjs/operators";
 
 @Injectable(
-  {providedIn: 'root'}
+    {providedIn: 'root'}
 )
 /**
  * AuthGuard service to protect routes based on user authentication status.
  * Implements the CanActivate interface to determine whether a route can be activated.
  */
 export class AuthGuard implements CanActivate {
-  constructor(private auth: AuthFacadeService, private router: Router) {
-  }
+    constructor(private auth: AuthFacadeService, private router: Router) {
+    }
 
-  /**
-   * Checks if the user is authenticated by subscribing to the `isAuthenticated$` Observable.
-   * If the user is not authenticated, redirect them to the 'no-auth-redirect' route.
-   *
-   * @returns {Observable<boolean>} An Observable that emits `true` if the user is authenticated, otherwise `false`.
-   */
-  canActivate(): Observable<boolean> {
-    return this.auth.isAuthenticated$.pipe(
-      // 1 - Side effect to handle unauthenticated users.
-      // Redirects the user to 'no-auth-redirect' if they are not authenticated.
-      tap(isAuthenticated => {
-        if (!isAuthenticated) {
-          this.router.navigate(['/no-auth-redirect']);
+    /**
+     * Checks if the user is authenticated by subscribing to the `isAuthenticated$` Observable.
+     * - If the user is not authenticated, redirect them to the 'no-auth-redirect' route.
+     * - If the user is authenticated, check if the user has the required roles (if any) to access the route.
+     * @param route The activated route snapshot.
+     * @returns A promise that resolves to `true` if the user is authenticated and has the required roles otherwise `false`.
+     */
+    async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
+        const canActivate = await firstValueFrom(this.canAccess$(route).pipe(first()));
+        if (!canActivate) {
+            console.debug('Access denied - Redirecting to "no-auth-redirect"');
+            if (!await this.router.navigate(['/no-auth-redirect'])) {
+                console.error('Navigation to "no-auth-redirect" failed');
+            }
         }
-      }),
-      // 2- Maps the authentication status to a boolean value.
-      map(isAuthenticated => isAuthenticated)
-    );
-  }
+        return canActivate;
+    }
+
+    // /**
+    //  * Check if the user can access a route
+    //  * (based on canActivate logic, but without side effects like redirection and console debugging).
+    //  * @param route The activated route snapshot.
+    //  * @returns A promise that resolves to `true` if the user can access the route otherwise `false`.
+    //  */
+    // async canAccess(route: ActivatedRouteSnapshot | string): Promise<boolean> {
+    //     // PARSE ROUTE if string//
+    //     /*TODO I need to check if this approach can cause bugs. Since there is no built-in way to parse
+    //     *  a string to an existing route, this way needs to be tested */
+    //     if (typeof route === 'string') {
+    //         const url = new URL(route, window.location.origin);
+    //         const tmpRoute = this.router.config.find(r => r.path === url.pathname.replace(/^\//, ''));
+    //         if (!tmpRoute) {
+    //             throw new Error(`Route ${route} not found in router config`);
+    //         }
+    //
+    //         route = {
+    //             data: tmpRoute.data || {},
+    //         } as ActivatedRouteSnapshot;
+    //     }
+    //
+    //
+    //     // CHECK AUTHENTICATION //
+    //     let ret = true;
+    //     const isAuthenticated = await firstValueFrom(this.auth.isAuthenticated$);
+    //     if (!isAuthenticated) {
+    //         ret = false;
+    //     }
+    //
+    //     // CHECK ROLES /
+    //     if (isAuthenticated && route.data && route.data['roles'].length != 0) {
+    //         const requiredRoles = route.data['roles'] as string[];
+    //
+    //         // If roles are required, check if the user has all required roles
+    //         let userRoles: string | string[];
+    //         try {
+    //             userRoles = this.auth.roles() as string[] || []; // should be string[]
+    //             ret = requiredRoles.every(role => userRoles.includes(role));
+    //         } catch (error) {
+    //             ret = false;
+    //         }
+    //     }
+    //     console.debug(ret);
+    //     return ret;
+    // }
+
+
+    canAccess$(route: ActivatedRouteSnapshot | string) {
+        // Convert string route to snapshot (same as your code)
+        if (typeof route === 'string') {
+            const url = new URL(route, window.location.origin);
+            const tmpRoute = this.router.config.find(r => r.path === url.pathname.replace(/^\//, ''));
+            if (!tmpRoute) {
+                throw new Error(`Route ${route} not found in router config`);
+            }
+            route = { data: tmpRoute.data || {} } as ActivatedRouteSnapshot;
+        }
+
+        return this.auth.isAuthenticated$.pipe(
+            switchMap(isAuthenticated => {
+                if (!isAuthenticated) return of(false);
+
+                const requiredRoles = (route.data?.['roles'] as string[]) || [];
+                if (!requiredRoles.length) return of(true);
+
+                return of(this.auth.roles()).pipe(
+                    map(userRoles => {
+                        const rolesArray = userRoles || [];
+                        return requiredRoles.every(role => rolesArray.includes(role));
+                    }),
+                    catchError(() => of(false))
+                );
+            })
+        );
+    }
+
 }
+
 
