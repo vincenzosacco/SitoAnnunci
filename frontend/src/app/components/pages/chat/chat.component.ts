@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ChatService } from '../../../services/api/chat.service';
+import {Component, inject} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ChatService} from '../../../services/api/chat.service';
 import {FormsModule} from "@angular/forms";
 
 @Component({

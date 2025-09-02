@@ -4,9 +4,8 @@
 import properties from 'properties-parser';
 import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'fs';
 import {EOL} from 'os';
-import {dirname } from 'path';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path, {dirname} from 'path';
+import {fileURLToPath} from 'url';
 
 // Constants
 const __filename = fileURLToPath(import.meta.url);
