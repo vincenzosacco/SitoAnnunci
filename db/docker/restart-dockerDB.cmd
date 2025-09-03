@@ -3,8 +3,6 @@ REM LOADS ENVIRONMENT VARIABLES
 setlocal EnableDelayedExpansion
 
 
-
-
 if "%~1"=="" (goto show_usage)
 set ENV_PATH=%~1
 

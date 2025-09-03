@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { FilterService } from '../../../../services/filter.service';
+import {Component} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {FilterService} from '../../../../services/filter.service';
 
 @Component({
   selector: 'app-filters',

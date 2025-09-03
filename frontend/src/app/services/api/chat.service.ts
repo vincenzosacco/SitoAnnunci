@@ -1,6 +1,6 @@
 // `src/app/services/chat.service.ts`
 import {Injectable} from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import {BaseApiService} from "./base-api.service";
 
 export interface Messaggio {

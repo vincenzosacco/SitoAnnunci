@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FilterService } from '../../../../services/filter.service';
+import {Component, OnInit} from '@angular/core';
+import {FilterService} from '../../../../services/filter.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {AnnuncioService} from '../../../../services/api/annuncio.service';
 import {AnnuncioModel} from '../../../api/annuncio/annuncio.model';

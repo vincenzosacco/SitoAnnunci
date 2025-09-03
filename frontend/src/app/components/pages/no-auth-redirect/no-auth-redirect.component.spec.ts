@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { NoAuthRedirectComponent } from './no-auth-redirect.component';
+import {NoAuthRedirectComponent} from './no-auth-redirect.component';
 
 describe('NoAuthRedirectComponent', () => {
   let component: NoAuthRedirectComponent;

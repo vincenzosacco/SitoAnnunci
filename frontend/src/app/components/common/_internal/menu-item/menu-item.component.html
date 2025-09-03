@@ -1,6 +1,6 @@
-<!--IF auth is not required OR auth is required and user is authenticated-->
-@if ( !(item().authRequired) ||  (authService.isAuthenticated$ | async)){
+@if (canShow()) {
 
+<!--Try a call to     -->
   <div>
         <a mat-list-item
             [routerLink]= "item().route"

@@ -1,8 +1,8 @@
 <h1>User Profile</h1>
 
 <ul>
-  <li>name:{{ user?.name }}</li>
-  <li>email:{{ user?.email }}</li>
+  <li>name:{{ (user$| async)?.name}}</li>
+  <li>email:{{(user$| async)?.email }}</li>
 </ul>
 
 <!-- User check is made in .ts-->
