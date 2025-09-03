@@ -1,5 +1,5 @@
-#NOT updated as the cmd version , dont use this script
 #!/bin/bash
+#NOT updated as the cmd version , dont use this script
 # LOADS ENVIRONMENT VARIABLES
 
 ENV_PATH="../pg.env"
