@@ -7,7 +7,6 @@ package org.unical.backend.persistance._impl.dao.jdbc;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.unical.backend.exceptions.AnnuncioNotValidException;
-import org.unical.backend.exceptions.NotImplementedException;
 import org.unical.backend.persistance._impl.dao.IDao;
 import org.unical.backend.model.Annuncio;
 
@@ -17,25 +16,35 @@ import java.util.List;
 @Repository
 public class AnnuncioDaoJDBC extends AbsBaseJDBC implements IDao<Annuncio, Integer> {
 
+    private final FotoDaoJDBC fotoDao;
+
+    public AnnuncioDaoJDBC(FotoDaoJDBC fotoDao) {
+        this.fotoDao = fotoDao;
+    }
+
     @Override
     protected RowMapper<Annuncio> getRowMapper() {
-        return (rs, rowNum) -> new Annuncio(
-                rs.getInt("id"),
-                rs.getString("titolo"),
-                rs.getString("descrizione"),
-                rs.getBigDecimal("prezzo"),
-                rs.getBigDecimal("prezzo_asta"),
-                rs.getInt("superficie"),
-                rs.getString("indirizzo"),
-                rs.getDouble("latitudine"),
-                rs.getDouble("longitudine"),
-                rs.getBoolean("in_vendita"),
-                rs.getInt("categoria_id"),
-                rs.getInt("venditore_id"),
-                rs.getTimestamp("data_creazione"),
-                rs.getString("foto"),
-                rs.getBoolean("promozione")
-        );
+        return (rs, rowNum) -> {
+            Annuncio ann = new Annuncio();
+            ann.setId(rs.getInt("id"));
+            ann.setTitolo(rs.getString("titolo"));
+            ann.setDescrizione(rs.getString("descrizione"));
+            ann.setPrezzo(rs.getBigDecimal("prezzo"));
+            ann.setPrezzo_asta(rs.getBigDecimal("prezzo_asta"));
+            ann.setSuperficie(rs.getInt("superficie"));
+            ann.setIndirizzo(rs.getString("indirizzo"));
+            ann.setLatitudine(rs.getDouble("latitudine"));
+            ann.setLongitudine(rs.getDouble("longitudine"));
+            ann.setIn_vendita(rs.getBoolean("in_vendita"));
+            ann.setCategoria_id(rs.getInt("categoria_id"));
+            ann.setVenditore_id(rs.getInt("venditore_id"));
+            ann.setData_creazione(rs.getTimestamp("data_creazione"));
+            ann.setPromozione(rs.getBoolean("promozione"));
+
+            ann.setFoto(fotoDao.findByAnnuncioId(ann.getId()));
+
+            return ann;
+        };
     }
 
     @Override
@@ -62,8 +71,8 @@ public class AnnuncioDaoJDBC extends AbsBaseJDBC implements IDao<Annuncio, Integ
 
         // INSERT
         String sql = "INSERT INTO annuncio (titolo, descrizione, prezzo, prezzo_asta, superficie, indirizzo, " +
-            "latitudine, longitudine, in_vendita, categoria_id, venditore_id, data_creazione, foto, promozione) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "latitudine, longitudine, in_vendita, categoria_id, venditore_id, data_creazione, promozione) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, ann.getTitolo(), ann.getDescrizione(), ann.getPrezzo(),
             ann.getSuperficie(), ann.getIndirizzo(), ann.getLatitudine(), ann.getLongitudine());
 
@@ -75,7 +84,9 @@ public class AnnuncioDaoJDBC extends AbsBaseJDBC implements IDao<Annuncio, Integ
 
     @Override
     public void delete(Annuncio ann) {
-        throw new NotImplementedException();
+        String sql = "DELETE FROM annuncio WHERE id = ?";
+        jdbcTemplate.update(sql, ann.getId());
+        fotoDao.deleteByAnnuncioId(ann.getId());
     }
 
     private static void checkAnnuncioValidity(Annuncio ann) throws AnnuncioNotValidException {
