@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
 import {AuthFacadeService} from './auth-facade.service';
-import {catchError, first, firstValueFrom, map, of} from "rxjs";
+import {catchError, combineLatest, first, firstValueFrom, map, of} from "rxjs";
 import {switchMap} from "rxjs/operators";
 
 @Injectable(
@@ -92,21 +92,24 @@ export class AuthGuard implements CanActivate {
             route = { data: tmpRoute.data || {} } as ActivatedRouteSnapshot;
         }
 
-        return this.auth.isAuthenticated$.pipe(
-            switchMap(isAuthenticated => {
+        /* combineLatest allows to reactively check both authentication status and user roles;
+         * it's necessary because user roles change after login, so we need to wait for both observables to emit new values.
+        */
+        return combineLatest([this.auth.isAuthenticated$, this.auth.user$]).pipe(
+            /* switchMap is used to flatten the observable returned by combineLatest.
+             * It also cancels previous subscriptions if new values are emitted, ensuring
+             * only the latest authentication and user data are considered.
+             */
+            switchMap(([isAuthenticated, user]) => {
                 if (!isAuthenticated) return of(false);
 
                 const requiredRoles = (route.data?.['roles'] as string[]) || [];
                 if (!requiredRoles.length) return of(true);
 
-                return of(this.auth.roles()).pipe(
-                    map(userRoles => {
-                        const rolesArray = userRoles || [];
-                        return requiredRoles.every(role => rolesArray.includes(role));
-                    }),
-                    catchError(() => of(false))
-                );
-            })
+                const userRoles = user ? user['https://custom-claim.com/roles'] || [] : [];
+                return of(requiredRoles.every(role => userRoles.includes(role)));
+            }),
+            catchError(() => of(false))
         );
     }
 

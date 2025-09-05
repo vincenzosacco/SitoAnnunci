@@ -4,7 +4,6 @@ import {DOCUMENT} from '@angular/common';
 import {HttpInterceptorFn} from '@angular/common/http';
 import {catchError, from, map} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
-import {Router} from "@angular/router";
 import {toSignal} from "@angular/core/rxjs-interop";
 
 @Injectable({
@@ -25,16 +24,17 @@ export class AuthFacadeService {
      */
     roles:Signal<string[]> = toSignal(this.user$.pipe(
         map((user: User | null | undefined) => {
-            if (user) {
-                return user[`https://custom-claim.com/roles`] || [];
-            }
-        })), {initialValue: []}
+            return user ? user[`https://custom-claim.com/roles`] || [] : [];
+        })) , {initialValue: []}
     );
 
-    private router = inject(Router);
-
     login() {
-        this.auth.loginWithRedirect();
+        this.auth.loginWithRedirect({
+            // appState : {target: '/user-profile'},
+            authorizationParams : {
+                prompt : 'login'
+            }
+        });
     }
 
     logout() {

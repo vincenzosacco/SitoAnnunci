@@ -54,7 +54,7 @@ export class MenuItemComponent implements OnInit, OnDestroy {
     isOpenSubItems = signal(false);
     canShow = signal(false);
 
-    private destroy$ = new Subject<void>();
+    private destroy$ = new Subject<void>(); // used by takeUntil, read below
 
     ngOnInit(): void {
         // Reactively check access when user login state OR roles change
@@ -66,10 +66,9 @@ export class MenuItemComponent implements OnInit, OnDestroy {
                     // else, can show = true
                     : of(true)
                 ), // always recheck when auth changes
-                takeUntil(this.destroy$)
+                takeUntil(this.destroy$) // best practice to avoid memory leaks, as explained https://www.learnrxjs.io/learn-rxjs/operators/filtering/takeuntil
             )
             .subscribe(result => this.canShow.set(result));
-
     }
 
     ngOnDestroy(): void {
