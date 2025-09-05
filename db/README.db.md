@@ -20,15 +20,15 @@ Dopo è sufficiente buildare l'immagine seguendo uno dei metodi seguenti:
   Dalla cartella [db](.) eseguire il comando:
   ```bash
   # Windows
-  .\docker\launch-docker.cmd pg.env dump-sito_annunci-202506151937.sql docker\Dockerfile
+  .\docker\launch-docker.cmd pg.env dump-sito_annunci.sql docker\Dockerfile
 
   # Linux/Mac
-  .\docker\launch-docker.sh pg.env dump-sito_annunci-202506151937.sql docker\Dockerfile
+  .\docker\launch-docker.sh pg.env dump-sito_annunci.sql docker\Dockerfile
   ```
 
 
 ### Host NON-docker
-Se si desidera hostare in locale o da qualsiasi altra parte che non sia Docker: 
+Se si desidera hostare direttamente sulla macchina o da qualsiasi altra parte che non sia Docker: 
 1. Installare [PostgreSQL 17](https://www.postgresql.org/download/)
 (è molto importante che sia la versione 17, altrimenti [pg_restore](https://www.postgresql.org/docs/current/app-pgrestore.html) non funzionerà correttamente).
 
