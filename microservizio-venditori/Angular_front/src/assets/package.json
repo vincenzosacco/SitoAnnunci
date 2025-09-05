@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "titolo": "Appartamento in centro",
+    "descrizione": "Bellissimo appartamento in pieno centro città.",
+    "prezzo": 200000,
+    "ribassato": false
+  },
+  {
+    "id": 2,
+    "titolo": "Villa con giardino",
+    "descrizione": "Ampia villa con giardino privato.",
+    "prezzo": 350000,
+    "ribassato": true
+  }
+]

@@ -1,0 +1,72 @@
+/* ===== BACKGROUND + FONT (incolla nel tuo styles.css o in <style> nel head) ===== */
+body {
+  font-family: Arial, sans-serif; /* come richiesto */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  color: #0b1220;
+
+  /* base + gradient */
+  background-color: #f6f8ff;
+  background-image:
+    linear-gradient(180deg, #f8faff 0%, #f6f8ff 60%),
+
+      /* bagliori radiali */
+    radial-gradient(600px 300px at 8% 12%, rgba(100,123,237,0.06), transparent 18%),
+    radial-gradient(500px 240px at 85% 78%, rgba(100,123,237,0.04), transparent 18%),
+
+      /* texture a strisce sottili diagonali */
+    repeating-linear-gradient(135deg,
+    transparent 0 14px,
+    rgba(100,123,237,0.04) 14px 15px);
+
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 240ms ease;
+}
+
+/* overlay colorato animato molto sottile */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(120deg,
+  rgba(100,123,237,0.06) 0%,
+  rgba(100,123,237,0.00) 40%,
+  rgba(100,123,237,0.03) 100%);
+  mix-blend-mode: overlay;
+  opacity: 0.9;
+  will-change: transform, opacity;
+  animation: bgShift 14s linear infinite;
+}
+
+/* animazione lenta e delicata */
+@keyframes bgShift {
+  0%   { transform: translateY(0) translateX(0); opacity: 0.92; }
+  50%  { transform: translateY(-5%) translateX(4%); opacity: 0.98; }
+  100% { transform: translateY(0) translateX(0); opacity: 0.92; }
+}
+
+/* Rispetta preferenza ridotta per il movimento */
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; opacity: 0.88; }
+  * { transition: none !important; animation: none !important; }
+}
+
+/* Assicura che il contenuto della app stia sopra l'overlay */
+app-root, #app-root, .app-root {
+  position: relative;
+  z-index: 1;
+}
+
+/* (opzionale) contrasto più forte per card/header */
+.header, .annuncio, .container, .main-nav, .nav-row, .chat-popup {
+  position: relative;
+  z-index: 2;
+  background-clip: padding-box;
+}
