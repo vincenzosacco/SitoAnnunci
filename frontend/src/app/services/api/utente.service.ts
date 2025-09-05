@@ -13,4 +13,13 @@ export class UtenteService extends BaseApiService<any> {
   getById(id: number) {
     return this.getBy(id);
   }
+
+  getVenditori(){
+      return this.http.get<any[]>(`${this.endpointUrl}/venditori`);
+  }
+
+  getAcquirenti(){
+      return this.http.get<any[]>(`${this.endpointUrl}/acquirenti`);
+  }
+
 }
