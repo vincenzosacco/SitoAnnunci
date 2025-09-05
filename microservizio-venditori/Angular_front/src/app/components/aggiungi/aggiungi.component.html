@@ -1,0 +1,75 @@
+<form (ngSubmit)="$event.preventDefault()">
+  <!-- Titolo -->
+  <div class="custom-input-group">
+    <label for="titolo" class="form-label">📝 Titolo</label>
+    <input
+      id="titolo"
+      type="text"
+      class="custom-input"
+      placeholder="Es: Offro lezioni di pianoforte"
+      name="titolo"
+      #titolo>
+  </div>
+
+  <div class="custom-input-group">
+    <label for="m2" class="form-label">↔ Metri Quadri</label>
+    <input
+      id="m2"
+      type="number"
+      class="custom-input"
+      placeholder="Inserisci i metri quadri"
+      name="m2"
+      #m2>
+  </div>
+
+  <!-- Descrizione -->
+  <div class="custom-input-group">
+    <label for="descrizione" class="form-label">💬 Descrizione</label>
+    <textarea
+      id="descrizione"
+      class="custom-input"
+      rows="4"
+      placeholder="Scrivi una descrizione dettagliata"
+      name="descrizione"
+      #descrizione></textarea>
+  </div>
+
+  <!-- Prezzo -->
+  <div class="custom-input-group">
+    <label for="prezzo" class="form-label">💶 Prezzo</label>
+    <input
+      id="prezzo"
+      type="number"
+      class="custom-input"
+      placeholder="Inserisci il prezzo"
+      name="prezzo"
+      #prezzo>
+  </div>
+
+  <!-- Latitudine e Longitudine -->
+  <div class="custom-input-group">
+    <label class="form-label">Posizione</label>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+  </div>
+
+  <!-- Foto -->
+  <div class="custom-input-group">
+    <label for="foto" class="form-label">📷 Foto</label>
+    <input
+      id="foto"
+      type="file"
+      class="custom-input-file"
+      accept="image/*"
+      (change)="onFileSelected($event)">
+  </div>
+
+  <div class="d-flex justify-content-between mt-4">
+    <button type="button" class="custom-btn cancel-btn" [routerLink]="['/home']">
+      Indietro
+    </button>
+    <button type="button" class="custom-btn submit-btn"
+            (click)="aggiornaTutto(titolo.value, descrizione.value, Number(m2.value), Number(prezzo.value))">
+      Salva
+    </button>
+  </div>
+</form>

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "titolo": "MacBook Pro in vendita",
+    "descrizione": "MacBook Pro 16 pollici, usato ma in ottime condizioni.",
+    "prezzo": 1800
+  },
+  {
+    "id": 2,
+    "titolo": "Bicicletta da corsa",
+    "descrizione": "Bici leggera e veloce, ideale per le gare su strada.",
+    "prezzo": 700
+  },
+  {
+    "id": 3,
+    "titolo": "Console PlayStation 5",
+    "descrizione": "PS5 nuova, ancora imballata, con un gioco incluso.",
+    "prezzo": 500
+  }
+]

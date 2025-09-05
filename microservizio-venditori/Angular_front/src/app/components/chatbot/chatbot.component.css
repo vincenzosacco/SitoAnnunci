@@ -1,0 +1,103 @@
+/* Default desktop */
+.chat-popup {
+  position: fixed;
+  bottom: 0;
+  right: 20px;
+  width: 14%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+/* 📱 Mobile: fullscreen */
+@media (max-width: 768px) {
+  .chat-container {
+    bottom: 100px; /* invece che appoggiata al fondo, sale di 100px */
+    right: 10px; /* opzionale: spostala un po’ più a sinistra */
+    width: 90%; /* più larga sul telefono */
+    height: 350px;
+    font-size: 0.85rem;
+  }
+
+  .chat-popup {
+    bottom: 70px;
+    width: 30%;
+  }
+
+  .chat-header {
+    padding: 15px;
+    font-size: 1.2rem;
+  }
+
+  .chat-body {
+    flex: 1;
+    padding: 15px;
+    font-size: 1rem;
+  }
+
+  .button-group {
+    justify-content: center;
+  }
+
+  .button-group button {
+    flex: 1 1 45%;
+    font-size: 1rem;
+  }
+}
+
+/* Header sempre visibile */
+.chat-header {
+  background-color: #647bed;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Corpo della chat */
+.chat-body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+/* Pulsanti */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 5px 0;
+}
+
+.button-group button {
+  padding: 6px 10px;
+  border: 1px solid #007bff;
+  background-color: white;
+  color: #007bff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.button-group button:hover {
+  background-color: #e6f0ff;
+}
+
+.button-group button.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Messaggi consigli */
+.chat-messages ul {
+  padding-left: 20px;
+  margin: 0;
+}

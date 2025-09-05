@@ -1,0 +1,101 @@
+<form *ngIf="annuncio" (ngSubmit)="$event.preventDefault()">
+  <!-- Titolo -->
+  <div class="custom-input-group">
+    <label for="titolo" class="form-label">📝 Titolo</label>
+    <input
+      id="titolo"
+      type="text"
+      class="custom-input"
+      placeholder="Es: Appartamento in centro"
+      [(ngModel)]="annuncio.titolo"
+      name="titolo"
+      [ngModelOptions]="{standalone: true}">
+  </div>
+
+  <!-- Superficie -->
+  <div class="custom-input-group">
+    <label for="superficie" class="form-label">↔ Superficie (m²)</label>
+    <input
+      id="superficie"
+      type="number"
+      class="custom-input"
+      placeholder="Inserisci la superficie"
+      [(ngModel)]="annuncio.superficie"
+      name="superficie"
+      [ngModelOptions]="{standalone: true}">
+  </div>
+
+  <!-- Descrizione -->
+  <div class="custom-input-group">
+    <label for="descrizione" class="form-label">💬 Descrizione</label>
+    <textarea
+      id="descrizione"
+      class="custom-input"
+      rows="4"
+      placeholder="Scrivi una descrizione dettagliata"
+      [(ngModel)]="annuncio.descrizione"
+      name="descrizione"
+      [ngModelOptions]="{standalone: true}"></textarea>
+  </div>
+
+  <!-- Indirizzo -->
+  <div class="custom-input-group">
+    <label for="indirizzo" class="form-label">📍 Indirizzo</label>
+    <input
+      id="indirizzo"
+      type="text"
+      class="custom-input"
+      placeholder="Via / Piazza"
+      [(ngModel)]="annuncio.indirizzo"
+      name="indirizzo"
+      [ngModelOptions]="{standalone: true}">
+  </div>
+
+  <!-- Prezzo Nuovo -->
+  <div class="custom-input-group">
+    <label for="prezzonuovo" class="form-label">💶 Prezzo</label>
+    <input
+      id="prezzonuovo"
+      type="number"
+      class="custom-input"
+      placeholder="Inserisci il prezzo"
+      [(ngModel)]="annuncio.prezzonuovo"
+      name="prezzonuovo"
+      [ngModelOptions]="{standalone: true}">
+  </div>
+
+  <!-- Latitudine e Longitudine -->
+  <div class="custom-input-group">
+    <label class="form-label">📍 Posizione</label>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+  </div>
+
+  <!-- Foto -->
+<!--  <div class="custom-input-group">
+    <label for="foto" class="form-label">📷 Foto</label>
+    <input
+      id="foto"
+      type="file"
+      class="custom-input-file"
+      accept="image/*"
+      (change)="onFileSelected($event)">
+    <img *ngIf="fotoBase64 || annuncio.foto"
+         [src]="fotoBase64 ?? annuncio.foto"
+         alt="Anteprima foto"
+         class="mt-2"
+         style="max-width: 200px;">
+  </div>
+  -->
+
+  <!-- Bottoni -->
+  <div class="d-flex justify-content-between mt-4">
+    <button type="button" class="custom-btn cancel-btn" [routerLink]="['/home']">
+      Indietro
+    </button>
+    <button type="button"
+            class="custom-btn submit-btn"
+            (click)="aggiornaTutto()">
+      Salva
+    </button>
+  </div>
+</form>

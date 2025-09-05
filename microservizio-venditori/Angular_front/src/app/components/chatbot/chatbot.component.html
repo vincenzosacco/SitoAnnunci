@@ -1,0 +1,66 @@
+<div class="chat-popup" [class.open]="isOpen">
+  <!-- Intestazione cliccabile -->
+  <div class="chat-header" (click)="toggleChat()">
+    <label><strong>Chat di Supporto</strong></label>
+  </div>
+
+  <!-- Contenuto della chat -->
+  <div class="chat-body" *ngIf="isOpen">
+    <div>
+      <label>In quale ruolo ti identifichi?</label>
+      <div class="button-group">
+        <button
+          *ngFor="let r of ruolo"
+          [class.selected]="tag[0] === r"
+          (click)="tag[0] = r; controlla1()">
+          {{r}}
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="tag[0]">
+      <label>Quanto vuoi investire nella promozione?</label>
+      <div class="button-group">
+        <button
+          *ngFor="let i of investimento"
+          [class.selected]="tag[1] === i"
+          (click)="tag[1] = i; controlla2()">
+          {{i}}
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="tag[1]">
+      <label>Qual è il punto di forza dell'immobile?</label>
+      <div class="button-group">
+        <button
+          *ngFor="let p of puntoDiForza"
+          [class.selected]="tag[2] === p"
+          (click)="tag[2] = p; controlla3()">
+          {{p}}
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="tag[2]">
+      <label>La vendita è urgente?</label>
+      <div class="button-group">
+        <button
+          *ngFor="let u of urgenza"
+          [class.selected]="tag[3] === u"
+          (click)="tag[3] = u; controlla4()">
+          {{u}}
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="parte4Data && rispostaOttenuta" class="chat-messages">
+      <h3>Consigli:</h3>
+      <ul>
+        <li *ngFor="let r of chatService.getRaccomandazione(tag)">
+          {{r}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

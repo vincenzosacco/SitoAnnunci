@@ -1,0 +1,24 @@
+<div class="main-layout">
+  <div class="container">
+    <h1>{{ title }}</h1>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <nav class="sidebar">
+    <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home annunci</a>
+    <a routerLink="/Aggiungi" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Aggiungi annuncio</a>
+    <a routerLink="/Statistiche" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Statistiche Prezzi</a>
+  </nav>
+
+</div>
+<ul class="nav-row">
+  <li><a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home annunci</a></li>
+  <li><a routerLink="/Aggiungi" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Aggiungi annuncio</a></li>
+  <li><a routerLink="/Statistiche" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Statistiche Prezzi</a></li>
+</ul>
+
+<div>
+  <app-chatbot></app-chatbot>
+</div>
