@@ -1,8 +1,11 @@
 <h1>User Profile</h1>
 
-<ul>
-  <li>name:{{ (user$| async)?.name}}</li>
-  <li>email:{{(user$| async)?.email }}</li>
-</ul>
-
-<!-- User check is made in .ts-->
+@if (user$ | async; as user) {
+    <div class="profile">
+        <p><strong>Name:</strong> {{ user.name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <!-- Add more user details as needed -->
+    </div>
+} @else {
+    <p>Loading user profile...</p>
+}

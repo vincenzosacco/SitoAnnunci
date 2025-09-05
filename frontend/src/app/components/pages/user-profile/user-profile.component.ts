@@ -12,6 +12,7 @@ import {AsyncPipe} from "@angular/common";
 })
 
 export class UserProfileComponent {
-    protected user$ =  inject(AuthFacadeService).user$;
+    user$ = inject(AuthFacadeService).user$;
 }
+
 
