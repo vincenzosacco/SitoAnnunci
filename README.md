@@ -3,9 +3,9 @@
 >Progetto per il corso di *WebApplication-Cds Informatica-Unical- 2024/2025*
 >#### Studenti 
 >- Vincenzo Sacco - 234681
->- Andrea Mirarchi - Aggiungere
->- Francesco Iorio - Aggiungere
->- Francesco Ferraro - Aggiungere
+>- Andrea Mirarchi - 246005
+>- Francesco Iorio - 220486
+>- Francesco Ferraro - 223567
 
 ## Descrizione
 Il progetto è un'applicazione web che ...
