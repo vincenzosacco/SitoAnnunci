@@ -1,0 +1,14 @@
+{
+  "name": "mastodon-api",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "mastodonPost.js",
+  "dependencies": {
+    "axios": "^1.10.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "form-data": "^4.0.3",
+    "multer": "^1.4.5-lts.2",
+    "open": "^10.1.2"
+  }
+}

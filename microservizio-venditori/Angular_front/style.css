@@ -1,0 +1,7 @@
+.checked {
+  list-style: none;
+}
+
+.checked::before {
+  content: "✓ ";
+}

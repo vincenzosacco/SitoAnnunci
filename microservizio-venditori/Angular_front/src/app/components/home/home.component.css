@@ -1,0 +1,173 @@
+/* font globale */
+body {
+  font-family: "Inter", "Segoe UI", "Roboto", sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* NAVBAR / SIDEBAR */
+.main-nav {
+  position: fixed;
+  top: 50px;
+  right: 20px;
+  z-index: 120;
+}
+.main-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.main-nav li {
+  margin: 10px 0;
+}
+.main-nav a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  background: #eaeaea;
+  border-radius: 8px;
+}
+.main-nav a.active {
+  font-weight: bold;
+  color: blue;
+  background: #dbeaff;
+}
+
+/* GRIGLIA FLUIDA: si adatta dinamicamente */
+#annunci-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* auto-fit + minmax per adattarsi */
+  gap: 20px;                       /* spazio orizz. e vert. tra le card */
+  padding: 20px;
+  width: 100%;
+  max-width: none;                 /* lascia che la griglia usi tutto lo spazio disponibile */
+  margin: 0 auto;
+  box-sizing: border-box;
+  align-items: start;
+  grid-auto-rows: auto;
+  /* se hai una sidebar fissa a destra, tieni uno spazio di margine (cambialo se necessario) */
+  margin-right: 240px;
+}
+
+/* CARD ANNUNCIO: colori originali invariati */
+.annuncio {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: #f8f9fa;
+  border: 2px solid #007bff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 15px;
+  box-sizing: border-box;
+  text-align: center;              /* come avevi tu */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  width: 100%;
+  min-height: 100px;
+}
+.annuncio:hover {
+  transform: translateY(-6px);
+  box-shadow: 0px 10px 18px rgba(0, 0, 0, 0.12);
+}
+
+.annuncio h2 {
+  font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+  margin: 0 0 8px 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.annuncio p {
+  font-size: clamp(0.9rem, 1.8vw, 1rem);
+  color: #666;
+  margin: 6px 0;
+}
+.annuncio strong { color: #e63946; font-size: clamp(1rem, 2vw, 1.2rem); }
+
+.annuncio img {
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+}
+
+.annuncio-btn {
+  padding: 2px 5px !important;
+}
+
+.prezzo-vecchio {
+  text-decoration: line-through;
+  color: gray;
+  margin-left: 8px;
+}
+
+.mastodon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid;
+  cursor: pointer;
+  width: 30%;
+  height: 30%;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+.mastodon-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(100,123,237,0.1);
+  background: #f6f8ff;
+}
+.mastodon-icon {
+  width: 20px;
+  height: 20px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  object-fit: contain;
+  display: inline-block;
+  flex: 0 0 16px;
+}
+.mastodon-label {
+  padding: 10px;
+  white-space: nowrap;
+  font-size: 1rem;
+}
+
+/* MEDIA QUERIES: mobile friendly */
+@media (max-width: 900px) {
+  #annunci-container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    margin-right: 120px; /* spazio ridotto se metti sidebar più stretta su mobile */
+  }
+}
+
+@media (max-width: 700px) {
+  /* metti la navbar in alto orizzontale su telefoni */
+  .main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    background: #f2f2f2;
+    padding: 8px 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  .main-nav ul { display: flex; justify-content: center; gap: 8px; }
+  .main-nav a { padding: 8px 10px; font-size: 0.95rem; }
+
+  /* rimuovi margine-right: la griglia può usare tutta la larghezza su mobile */
+  #annunci-container {
+    margin-right: 0;
+    padding-top: 56px; /* spazio per la navbar fissa in alto */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+  }
+}

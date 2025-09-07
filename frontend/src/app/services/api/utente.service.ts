@@ -1,6 +1,6 @@
 // src/app/services/utente.service.ts
-import { Injectable } from '@angular/core';
-import { BaseApiService } from './base-api.service';
+import {Injectable} from '@angular/core';
+import {BaseApiService} from './base-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,4 +17,13 @@ export class UtenteService extends BaseApiService<any> {
   getByEmail(email: string) {
     return this.http.get<any>(`${this.endpointUrl}/by-email?email=${encodeURIComponent(email)}`);
   }
+
+  getVenditori(){
+      return this.http.get<any[]>(`${this.endpointUrl}/venditori`);
+  }
+
+  getAcquirenti(){
+      return this.http.get<any[]>(`${this.endpointUrl}/acquirenti`);
+  }
+
 }

@@ -25,7 +25,6 @@ export class HeaderComponent {
 
   onMenuButtonClick() {
     this.menuButtonClick.emit(); // Emit the event to parent component
-    console.debug('HeaderComponent: onMenuButtonClick()');
   }
 
 

@@ -1,5 +1,3 @@
-import {TestBed} from '@angular/core/testing';
-
 import {BaseApiService} from './base-api.service';
 
 describe('BaseApiService', () => {

@@ -62,9 +62,9 @@ export class SidemenuContentComponent {
 
             {
                 label: 'Admin',
-                authRequired: true,
                 icon: 'admin_panel_settings',
                 route: '/admin',
+                authRequired: true,
             }
         ]
     );

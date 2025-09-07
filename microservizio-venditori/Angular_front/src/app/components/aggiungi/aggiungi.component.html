@@ -1,0 +1,63 @@
+<!-- -------------------- AggiungiComponent.html -------------------- -->
+<form (ngSubmit)="$event.preventDefault()">
+
+  <!-- Titolo -->
+  <div class="custom-input-group">
+    <label for="titolo" class="form-label">📝 Titolo</label>
+    <input id="titolo" type="text" class="custom-input" placeholder="Scrivi il titolo del tuo immobile" name="titolo" #titolo>
+  </div>
+
+  <!-- Metri Quadri -->
+  <div class="custom-input-group">
+    <label for="m2" class="form-label">↔ Metri Quadri</label>
+    <input id="m2" type="number" class="custom-input" placeholder="Inserisci i metri quadri" name="m2" #m2>
+  </div>
+
+  <!-- Descrizione -->
+  <div class="custom-input-group">
+    <label for="descrizione" class="form-label">💬 Descrizione</label>
+    <textarea id="descrizione" class="custom-input" rows="4" placeholder="Scrivi una descrizione dettagliata" name="descrizione" #descrizione></textarea>
+  </div>
+
+  <!-- Prezzo -->
+  <div class="custom-input-group">
+    <label for="prezzo" class="form-label">💶 Prezzo</label>
+    <input id="prezzo" type="number" step="0.01" class="custom-input" placeholder="Inserisci il prezzo" name="prezzo" #prezzo>
+  </div>
+
+  <!-- Mappa -->
+  <div class="custom-input-group">
+    <p *ngIf="indirizzo" class="mt-2">Indirizzo: <strong>{{ indirizzo }}</strong></p>
+    <label class="form-label">📍 Posizione</label>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+    <p *ngIf="latitudine !== null && longitudine !== null" class="mt-2">
+      Coordinate selezionate: <strong>{{ latitudine.toFixed(5) }}, {{ longitudine.toFixed(5) }}</strong>
+    </p>
+  </div>
+
+  <!-- Foto -->
+  <div class="custom-input-group">
+    <label for="foto" class="form-label">📷 Foto</label>
+    <input id="foto" type="file" class="custom-input-file" accept="image/*" (change)="onFileSelected($event)" multiple>
+  </div>
+
+  <!-- Anteprima Foto -->
+  <div *ngIf="fotoNuove.length > 0" class="foto-preview mt-3">
+    <h5>Anteprima foto caricate:</h5>
+    <div class="foto-grid">
+      <div class="foto-item" *ngFor="let foto of fotoNuove; let i = index">
+        <img [src]="'data:image/jpeg;base64,' + foto" alt="Foto nuova" />
+        <button type="button" class="delete-btn" (click)="rimuoviFotoNuova(i)">🗑️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pulsanti -->
+  <div class="d-flex justify-content-between mt-4">
+    <button type="button" class="custom-btn cancel-btn" [routerLink]="['/home']">Indietro</button>
+    <button type="button" class="custom-btn submit-btn"
+            (click)="aggiornaTutto(titolo.value, descrizione.value, Number(m2.value), Number(prezzo.value))">
+      Salva
+    </button>
+  </div>
+</form>

@@ -1,0 +1,55 @@
+<div id="annunci-container" class="grid-container">
+  <ng-container *ngFor="let annuncio of annunci">
+    <div *ngIf="annuncio.venditoreId === Number(localStorage.getItem('msg'))" class="annuncio">
+
+      <!-- Bottoni -->
+      <div class="annuncio-btns">
+        <button class="annuncio-btn" [routerLink]="['/Modifica', annuncio.id]">Modifica</button>
+        <button class="annuncio-btn"  (click)="rimuoviAnnuncio(annuncio.id)">Rimuovi</button>
+      </div>
+
+      <!-- Titolo e superficie -->
+      <h2 class="annuncio-titolo">
+        {{ annuncio.titolo }}
+        <span class="superficie">
+          {{ annuncio.superficie }}m<sup>2</sup>
+        </span>
+      </h2>
+
+      <!-- Prezzi -->
+      <p>
+        <strong>Prezzo: €{{ annuncio.prezzoNuovo | number:'1.2-2' }}</strong>
+        <span *ngIf="(annuncio.prezzoNuovo ?? 0) < (annuncio.prezzoVecchio ?? 0)" class="prezzo-vecchio">
+  €{{ annuncio.prezzoVecchio | number:'1.2-2' }}
+</span>
+      </p>
+
+      <!-- Posizione -->
+      <p *ngIf="annuncio.latitudine && annuncio.longitudine" class="posizione">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" color="red" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M8 0a5 5 0 0 0-5 5c0 3.866 5 11 5 11s5-7.134 5-11a5 5 0 0 0-5-5zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+        </svg>
+        <strong>Posizione:</strong>
+        <a [href]="'https://www.google.com/maps?q=' + annuncio.latitudine + ',' + annuncio.longitudine" target="_blank" rel="noopener">
+          Visualizza su Google Maps
+        </a>
+      </p>
+
+      <!-- Descrizione -->
+      <p>{{ annuncio.descrizione }}</p>
+
+      <!-- Immagine -->
+      <img [id]="'foto-annuncio-' + annuncio.id" alt="Foto annuncio" [src]="getFotoSrc(annuncio)"/>
+
+      <!-- Pulsante Mastodon -->
+      <button
+        *ngIf="!loggedIn"
+        (click)="loginMastodon(annuncio)"
+        class="mastodon-btn"
+        aria-label="Pubblica su Mastodon">
+        <img [src]="MastodonIconDataUrl" alt="Mastodon" class="mastodon-icon" />
+        <p class="mastodon-label">Pubblica<br>su Mastodon</p>
+      </button>
+    </div>
+  </ng-container>
+</div>

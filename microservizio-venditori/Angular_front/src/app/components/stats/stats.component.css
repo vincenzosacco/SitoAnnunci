@@ -1,0 +1,98 @@
+/* Chart card */
+.chart-container {
+  /* dimensione responsive: minimo 260px, ideale ~40vh, max 520px */
+  height: clamp(260px, 40vh, 520px);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(246,248,255,0.9));
+  border-radius: 14px;
+  padding: 14px;
+  padding-top: 10px;
+  border: 1px solid rgba(100,123,237,0.08);
+  box-shadow: var(--shadow-sm, 0 6px 18px rgba(100,123,237,0.08));
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+  animation: fadeInUp .36s ease both;
+}
+
+/* Header sopra il grafico: titolo + spazio per controlli */
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px;
+}
+.chart-header .title {
+  font-weight: 700;
+  color: var(--primary, #647bed);
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+}
+.chart-header .controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Corpo che contiene la canvas: occupa tutto lo spazio rimasto */
+.chart-body {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 140px;
+  display: block;
+}
+
+/* canvas: forza a riempire .chart-body */
+.chart-body canvas,
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Piccoli pulsanti nella header */
+.chart-header .btn {
+  background: transparent;
+  border: 1px solid rgba(100,123,237,0.14);
+  color: var(--primary, #647bed);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease;
+}
+.chart-header .btn:hover { transform: translateY(-3px); background: rgba(100,123,237,0.04); }
+
+/* Placeholder (loading / no data) */
+.chart-placeholder {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted, #6b7280);
+  font-size: 0.98rem;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(100,123,237,0.02),
+    rgba(100,123,237,0.02) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+  border-radius: 8px;
+}
+
+/* Mobile: riduce padding e altezza */
+@media (max-width: 700px) {
+  .chart-container {
+    height: clamp(220px, 45vh, 420px);
+    padding: 10px;
+    border-radius: 12px;
+  }
+  .chart-header .title { font-size: 1rem; }
+  .chart-header .btn { padding: 6px 8px; }
+}

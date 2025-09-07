@@ -8,16 +8,23 @@ import {ChatComponent} from "./components/pages/chat/chat.component";
 
 
 export const routes: Routes = [
-    {path: '', redirectTo: '/home', pathMatch: 'full'},
 
     // PAGES
     {path: 'home', component: HomeComponent},
     {path: 'no-auth-redirect', component: NoAuthRedirectComponent},
     {path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard]},
     {path: 'chat', component: ChatComponent, canActivate: [AuthGuard]},
+    {path: 'admin',
+        loadComponent: () => import('./components/pages/admin/admin.component').then(m => m.AdminComponent),
+        canActivate: [AuthGuard],
+        data:{roles:['admin']}
+    },
 
     // API
     {path: 'annuncio/:id', component: AnnuncioComponent},
 
+    // WILDCARD (MUST BE THE LAST)
+    {path: '**', redirectTo: '/home', pathMatch: 'full'},
 ];
+
 

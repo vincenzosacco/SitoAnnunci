@@ -1,9 +1,14 @@
 package org.unical.backend.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.unical.backend.model.Utente;
 import org.unical.backend.service.IUtenteService;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/utenti")
@@ -27,5 +32,15 @@ public class UtentiController {
         Utente utente = utenteService.findByEmail(email);
         if (utente == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(utente);
+    }
+
+    @GetMapping("/venditori")
+    public ResponseEntity<Collection<Utente>> getVenditori() {
+        return ResponseEntity.ok(utenteService.findByRuolo(2));
+    }
+
+    @GetMapping("/acquirenti")
+    public ResponseEntity<Collection<Utente>> getAcquirenti() {
+        return ResponseEntity.ok(utenteService.findByRuolo(3));
     }
 }

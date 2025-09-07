@@ -7,6 +7,7 @@ import org.unical.backend.persistance._impl.dao.IDao;
 import org.unical.backend.service.IUtenteService;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 class UtenteServiceDao implements IUtenteService {
@@ -28,6 +29,11 @@ class UtenteServiceDao implements IUtenteService {
     @Override
     public Utente findByEmail(String email) {
         return dao.findAll().stream().filter(u -> u.getEmail().equalsIgnoreCase(email)).findFirst().orElse(null);
+    }
+
+    @Override
+    public Collection<Utente> findByRuolo(int ruolo) {
+        return dao.findAll().stream().filter(u -> u.getRuolo_id() == ruolo).collect(Collectors.toList());
     }
 
     @Override
