@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgIf, NgFor, DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Annuncio } from './Annuncio';
@@ -7,6 +7,9 @@ import { MastodonIcon } from './Images';
 import { PubblicitaService } from '../../services/pubblicita.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -22,63 +25,102 @@ export class HomeComponent implements OnInit {
   private annuncioDaPubblicare: Annuncio | null = null;
   protected MastodonIconDataUrl = "data:image/png;base64," + MastodonIcon;
 
-  // mappa foto per annuncio: annuncioId => array di foto base64
-  fotoMap = new Map<number, string[]>();
+  // cache: annuncioId -> dataUrl (data:image/png;base64,...)
+  private fotoCache = new Map<number, string>();
+
+  // sottoscrizioni per pulire quando necessario
+  private subs = new Subscription();
+
+  // fallback immagine (metti nel tuo assets)
+  private readonly fallbackImg = 'assets/no-image.png';
 
   constructor(
     private annunciService: AnnunciService,
     private pubblicitaService: PubblicitaService,
     private router: Router,
     private location: Location,
-    private elRef: ElementRef
+    private http: HttpClient,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     console.log('HomeComponent inizializzato');
-    this.handleQueryParams();
+
+    // Controlla localStorage
+    let msg = localStorage.getItem('msg');
+      // Leggi dai query params: /home?msg=1
+      const urlParams = new URLSearchParams(window.location.search);
+      const numeroStr = urlParams.get('user');
+
+      if (numeroStr && !isNaN(Number(numeroStr))) {
+        localStorage.setItem('msg', numeroStr);
+      }
+
+      // Rimuovi il parametro 'msg' dall'URL senza ricaricare
+      urlParams.delete('user');
+      const newUrl = urlParams.toString()
+        ? `${window.location.pathname}?${urlParams.toString()}`
+        : window.location.pathname;
+      this.location.replaceState(newUrl);
+
+    // Carica gli annunci
     this.fetchAnnunci();
+  }
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
   fetchAnnunci(): void {
-    this.annunciService.getAnnunci().subscribe({
+    const s = this.annunciService.getAnnunci().subscribe({
       next: dati => {
-        console.log('Dati dal backend:', dati);
+        // popola gli oggetti Annuncio
         this.annunci = dati.map((d: any) => Annuncio.fromJSON(d));
-        this.annunci.forEach(a => this.loadFotoAnnuncio(a.id));
+
+        // carica FOTO solo per gli annunci visibili (che corrispondono al venditore corrente)
+        const venditoreId = Number(localStorage.getItem('msg'));
+        const visible = this.annunci.filter(a => a.venditoreId === venditoreId);
+
+        visible.forEach(a => this.loadFotoForAnnuncio(a));
       },
       error: err => console.error('Errore caricamento annunci:', err)
     });
+
+    this.subs.add(s);
   }
 
-  // carica le foto di un annuncio e le mette in fotoMap
-  loadFotoAnnuncio(annuncioId: number) {
-    console.log('Chiamata loadFotoAnnuncio per annuncioId:', annuncioId);
+  /**
+   * Carica la foto (prima immagine) per un annuncio e la salva nella cache.
+   * Usa la rotta /api/annunci/{id}/foto che ritorna string[] (base64).
+   */
+  private loadFotoForAnnuncio(annuncio: Annuncio) {
+    // se già in cache, nulla da fare
+    if (this.fotoCache.has(annuncio.id)) return;
 
-    this.annunciService.getFotoAnnuncio(annuncioId).subscribe({
+    const s = this.annunciService.getFotoAnnuncio(annuncio.id).subscribe({
       next: (base64Array: string[]) => {
-        // Prepend data URL
-        const dataUrls = base64Array.map(b64 => 'data:image/png;base64,' + b64);
-        this.fotoMap.set(annuncioId, dataUrls);
-
-        // Imposta la prima foto
-        const imgEl = this.elRef.nativeElement.querySelector(`#foto-annuncio-${annuncioId}`);
-        if (imgEl && dataUrls.length > 0) imgEl.src = dataUrls[0];
-
-        console.log(`Annuncio ID: ${annuncioId}`, dataUrls[0]);
+        if (base64Array && base64Array.length > 0 && base64Array[0]) {
+          const dataUrl = `data:image/png;base64,${base64Array[0]}`;
+          this.fotoCache.set(annuncio.id, dataUrl);
+        } else {
+          // nessuna foto: setta fallback così il template mostra immagine di default
+          this.fotoCache.set(annuncio.id, this.fallbackImg);
+        }
       },
-      error: err => console.error('Errore caricamento foto:', err)
+      error: err => {
+        console.error(`Errore caricamento foto per annuncio ${annuncio.id}:`, err);
+        this.fotoCache.set(annuncio.id, this.fallbackImg);
+      }
     });
+
+    this.subs.add(s);
   }
 
-  // converte Uint8Array / byte[] in base64
-  arrayBufferToBase64(buffer: Uint8Array): string {
-    let binary = '';
-    const bytes = new Uint8Array(buffer);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return window.btoa(binary);
+  /**
+   * Usato dal template per ottenere l'url immagine da mettere in [src].
+   * Non fa chiamate e ritorna subito (o fallback).
+   */
+  getFotoSrc(annuncio: Annuncio): string {
+    return this.fotoCache.get(annuncio.id) ?? this.fallbackImg;
   }
 
   rimuoviAnnuncio(id: number): void {
@@ -121,17 +163,6 @@ export class HomeComponent implements OnInit {
         alert('Errore di rete o server');
       }
     });
-  }
-
-  private handleQueryParams(): void {
-    const urlParams = new URLSearchParams(window.location.search);
-    const msg = urlParams.get('msg');
-    if (msg) {
-      localStorage.setItem('msg', msg);
-      urlParams.delete('msg');
-      const newUrl = urlParams.toString() ? `${window.location.pathname}?${urlParams.toString()}` : window.location.pathname;
-      this.location.replaceState(newUrl);
-    }
   }
 
   protected readonly localStorage = localStorage;

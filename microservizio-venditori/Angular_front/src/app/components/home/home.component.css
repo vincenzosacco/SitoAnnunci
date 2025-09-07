@@ -96,6 +96,10 @@ body {
   border: 1px solid #ddd;
 }
 
+.annuncio-btn {
+  padding: 2px 5px !important;
+}
+
 .prezzo-vecchio {
   text-decoration: line-through;
   color: gray;
@@ -105,13 +109,13 @@ body {
 .mastodon-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   padding: 4px 8px;
   border-radius: 6px;
   border: 1px solid;
   cursor: pointer;
-  width: 80px;
-  height: 80px;
+  width: 30%;
+  height: 30%;
   transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 .mastodon-btn:hover {
@@ -131,7 +135,7 @@ body {
 .mastodon-label {
   padding: 10px;
   white-space: nowrap;
-  font-size: 0.85rem;
+  font-size: 1rem;
 }
 
 /* MEDIA QUERIES: mobile friendly */

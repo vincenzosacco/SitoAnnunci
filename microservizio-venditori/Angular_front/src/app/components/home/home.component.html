@@ -4,8 +4,8 @@
 
       <!-- Bottoni -->
       <div class="annuncio-btns">
-        <button [routerLink]="['/Modifica', annuncio.id]">Modifica</button>
-        <button (click)="rimuoviAnnuncio(annuncio.id)">Rimuovi</button>
+        <button class="annuncio-btn" [routerLink]="['/Modifica', annuncio.id]">Modifica</button>
+        <button class="annuncio-btn"  (click)="rimuoviAnnuncio(annuncio.id)">Rimuovi</button>
       </div>
 
       <!-- Titolo e superficie -->
@@ -39,7 +39,7 @@
       <p>{{ annuncio.descrizione }}</p>
 
       <!-- Immagine -->
-      <img [id]="'foto-annuncio-' + annuncio.id" alt="Foto annuncio" />
+      <img [id]="'foto-annuncio-' + annuncio.id" alt="Foto annuncio" [src]="getFotoSrc(annuncio)"/>
 
       <!-- Pulsante Mastodon -->
       <button
@@ -48,7 +48,7 @@
         class="mastodon-btn"
         aria-label="Pubblica su Mastodon">
         <img [src]="MastodonIconDataUrl" alt="Mastodon" class="mastodon-icon" />
-        <span class="mastodon-label">Pubblica su Mastodon</span>
+        <p class="mastodon-label">Pubblica<br>su Mastodon</p>
       </button>
     </div>
   </ng-container>

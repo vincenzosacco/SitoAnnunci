@@ -11,7 +11,8 @@ export class AnnunciService {
   private readonly baseRoot = 'http://localhost:8081';
   private readonly apiUrl = `${this.baseRoot}/api`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getAnnunci(): Observable<Annuncio[]> {
     return this.http.get<any[]>(`${this.apiUrl}/data`).pipe(
@@ -28,23 +29,24 @@ export class AnnunciService {
       .set('id', id.toString())
       .set('prezzoNuovo', prezzoNuovo.toString());
 
-    this.http.post(`${this.baseRoot}/update`, null, { params, responseType: 'text' })
+    this.http.post(`${this.baseRoot}/update`, null, {params, responseType: 'text'})
       .subscribe({
         next: response => console.log('Successo:', response),
         error: err => console.error('Errore:', err)
       });
   }
 
-  // ❗ Modifica: ritorna Observable invece di fare subscribe
+// prima: usavi HttpParams -> NO
+// dopo: inviamo JSON body: { id, column, nuovoValore }
   aggiornaSpecData(id: number, column: string, valore: any): Observable<any> {
-    const params = new HttpParams()
-      .set('id', id.toString())
-      .set('column', column)
-      .set('nuovoValore', valore == null ? '' : valore.toString());
+    const body: any = {
+      id,
+      column,
+      // per i numeri inviamo un number (non string): se valore è undefined/null -> null
+      nuovoValore: valore === null || valore === undefined ? null : valore
+    };
 
-
-    return this.http.post(`${this.baseRoot}/updateSpecData`, null, {
-      params,
+    return this.http.post(`${this.baseRoot}/updateSpecData`, body, {
       responseType: 'text'
     });
   }
@@ -60,5 +62,17 @@ export class AnnunciService {
 
   getFotoAnnuncio(id: number): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/annunci/${id}/foto`);
+  }
+
+  addPhoto(annuncioId: number, fotoBase64: string): Observable<string> {
+    const body = { fotoBase64 };
+    return this.http.post(`${this.apiUrl}/annunci/${annuncioId}/fotoAdd`, body, { responseType: 'text' });
+  }
+
+  removePhotoByIndex(annuncioId: number, index: number) {
+    return this.http.delete(
+      `${this.apiUrl}/annunci/${annuncioId}/foto/${index}`,
+      { responseType: 'text' }
+    );
   }
 }

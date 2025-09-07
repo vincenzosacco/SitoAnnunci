@@ -12,11 +12,6 @@ import java.io.IOException;
 public class MastodonProcessLauncher {
 
     private Process nodeProcess;
-
-    /**
-     * Avvia il server Node.js scrivendo prima il file server.js (se non esiste)
-     * e poi eseguendolo tramite 'node'.
-     */
     public void startNodeProcess() throws IOException {
         writeNodeServerFile();
 

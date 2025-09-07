@@ -9,41 +9,40 @@ public class Data {
     private String descrizione;
     private int superficie;
     private String indirizzo;
-    private Integer categoriaId;   // nullable
-    private Integer venditoreId;   // nullable
+    private Integer categoriaId;
+    private String categoriaTipo;
+    private Integer venditoreId;
     private LocalDateTime dataCreazione;
-    private Double longitudine;    // nullable
-    private Double latitudine;     // nullable
+    private Double longitudine;
+    private Double latitudine;
     private BigDecimal prezzoNuovo;
     private BigDecimal prezzoVecchio;
+    private Boolean inVendita;
     private String immagineBase64;
-    public Data(int id,
-                String titolo,
-                String descrizione,
-                int superficie,
-                String indirizzo,
-                Integer categoriaId,
-                Integer venditoreId,
-                LocalDateTime dataCreazione,
-                Double longitudine,
-                Double latitudine,
-                BigDecimal prezzoNuovo,
-                BigDecimal prezzoVecchio) {
+
+    public Data() {}
+
+    public Data(int id, String titolo, String descrizione, int superficie,
+                String indirizzo, Integer categoriaId, String categoriaTipo,
+                Integer venditoreId, LocalDateTime dataCreazione,
+                Double longitudine, Double latitudine,
+                BigDecimal prezzoNuovo, BigDecimal prezzoVecchio,
+                Boolean inVendita) {
         this.id = id;
         this.titolo = titolo;
         this.descrizione = descrizione;
         this.superficie = superficie;
         this.indirizzo = indirizzo;
         this.categoriaId = categoriaId;
+        this.categoriaTipo = categoriaTipo;
         this.venditoreId = venditoreId;
         this.dataCreazione = dataCreazione;
         this.longitudine = longitudine;
         this.latitudine = latitudine;
         this.prezzoNuovo = prezzoNuovo;
         this.prezzoVecchio = prezzoVecchio;
+        this.inVendita = inVendita;
     }
-
-    public Data() {}
 
     // --- getters / setters ---
     public int getId() { return id; }
@@ -64,6 +63,9 @@ public class Data {
     public Integer getCategoriaId() { return categoriaId; }
     public void setCategoriaId(Integer categoriaId) { this.categoriaId = categoriaId; }
 
+    public String getCategoriaTipo() { return categoriaTipo; }
+    public void setCategoriaTipo(String categoriaTipo) { this.categoriaTipo = categoriaTipo; }
+
     public Integer getVenditoreId() { return venditoreId; }
     public void setVenditoreId(Integer venditoreId) { this.venditoreId = venditoreId; }
 
@@ -82,6 +84,9 @@ public class Data {
     public BigDecimal getPrezzoVecchio() { return prezzoVecchio; }
     public void setPrezzoVecchio(BigDecimal prezzoVecchio) { this.prezzoVecchio = prezzoVecchio; }
 
+    public Boolean getInVendita() { return inVendita; }
+    public void setInVendita(Boolean inVendita) { this.inVendita = inVendita; }
+
     public String getImmagineBase64() { return immagineBase64; }
     public void setImmagineBase64(String immagineBase64) { this.immagineBase64 = immagineBase64; }
 
@@ -94,12 +99,14 @@ public class Data {
                 ", superficie=" + superficie +
                 ", indirizzo='" + indirizzo + '\'' +
                 ", categoriaId=" + categoriaId +
+                ", categoriaTipo='" + categoriaTipo + '\'' +
                 ", venditoreId=" + venditoreId +
                 ", dataCreazione=" + dataCreazione +
                 ", longitudine=" + longitudine +
                 ", latitudine=" + latitudine +
                 ", prezzoNuovo=" + prezzoNuovo +
                 ", prezzoVecchio=" + prezzoVecchio +
+                ", inVendita=" + inVendita +
                 '}';
     }
 }

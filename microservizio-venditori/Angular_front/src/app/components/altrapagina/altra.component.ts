@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { AnnunciService } from '../../services/annunci.service';
-import { NgIf } from '@angular/common';
+import { NgIf, NgFor } from '@angular/common';
 
 interface Annuncio {
   titolo: string;
@@ -21,14 +21,15 @@ interface Annuncio {
   templateUrl: './altra.component.html',
   styleUrls: ['./altra.component.css'],
   standalone: true,
-  imports: [FormsModule, RouterLink, NgIf]
+  imports: [FormsModule, RouterLink, NgIf, NgFor]
 })
-export class AltraComponent implements OnInit, AfterViewInit {
+export class AltraComponent implements OnInit, AfterViewInit, OnDestroy {
   id!: number;
   latitudine: number | null = null;
   longitudine: number | null = null;
   map!: google.maps.Map;
   marker: google.maps.Marker | null = null;
+
   annuncio: Annuncio = {
     titolo: '',
     superficie: null,
@@ -37,11 +38,21 @@ export class AltraComponent implements OnInit, AfterViewInit {
     latitudine: null,
     longitudine: null,
     prezzonuovo: 0,
-    prezzovecchio: 0,
+    prezzovecchio: 0
   };
-  fotoBase64: string | null = null;
 
-  // centro di Roma (fallback)
+  // --- FOTO ---
+  fotoPreesistenti: string[] = [];
+  fotoNuove: string[] = [];
+
+  // Cache e fallback come in HomeComponent
+  private fotoCache = new Map<number, string[]>();
+  protected readonly fallbackImg = 'assets/no-image.png';
+  private subs = new Subscription();
+
+  // Conserviamo il prezzo corrente così lo possiamo mettere in prezzovecchio prima dell'update
+  private originalPrezzoNuovo: number | null = null;
+
   private readonly roma = { lat: 41.9028, lng: 12.4964 };
 
   constructor(private route: ActivatedRoute, private annunciService: AnnunciService) {}
@@ -56,16 +67,21 @@ export class AltraComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // aspetta che il view DOM sia pronto prima di creare la mappa
   ngAfterViewInit(): void {
     this.loadGoogleMapsScript()
       .then(() => this.initMap())
       .catch(err => console.error(err));
   }
 
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
+
+  // --- CARICAMENTO ANNUNCIO ---
   public loadAnnuncio() {
     this.annunciService.getAnnuncioById(this.id).subscribe({
       next: data => {
+        // popolo annuncio con dati dal backend
         this.annuncio = {
           titolo: data.titolo ?? '',
           superficie: data.superficie ?? null,
@@ -74,18 +90,21 @@ export class AltraComponent implements OnInit, AfterViewInit {
           latitudine: data.latitudine ?? null,
           longitudine: data.longitudine ?? null,
           prezzonuovo: data.prezzoNuovo ?? 0,
-          prezzovecchio: data.prezzoVecchio ?? 0,
+          prezzovecchio: data.prezzoVecchio ?? 0
         };
 
-        // salva coordinate locali
+        // salvo il prezzo corrente così posso metterlo in prezzovecchio prima dell'update
+        this.originalPrezzoNuovo = (data.prezzoNuovo != null) ? Number(data.prezzoNuovo) : null;
+
         this.latitudine = this.annuncio.latitudine;
         this.longitudine = this.annuncio.longitudine;
 
-        // quando arrivano i dati: se la mappa è già inizializzata, aggiorna marker/centro
+        // --- FOTO: usa il metodo di HomeComponent ---
+        this.loadFotoForAnnuncio(this.id);
+
         if (this.map) {
           const lat = this.getValidLatLng(this.latitudine, this.roma.lat);
           const lng = this.getValidLatLng(this.longitudine, this.roma.lng);
-
           this.posizionaMarker(lat, lng);
           this.map.setCenter({ lat, lng });
           this.map.setZoom(12);
@@ -95,6 +114,35 @@ export class AltraComponent implements OnInit, AfterViewInit {
     });
   }
 
+  // --- METODO RIUTILIZZATO DA HOME COMPONENT ---
+  private loadFotoForAnnuncio(annuncioId: number) {
+    if (this.fotoCache.has(annuncioId)) {
+      this.fotoPreesistenti = this.fotoCache.get(annuncioId)!;
+      return;
+    }
+
+    const s = this.annunciService.getFotoAnnuncio(annuncioId).subscribe({
+      next: (base64Array: string[]) => {
+        let fotos: string[];
+        if (base64Array && base64Array.length > 0) {
+          fotos = base64Array.map(f => `data:image/png;base64,${f}`);
+        } else {
+          fotos = [this.fallbackImg];
+        }
+        this.fotoCache.set(annuncioId, fotos);
+        this.fotoPreesistenti = fotos;
+      },
+      error: err => {
+        console.error(`Errore caricamento foto per annuncio ${annuncioId}:`, err);
+        const fotos = [this.fallbackImg];
+        this.fotoCache.set(annuncioId, fotos);
+        this.fotoPreesistenti = fotos;
+      }
+    });
+    this.subs.add(s);
+  }
+
+  // --- GOOGLE MAPS ---
   private loadGoogleMapsScript(): Promise<void> {
     return new Promise((resolve, reject) => {
       if ((window as any).google?.maps) { resolve(); return; }
@@ -109,42 +157,16 @@ export class AltraComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private getIndirizzoDaCoordinate(lat: number, lng: number) {
-    const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=it`;
-
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        if (data && data.display_name) {
-          this.annuncio.indirizzo = data.display_name;
-        } else {
-          console.warn("Nessun indirizzo trovato per queste coordinate.");
-        }
-      })
-      .catch(err => console.error("Errore reverse geocoding:", err));
-  }
-
   private initMap() {
-    // assicuriamoci che esista l'elemento map
     const mapEl = document.getElementById('map');
-    if (!mapEl) {
-      console.error('Elemento #map non trovato nel DOM');
-      return;
-    }
+    if (!mapEl) { console.error('Elemento #map non trovato nel DOM'); return; }
 
-    // calcola lat/lng iniziali: se API ha 0 o null -> usa Roma
     const lat = this.getValidLatLng(this.latitudine, this.roma.lat);
     const lng = this.getValidLatLng(this.longitudine, this.roma.lng);
 
-    this.map = new google.maps.Map(mapEl as HTMLElement, {
-      center: { lat, lng },
-      zoom: 12
-    });
-
-    // posiziona marcatore iniziale
+    this.map = new google.maps.Map(mapEl as HTMLElement, { center: { lat, lng }, zoom: 12 });
     this.posizionaMarker(lat, lng);
 
-    // click listener per aggiornare coordinate (e mostrare marker)
     this.map.addListener('click', (event: google.maps.MapMouseEvent) => {
       if (!event.latLng) return;
       this.latitudine = event.latLng.lat();
@@ -160,60 +182,124 @@ export class AltraComponent implements OnInit, AfterViewInit {
     this.getIndirizzoDaCoordinate(lat, lng);
   }
 
-  // helper: se valore è null/undefined o estremamente vicino a zero, usa fallback
   private getValidLatLng(value: number | null, fallback: number): number {
     if (value === null || value === undefined) return fallback;
-    // considera 0 (o molto vicino a 0) come "non valido" (ad es. 0,0 coord di default db)
     if (Math.abs(value) < 1e-6) return fallback;
     return Number(value);
   }
 
-  aggiornaTutto(): void {
-    const lat: number | null = this.latitudine !== null ? Number(this.latitudine) : null;
-    const lng: number | null = this.longitudine !== null ? Number(this.longitudine) : null;
+  private getIndirizzoDaCoordinate(lat: number, lng: number) {
+    const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=it`;
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.display_name) this.annuncio.indirizzo = data.display_name;
+      })
+      .catch(err => console.error("Errore reverse geocoding:", err));
+  }
 
+  // --- GESTIONE FOTO ---
+  onFilesSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      const filePromises = Array.from(input.files).map(file => {
+        return new Promise<void>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            let base64 = e.target.result as string;
+            if (base64.includes(',')) base64 = base64.split(',')[1];
+            this.fotoNuove.push(base64);
+            resolve();
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+
+      Promise.all(filePromises).then(() => {
+        console.log('Tutte le foto nuove selezionate sono pronte');
+      });
+    }
+  }
+
+  rimuoviFotoPreesistente(index: number) {
+    this.annunciService.removePhotoByIndex(this.id, index).subscribe({
+      next: () => {
+        this.fotoPreesistenti.splice(index, 1);
+        console.log(`Foto index ${index} rimossa con successo`);
+      },
+      error: err => {
+        console.error('Errore rimozione foto:', err);
+        alert('Errore rimozione foto. Controlla console.');
+      }
+    });
+  }
+
+  rimuoviFotoNuova(index: number) {
+    this.fotoNuove.splice(index, 1);
+  }
+
+  aggiornaTutteLeFoto(): void {
+    if (this.fotoNuove.length === 0) return;
+
+    const calls = this.fotoNuove.map(foto => this.annunciService.addPhoto(this.id, foto));
+    forkJoin(calls).subscribe({
+      next: res => {
+        console.log('Foto nuove salvate:', res);
+        this.fotoNuove = [];
+        alert('Foto salvate correttamente!');
+      },
+      error: err => {
+        console.error('Errore salvataggio foto:', err);
+        alert('Errore salvataggio foto. Controlla console.');
+      }
+    });
+  }
+
+  // --- AGGIORNAMENTO DATI (con gestione corretta dei prezzi) ---
+  aggiornaTutto(): void {
+    const lat = this.latitudine ?? null;
+    const lng = this.longitudine ?? null;
+
+    // prendo il prezzo precedente (quello caricato da DB)
+    const previousPrice = this.originalPrezzoNuovo;
+    const newPrice = this.annuncio.prezzonuovo;
+
+    // Prepariamo le chiamate per gli altri campi
     const calls = [
       this.annunciService.aggiornaSpecData(this.id, 'titolo', this.annuncio.titolo),
       this.annunciService.aggiornaSpecData(this.id, 'superficie', this.annuncio.superficie),
       this.annunciService.aggiornaSpecData(this.id, 'descrizione', this.annuncio.descrizione),
       this.annunciService.aggiornaSpecData(this.id, 'indirizzo', this.annuncio.indirizzo),
       this.annunciService.aggiornaSpecData(this.id, 'latitudine', lat),
-      this.annunciService.aggiornaSpecData(this.id, 'longitudine', lng),
-      this.annunciService.aggiornaSpecData(this.id, 'prezzonuovo', this.annuncio.prezzonuovo),
-      this.annunciService.aggiornaSpecData(this.id, 'prezzovecchio', this.annuncio.prezzovecchio)
+      this.annunciService.aggiornaSpecData(this.id, 'longitudine', lng)
     ];
 
-    if (this.fotoBase64) {
-      calls.push(this.annunciService.aggiornaSpecData(this.id, 'foto', this.fotoBase64.replace(/\s+/g, '')));
+    // Se il prezzo è cambiato (e avevamo un prezzo precedente), salviamo prima previous->prezzovecchio,
+    // poi il nuovo in prezzonuovo. Altrimenti aggiorniamo solo prezzonuovo.
+    if (previousPrice !== null && previousPrice !== newPrice) {
+      calls.push(this.annunciService.aggiornaSpecData(this.id, 'prezzo', previousPrice));
+      calls.push(this.annunciService.aggiornaSpecData(this.id, 'prezzo_nuovo', newPrice));
+    } else {
+      // anche se non è cambiato, aggiorniamo comunque prezzonuovo (idempotente)
+      calls.push(this.annunciService.aggiornaSpecData(this.id, 'prezzo_nuovo', newPrice));
     }
 
     forkJoin(calls).subscribe({
-      next: results => {
-        console.log('Aggiornamento completato:', results);
-        alert('Aggiornamento completato!');
+      next: () => {
+        // aggiorniamo la copia locale del "prezzo originale" dopo il successo
+        this.originalPrezzoNuovo = newPrice;
+
+        // aggiornamento foto (solo se ci sono nuove foto)
+        if (this.fotoNuove.length > 0) {
+          this.aggiornaTutteLeFoto();
+        } else {
+          alert('Dati salvati correttamente!');
+        }
       },
       error: err => {
-        console.error('Errore durante aggiornamento:', err);
-        alert('Errore durante l\'aggiornamento. Vedi console.');
+        console.error('Errore aggiornamento dati:', err);
+        alert('Errore aggiornamento dati. Controlla console.');
       }
     });
-  }
-
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (!input.files?.length) return;
-
-    const file = input.files[0];
-    const reader = new FileReader();
-    reader.onload = () => this.fotoBase64 = reader.result as string;
-    reader.readAsDataURL(file);
-  }
-
-  stampaCoordinate(): void {
-    if (this.latitudine !== null && this.longitudine !== null) {
-      console.log('Latitudine:', this.latitudine, 'Longitudine:', this.longitudine);
-    } else {
-      console.warn('Seleziona una posizione sulla mappa.');
-    }
   }
 }

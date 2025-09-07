@@ -1,4 +1,4 @@
-<form *ngIf="annuncio" (ngSubmit)="$event.preventDefault()">
+<form *ngIf="annuncio" (ngSubmit)="aggiornaTutto()">
   <!-- Titolo -->
   <div class="custom-input-group">
     <label for="titolo" class="form-label">📝 Titolo</label>
@@ -51,7 +51,7 @@
       [ngModelOptions]="{standalone: true}">
   </div>
 
-  <!-- Prezzo Nuovo -->
+  <!-- Prezzo -->
   <div class="custom-input-group">
     <label for="prezzonuovo" class="form-label">💶 Prezzo</label>
     <input
@@ -64,38 +64,49 @@
       [ngModelOptions]="{standalone: true}">
   </div>
 
-  <!-- Latitudine e Longitudine -->
+  <!-- Posizione -->
   <div class="custom-input-group">
     <label class="form-label">📍 Posizione</label>
     <div id="map" style="height: 400px; width: 100%;"></div>
   </div>
 
   <!-- Foto -->
-<!--  <div class="custom-input-group">
+  <div class="custom-input-group">
     <label for="foto" class="form-label">📷 Foto</label>
     <input
       id="foto"
       type="file"
       class="custom-input-file"
       accept="image/*"
-      (change)="onFileSelected($event)">
-    <img *ngIf="fotoBase64 || annuncio.foto"
-         [src]="fotoBase64 ?? annuncio.foto"
-         alt="Anteprima foto"
-         class="mt-2"
-         style="max-width: 200px;">
+      multiple
+      (change)="onFilesSelected($event)">
   </div>
-  -->
+
+  <!-- Foto preesistenti -->
+  <div class="foto-list" *ngIf="fotoPreesistenti.length > 0">
+    <h5>Foto preesistenti:</h5>
+    <div class="foto-preview-wrapper" *ngFor="let foto of fotoPreesistenti; let i = index">
+      <img [src]="foto ? foto : fallbackImg" alt="Foto preesistente" class="foto-preview">
+      <div class="foto-overlay">
+        <button type="button" class="delete-btn" (click)="rimuoviFotoPreesistente(i)">🗑️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nuove foto -->
+  <div class="foto-list" *ngIf="fotoNuove.length > 0">
+    <h5>Nuove foto selezionate:</h5>
+    <div class="foto-preview-wrapper" *ngFor="let foto of fotoNuove; let i = index">
+      <img [src]="'data:image/png;base64,' + foto" alt="Nuova foto" class="foto-preview">
+      <div class="foto-overlay">
+        <button type="button" class="delete-btn" (click)="rimuoviFotoNuova(i)">🗑️</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Bottoni -->
   <div class="d-flex justify-content-between mt-4">
-    <button type="button" class="custom-btn cancel-btn" [routerLink]="['/home']">
-      Indietro
-    </button>
-    <button type="button"
-            class="custom-btn submit-btn"
-            (click)="aggiornaTutto()">
-      Salva
-    </button>
+    <button type="button" class="custom-btn cancel-btn" [routerLink]="['/home']">Indietro</button>
+    <button type="submit" class="custom-btn submit-btn">Salva</button>
   </div>
 </form>

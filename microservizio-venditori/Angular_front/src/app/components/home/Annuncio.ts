@@ -6,12 +6,13 @@ export class Annuncio {
   private _indirizzo: string;
   private _categoriaId: number | null;
   private _venditoreId: number | null;
-  private _dataCreazione: string; // string perché JSON restituisce ISO
+  private _dataCreazione: string; // ISO string dal JSON
   private _longitudine: number | null;
   private _latitudine: number | null;
   private _prezzoNuovo: number | null;
   private _prezzoVecchio: number | null;
-  private _immagine?: string | null;
+  private _immagine?: string | null;         // vecchio campo singolo
+  private _immagini: string[];               // nuovo campo array
 
   constructor(
     id: number,
@@ -26,7 +27,8 @@ export class Annuncio {
     latitudine: number | null,
     prezzoNuovo: number | null,
     prezzoVecchio: number | null,
-    immagine?: string | null
+    immagine?: string | null,
+    immagini: string[] = []
   ) {
     this._id = id;
     this._titolo = titolo;
@@ -41,6 +43,7 @@ export class Annuncio {
     this._prezzoNuovo = prezzoNuovo;
     this._prezzoVecchio = prezzoVecchio;
     this._immagine = immagine ?? null;
+    this._immagini = immagini;
   }
 
   // Getter e Setter
@@ -80,11 +83,18 @@ export class Annuncio {
   get prezzoVecchio(): number | null { return this._prezzoVecchio; }
   set prezzoVecchio(value: number | null) { this._prezzoVecchio = value; }
 
+  // vecchio campo singolo
   get immagine(): string | null { return this._immagine ?? null; }
   set immagine(value: string | null) { this._immagine = value; }
 
-  // Metodo statico per creare da JSON
+  // nuovo campo array
+  get immagini(): string[] { return this._immagini; }
+  set immagini(value: string[]) { this._immagini = value; }
+
+  // Creazione da JSON (gestisce sia singolo che array di immagini)
   static fromJSON(json: any): Annuncio {
+    // Se il backend restituisce immagini multiple, usa array
+    const immaginiArray: string[] = json.immagini ?? (json.immagine ? [json.immagine] : []);
     return new Annuncio(
       json.id,
       json.titolo,
@@ -98,7 +108,8 @@ export class Annuncio {
       json.latitudine ?? null,
       json.prezzoNuovo ?? null,
       json.prezzoVecchio ?? null,
-      json.immagine ?? null
+      json.immagine ?? null,
+      immaginiArray
     );
   }
 }

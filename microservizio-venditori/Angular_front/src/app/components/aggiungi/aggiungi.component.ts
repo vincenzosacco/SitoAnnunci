@@ -1,21 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+// -------------------- AggiungiComponent.ts --------------------
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { forkJoin, Subscription } from 'rxjs';
 import { AnnunciService } from '../../services/annunci.service';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-aggiungi',
   templateUrl: './aggiungi.component.html',
   styleUrls: ['./aggiungi.component.css'],
   standalone: true,
-  imports: [FormsModule, RouterLink]
+  imports: [FormsModule, RouterLink, NgIf, NgForOf]
 })
-export class AggiungiComponent implements OnInit {
+export class AggiungiComponent implements OnInit, OnDestroy {
+  // Mappa
   latitudine: number | null = null;
   longitudine: number | null = null;
   map!: google.maps.Map;
-  marker!: google.maps.Marker;
-  fotoBase64: string | null = null;
+  marker: google.maps.Marker | null = null;
+  indirizzo: string = '';
+
+  // Foto
+  fotoNuove: string[] = [];
+
+  private subs = new Subscription();
 
   constructor(private annunciService: AnnunciService) {}
 
@@ -25,12 +34,14 @@ export class AggiungiComponent implements OnInit {
       .catch(err => console.error(err));
   }
 
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
+
+  // -------------------- GOOGLE MAPS --------------------
   private loadGoogleMapsScript(): Promise<void> {
     return new Promise((resolve, reject) => {
-      if ((window as any).google?.maps) {
-        resolve();
-        return;
-      }
+      if ((window as any).google?.maps) { resolve(); return; }
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=LA_TUA_API_KEY`;
       script.async = true;
@@ -50,79 +61,144 @@ export class AggiungiComponent implements OnInit {
 
     this.map.addListener("click", (event: google.maps.MapMouseEvent) => {
       if (!event.latLng) return;
-      this.latitudine = event.latLng.lat();
-      this.longitudine = event.latLng.lng();
-
-      if (this.marker) this.marker.setMap(null);
-      this.marker = new google.maps.Marker({
-        position: { lat: this.latitudine, lng: this.longitudine },
-        map: this.map
-      });
+      const lat = event.latLng.lat();
+      const lng = event.latLng.lng();
+      this.latitudine = lat;
+      this.longitudine = lng;
+      this.posizionaMarker(lat, lng);
+      this.aggiornaCoordinate(lat, lng); // aggiorna indirizzo
     });
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    this.convertFileToBase64(file).then(base64 => {
-      // Rimuovo eventuale header "data:image/...;base64,"
-      const idx = base64.indexOf(',');
-      this.fotoBase64 = idx >= 0 ? base64.substring(idx + 1) : base64;
+  private posizionaMarker(lat: number, lng: number) {
+    if (this.marker) this.marker.setMap(null);
+    this.marker = new google.maps.Marker({
+      position: { lat, lng },
+      map: this.map
     });
   }
 
-  private convertFileToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
-    });
+  aggiornaCoordinate(lat: number, lng: number) {
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=it`)
+      .then(r => r.json())
+      .then(dati => {
+        this.indirizzo = dati.display_name ?? 'Indirizzo non disponibile';
+      })
+      .catch(() => this.indirizzo = 'Errore nel recupero indirizzo');
   }
 
-  async aggiornaTutto(titolo: string, descrizione: string, m2: number, prezzo: number) {
-    try {
-      const idCasuale = Math.floor(Math.random() * (999999 - 1000 + 1)) + 1000;
-
-      let fotoToSend: string | null = null;
-      if (this.fotoBase64) {
-        fotoToSend = this.fotoBase64.replace(/\s+/g, '');
-      }
-
-      const body = {
-        id: idCasuale,
-        nome: titolo,
-        descrizione,
-        m2,
-        prezzoVecchio: prezzo,
-        prezzoNuovo: prezzo,
-        foto: fotoToSend,
-        isChanged: true,
-        placeId: 'place_11',
-        owner: localStorage.getItem("msg"),
-        latitudine: this.latitudine,
-        longitudine: this.longitudine
-      };
-
-      console.log('POST /create body:', body);
-
-      this.annunciService.createAnnuncio(body).subscribe({
-        next: res => {
-          console.log('Annuncio creato:', res);
-          alert('Annuncio salvato con successo!');
-        },
-        error: err => {
-          console.error('Errore durante il salvataggio:', err);
-          alert('Errore durante il salvataggio dell\'annuncio. Vedi console.');
-        }
+  // -------------------- GESTIONE FOTO --------------------
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      const filePromises = Array.from(input.files).map(file => {
+        return new Promise<void>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            let base64 = e.target.result as string;
+            if (base64.includes(',')) base64 = base64.split(',')[1];
+            this.fotoNuove.push(base64);
+            resolve();
+          };
+          reader.readAsDataURL(file);
+        });
       });
 
-    } catch (err) {
-      console.error('Errore locale:', err);
-      alert('Errore locale durante la preparazione dei dati.');
+      Promise.all(filePromises).then(() => {
+        console.log('Tutte le foto nuove selezionate sono pronte');
+      });
     }
   }
 
-  protected readonly Number = Number;
+  rimuoviFotoNuova(index: number) {
+    this.fotoNuove.splice(index, 1);
+  }
+
+  // -------------------- CREAZIONE ANNUNCIO --------------------
+  // AggiungiComponent.ts — modifica aggiornaTutto(...)
+// AggiungiComponent.ts
+  aggiornaTutto(titolo: string, descrizione: string, m2: number, prezzo: number) {
+    // validazione minima
+    if (!titolo || titolo.trim() === '') {
+      alert('Inserisci un titolo.');
+      return;
+    }
+
+    // prezzo passato come stringa/numero nel template: normalizziamo
+    const prezzoRaw = (prezzo === undefined || prezzo === null) ? '' : String(prezzo).trim();
+    if (prezzoRaw === '') {
+      alert('Inserisci un prezzo.');
+      return;
+    }
+
+    // sostituisci eventuali virgole e prova a convertire
+    const prezzoNormalized = prezzoRaw.replace(',', '.');
+    const prezzoNum = Number(prezzoNormalized);
+    if (isNaN(prezzoNum)) {
+      alert('Prezzo non valido.');
+      return;
+    }
+
+    const idCasuale = Math.floor(Math.random() * (999999 - 1000 + 1)) + 1000;
+
+    // venditore: prova a convertire localStorage msg in numero, altrimenti null
+    const vendRaw = localStorage.getItem('msg');
+    const vendId = vendRaw ? Number(vendRaw) : NaN;
+    const venditoreIdOrNull = !isNaN(vendId) ? vendId : null;
+
+    // Corpo: includo più varianti dei nomi (snake_case + camelCase)
+    const body: any = {
+      id: idCasuale,
+      titolo: titolo,
+      descrizione: descrizione ?? null,
+      superficie: (m2 === undefined || m2 === null || isNaN(Number(m2))) ? null : Number(m2),
+      indirizzo: this.indirizzo ?? null,
+      // invio più campi relativi al prezzo per coprire mapping diversi lato server
+      prezzo: prezzoNum,
+      prezzo_nuovo: prezzoNum,
+      prezzoNuovo: prezzoNum,
+      prezzoVecchio: prezzoNum,
+      // venditore
+      venditoreId: venditoreIdOrNull,
+      venditore_id: venditoreIdOrNull,
+      // coordinate
+      latitudine: this.latitudine,
+      longitudine: this.longitudine,
+      // eventuale flag
+      isChanged: true,
+      placeId: 'place_11'
+    };
+
+    console.log('POST /create body:', body);
+
+    // dentro aggiornaTutto(...)
+    this.annunciService.createAnnuncio(body).subscribe({
+      next: (res: any) => {
+        console.log('Annuncio creato (risposta):', res);
+        const createdId = res && res.id ? res.id : idCasuale; // usa l'id ritornato dal server
+
+        if (this.fotoNuove.length > 0) {
+          const calls = this.fotoNuove.map(foto => this.annunciService.addPhoto(createdId, foto));
+          forkJoin(calls).subscribe({
+            next: () => {
+              this.fotoNuove = [];
+              alert('Annuncio e foto salvati con successo!');
+            },
+            error: err => {
+              console.error('Errore salvataggio foto:', err);
+              alert('Annuncio creato, ma errore nel salvataggio delle foto.');
+            }
+          });
+        } else {
+          alert('Annuncio salvato con successo!');
+        }
+      },
+      error: err => {
+        console.error('Errore durante il salvataggio:', err);
+        alert('Errore durante il salvataggio dell\'annuncio. Vedi console.');
+      }
+    });
+  }
+    // Per usare Number in template
+  public readonly Number = Number;
 }
