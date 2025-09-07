@@ -9,6 +9,8 @@ import {ReviewService} from '../../../services/api/review.service';
 import {ReviewModel} from './review/review.model';
 import {NgForOf, NgIf} from "@angular/common";
 import {GOOGLE_MAPS_API_KEY} from "../../../../environments/google-maps-key";
+import {AstaBoxComponent} from "./asta-box/asta-box.component";
+import {Asta, AstaService} from "../../../services/api/asta.service";
 
 
 @Component({
@@ -18,6 +20,7 @@ import {GOOGLE_MAPS_API_KEY} from "../../../../environments/google-maps-key";
         ReviewComponent,
         NgIf,
         NgForOf,
+        AstaBoxComponent,
     ],
   templateUrl: './annuncio.component.html',
   styleUrl: './annuncio.component.css'
@@ -50,6 +53,8 @@ export class AnnuncioComponent{
 
     map!: google.maps.Map;
 
+    private astaService = inject(AstaService);
+    asta: Asta | null = null;
 
     ngOnInit() {
         this.route.paramMap.subscribe(params => {
@@ -61,6 +66,10 @@ export class AnnuncioComponent{
 
                 this.lat = data.latitudine;
                 this.lng = data.longitudine;
+
+                this.astaService.getAstaByAnnuncio(id).subscribe(res => {
+                    this.asta = res;
+                });
 
                 this.loadGoogleMapsScript()
                     .then(() => {

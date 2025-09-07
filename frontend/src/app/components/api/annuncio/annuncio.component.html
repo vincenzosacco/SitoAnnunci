@@ -33,9 +33,6 @@
           </ng-template>
       </div>
 
-
-
-
       <aside class="right-col">
           <section class="info-venditore">
               <p><i class="bi bi-person"></i> <strong>Utente:</strong> {{ venditore?.nome }}</p>
@@ -49,6 +46,8 @@
           </section>
       </aside>
   </section>
+
+  <app-asta-box *ngIf="annuncio" [annuncioId]="annuncio.id"></app-asta-box>
 
   <section class="dettagli-annuncio">
     <p><strong>Descrizione:</strong> {{ annuncio?.descrizione }}</p>
