@@ -1,0 +1,16 @@
+
+
+<div *ngIf="asta" class="asta-box">
+    <h3>Asta attiva!</h3>
+
+    <p><b>Prezzo corrente:</b> {{ asta.prezzo_corrente | currency:'EUR' }}</p>
+    <p><b>Scadenza:</b> {{ asta.data_fine | date:'short' }}</p>
+
+    <div class="offerta-form">
+        <label for="offerta">La tua offerta: </label>
+        <input id="offerta" type="number" [(ngModel)]="offertaValue" [disabled]="loading">
+        <button (click)="faiOfferta()" [disabled]="loading">Fai offerta</button>
+    </div>
+
+    <p class="message">{{ message }}</p>
+</div>
