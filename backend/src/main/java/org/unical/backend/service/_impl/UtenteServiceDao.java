@@ -26,6 +26,11 @@ class UtenteServiceDao implements IUtenteService {
     }
 
     @Override
+    public Utente findByEmail(String email) {
+        return dao.findAll().stream().filter(u -> u.getEmail().equalsIgnoreCase(email)).findFirst().orElse(null);
+    }
+
+    @Override
     public Utente createUtente(Utente u) throws Exception {
         return dao.save(u);
     }

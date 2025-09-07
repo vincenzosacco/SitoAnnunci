@@ -9,7 +9,7 @@ export class FilterService {
   private searchFiltersSubject = new BehaviorSubject<any>({
     titolo: '',
     categoria: '',
-    citta: ''
+    indirizzo: ''
   });
   searchFilters$ = this.searchFiltersSubject.asObservable();
 
@@ -23,11 +23,11 @@ export class FilterService {
   advancedFilters$ = this.advancedFiltersSubject.asObservable();
 
 
-  aggiornaFiltriRicerca(filtroTitolo: string, filtroCategoria: number, filtroCitta: string) {
+  aggiornaFiltriRicerca(filtroTitolo: string, filtroCategoria: number, filtroIndirizzo: string) {
     this.searchFiltersSubject.next({
       titolo: filtroTitolo,
       categoria: filtroCategoria,
-      citta: filtroCitta
+      indirizzo: filtroIndirizzo
     });
   }
 

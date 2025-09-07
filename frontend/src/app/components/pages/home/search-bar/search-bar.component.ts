@@ -16,12 +16,12 @@ export class SearchBarComponent {
 
   filtroTitolo: string = '';
   filtroCategoria: number = 0;
-  filtroCitta: string = '';
+  filtroIndirizzo: string = '';
 
   constructor(private filtersService: FilterService) {}
 
   aggiornaFiltri() {
-    this.filtersService.aggiornaFiltriRicerca(this.filtroTitolo, this.filtroCategoria, this.filtroCitta);
+    this.filtersService.aggiornaFiltriRicerca(this.filtroTitolo, this.filtroCategoria, this.filtroIndirizzo);
   }
 
 

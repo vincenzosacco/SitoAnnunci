@@ -2,6 +2,10 @@ import {Component, Input, numberAttribute} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {NgForOf, NgIf} from '@angular/common';
 import {ReviewService} from '../../../../services/api/review.service';
+import {AuthService} from "@auth0/auth0-angular";
+import {Router} from "@angular/router";
+import {take} from "rxjs";
+import {UtenteService} from "../../../../services/api/utente.service";
 
 @Component({
   selector: 'app-review-form',
@@ -21,11 +25,30 @@ export class ReviewComponent {
   testo: string = '';
   recensioneInviata: boolean = false;
 
-  autore_id: number = 2; // #TODO: da sostituire con id utente loggato
+  autore_id: number | null = null;
 
-  constructor(private reviewService: ReviewService) {}
+  constructor(private reviewService: ReviewService,
+              private authService: AuthService,
+              private router: Router,
+              private utenteService: UtenteService) {}
+
+    ngOnInit() {
+        this.authService.user$.pipe(take(1)).subscribe(user => {
+            if (user?.email) {
+                this.utenteService.getByEmail(user.email).subscribe(dbUser => {
+                    this.autore_id = dbUser.id;
+                });
+            }
+        });
+    }
 
   inviaRecensione() {
+
+    if (!this.autore_id) {
+        this.router.navigate(['/no-auth-redirect']);
+        return;
+    }
+
     if (!this.nome_autore || !this.voto) {
       return;
     }

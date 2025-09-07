@@ -2,6 +2,9 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../../services/api/chat.service';
 import {FormsModule} from "@angular/forms";
+import {AuthService} from "@auth0/auth0-angular";
+import {take} from "rxjs";
+import {UtenteService} from "../../../services/api/utente.service";
 
 @Component({
   selector: 'app-chat',
@@ -12,16 +15,25 @@ import {FormsModule} from "@angular/forms";
   styleUrl: './chat.component.css'
 })
 export class ChatComponent {
-    private chatService = inject(ChatService);
+    constructor(private chatService: ChatService, private authService: AuthService, private utenteService: UtenteService) {
+    }
 
     utenti: any[] = [];
     messaggi: any[] = [];
-    mioId = 2; // #TODO Da sostituire con ID dell’utente loggato
     utenteSelezionato: any = null;
     nuovoMessaggio: string = '';
+    mioId: number | null = null;
 
     ngOnInit() {
-        this.caricaUtenti();
+        this.authService.user$.pipe(take(1)).subscribe(user => {
+            if (user?.email) {
+                this.utenteService.getByEmail(user.email).subscribe(dbUser => {
+                    this.mioId = dbUser.id;
+                    this.caricaUtenti();
+                });
+            }
+        });
+
     }
 
     formatDate(dateStr: string): string {
@@ -30,6 +42,7 @@ export class ChatComponent {
     }
 
     caricaUtenti() {
+        if (this.mioId == null) return;
         this.chatService.getConversazioni(this.mioId).subscribe(data => {
             this.utenti = data.map(u => ({
                 id: u.id,
@@ -40,6 +53,8 @@ export class ChatComponent {
     }
 
     selezionaUtente(utente: any) {
+        if (this.mioId == null) return;
+
         this.utenteSelezionato = utente;
 
         this.chatService.getMessaggi(this.mioId, utente.id).subscribe(data => {
@@ -54,6 +69,8 @@ export class ChatComponent {
     }
 
     inviaMessaggio() {
+        if (this.mioId == null) return;
+
         if (!this.nuovoMessaggio.trim()) return;
 
         const messaggio = {

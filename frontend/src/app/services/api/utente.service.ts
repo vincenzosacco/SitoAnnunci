@@ -13,4 +13,8 @@ export class UtenteService extends BaseApiService<any> {
   getById(id: number) {
     return this.getBy(id);
   }
+
+  getByEmail(email: string) {
+    return this.http.get<any>(`${this.endpointUrl}/by-email?email=${encodeURIComponent(email)}`);
+  }
 }

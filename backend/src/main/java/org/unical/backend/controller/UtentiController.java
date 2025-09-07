@@ -21,4 +21,11 @@ public class UtentiController {
         if (utente == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(utente);
     }
+
+    @GetMapping("/by-email")
+    public ResponseEntity<Utente> getUtenteByEmail(@RequestParam("email") String email) {
+        Utente utente = utenteService.findByEmail(email);
+        if (utente == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(utente);
+    }
 }

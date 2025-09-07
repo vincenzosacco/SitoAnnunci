@@ -60,7 +60,9 @@ export class ResultsComponent implements OnInit {
       // Filtri della barra di ricerca
       if (this.searchFilters.titolo && !result.titolo.includes(this.searchFilters.titolo)) match = false;
       if (this.searchFilters.categoria && result.categoria_id !== this.searchFilters.categoria) match = false;
-      if (this.searchFilters.indirizzo && result.indirizzo !== this.searchFilters.indirizzo) match = false;
+      if (this.searchFilters.indirizzo && !result.indirizzo.toLowerCase().includes(this.searchFilters.indirizzo.toLowerCase())){
+          match = false;
+      }
 
       // Filtri avanzati laterali
       if (this.advancedFilters.in_vendita != null && result.in_vendita !== this.advancedFilters.in_vendita) match = false;
