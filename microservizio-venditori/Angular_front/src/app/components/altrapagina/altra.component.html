@@ -1,5 +1,4 @@
 <form *ngIf="annuncio" (ngSubmit)="aggiornaTutto()">
-  <!-- Titolo -->
   <div class="custom-input-group">
     <label for="titolo" class="form-label">📝 Titolo</label>
     <input
@@ -12,7 +11,6 @@
       [ngModelOptions]="{standalone: true}">
   </div>
 
-  <!-- Superficie -->
   <div class="custom-input-group">
     <label for="superficie" class="form-label">↔ Superficie (m²)</label>
     <input
@@ -25,7 +23,6 @@
       [ngModelOptions]="{standalone: true}">
   </div>
 
-  <!-- Descrizione -->
   <div class="custom-input-group">
     <label for="descrizione" class="form-label">💬 Descrizione</label>
     <textarea
@@ -38,7 +35,6 @@
       [ngModelOptions]="{standalone: true}"></textarea>
   </div>
 
-  <!-- Indirizzo -->
   <div class="custom-input-group">
     <label for="indirizzo" class="form-label">📍 Indirizzo</label>
     <input
@@ -51,7 +47,6 @@
       [ngModelOptions]="{standalone: true}">
   </div>
 
-  <!-- Prezzo -->
   <div class="custom-input-group">
     <label for="prezzonuovo" class="form-label">💶 Prezzo</label>
     <input
@@ -77,13 +72,11 @@
     </select>
   </div>
 
-  <!-- Posizione -->
   <div class="custom-input-group">
     <label class="form-label">📍 Posizione</label>
     <div id="map" style="height: 400px; width: 100%;"></div>
   </div>
 
-  <!-- Foto -->
   <div class="custom-input-group">
     <label for="foto" class="form-label">📷 Foto</label>
     <input
@@ -95,7 +88,6 @@
       (change)="onFilesSelected($event)">
   </div>
 
-  <!-- Foto preesistenti -->
   <div class="foto-list" *ngIf="fotoPreesistenti.length > 0">
     <h5>Foto preesistenti:</h5>
     <div class="foto-preview-wrapper" *ngFor="let foto of fotoPreesistenti; let i = index">
@@ -106,7 +98,7 @@
     </div>
   </div>
 
-  <!-- Nuove foto -->
+
   <div class="foto-list" *ngIf="fotoNuove.length > 0">
     <h5>Nuove foto selezionate:</h5>
     <div class="foto-preview-wrapper" *ngFor="let foto of fotoNuove; let i = index">
@@ -117,7 +109,7 @@
     </div>
   </div>
 
-  <!-- Bottoni -->
+
   <div class="d-flex justify-content-between mt-4">
     <button type="button" class="custom-btn cancel-btn" [routerLink]="['/home']">Indietro</button>
     <button type="submit" class="custom-btn submit-btn">Salva</button>

@@ -6,9 +6,6 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class chatbotService {
-
-  // Mantieni la struttura leggibile: keys "umanamente leggibili".
-  // Ma la mappa interna userà le chiavi NORMALIZZATE (lowercase + trim).
   private rawRaccomandazioni: Record<string, string[]> = {
     "Investitori,budget limitato,Location,Urgente": [
       "Prepara una brochure digitale professionale con dati di mercato e ritorno sull’investimento ben evidenziati.",
@@ -77,18 +74,15 @@ export class chatbotService {
     ]
   };
 
-  // Mappa interna con chiavi normalizzate (lowercase + trim)
   private mapNormalized: Map<string, string[]> = new Map();
 
   constructor() {
-    // costruiamo la mappa normalizzata
     Object.keys(this.rawRaccomandazioni).forEach(k => {
       const normalized = chatbotService.normalizeKey(k);
       this.mapNormalized.set(normalized, this.rawRaccomandazioni[k]);
     });
   }
 
-  // normalizzazione: toLowerCase e trim degli elementi separati da virgola
   private static normalizeKey(keyOrArray: string | string[]): string {
     if (Array.isArray(keyOrArray)) {
       return keyOrArray.map(s => (s || '').toString().trim().toLowerCase()).join(',');
@@ -104,8 +98,6 @@ export class chatbotService {
       return of(arr.join('/n '));
     }
 
-    // fallback: prova con qualche normalizzazione extra (es. singolare/plurale)
-    // esempio: se "investitore" vs "investitori" è il problema, prova a sostituire termini chiave
     const alternativeNorm = norm
       .replace('investitore', 'investitori')
       .replace('famiglia', 'famiglie');
@@ -116,7 +108,6 @@ export class chatbotService {
     return of("Non ci sono raccomandazioni disponibili per queste scelte.");
   }
 
-  // restituisce array (utile per *ngFor)
   getRaccomandazione(tag: string[]): string[] {
     const norm = chatbotService.normalizeKey(tag);
     const arr = this.mapNormalized.get(norm);

@@ -1,33 +1,28 @@
 <form (ngSubmit)="$event.preventDefault()">
 
-  <!-- Titolo -->
   <div class="custom-input-group">
     <label for="titolo" class="form-label">📝 Titolo</label>
     <input id="titolo" type="text" class="custom-input"
            placeholder="Scrivi il titolo del tuo immobile" name="titolo" #titolo>
   </div>
 
-  <!-- Metri Quadri -->
   <div class="custom-input-group">
     <label for="m2" class="form-label">↔ Metri Quadri</label>
     <input id="m2" type="number" class="custom-input" placeholder="Inserisci i metri quadri" name="m2" #m2>
   </div>
 
-  <!-- Descrizione -->
   <div class="custom-input-group">
     <label for="descrizione" class="form-label">💬 Descrizione</label>
     <textarea id="descrizione" class="custom-input" rows="4"
               placeholder="Scrivi una descrizione dettagliata" name="descrizione" #descrizione></textarea>
   </div>
 
-  <!-- Prezzo -->
   <div class="custom-input-group">
     <label for="prezzo" class="form-label">💶 Prezzo</label>
     <input id="prezzo" type="number" step="0.01" class="custom-input"
            placeholder="Inserisci il prezzo" name="prezzo" #prezzo>
   </div>
 
-  <!-- Tipo vendita -->
   <div class="custom-input-group">
     <label for="tipoVendita" class="form-label">⚖️ Tipo vendita</label>
     <select id="tipoVendita" [(ngModel)]="tipoVendita" name="tipoVendita" class="custom-input" [ngModelOptions]="{standalone: true}">
@@ -36,7 +31,6 @@
     </select>
   </div>
 
-  <!-- Categoria -->
   <div class="custom-input-group">
     <label for="categoria" class="form-label">🏷️ Categoria</label>
     <select id="categoria" [(ngModel)]="categoriaId" name="categoriaId" class="custom-input" [ngModelOptions]="{standalone: true}">
@@ -50,8 +44,6 @@
     </select>
   </div>
 
-  <!-- Mappa -->
-  <!-- Indirizzo -->
   <div class="custom-input-group">
     <label for="indirizzo" class="form-label">🏠 Indirizzo</label>
     <input id="indirizzo" type="text" class="custom-input"
@@ -59,7 +51,6 @@
            name="indirizzo" [(ngModel)]="indirizzo" [ngModelOptions]="{standalone: true}">
   </div>
 
-  <!-- Mappa -->
   <div class="custom-input-group">
     <label class="form-label">📍 Posizione</label>
     <div id="map" style="height: 400px; width: 100%;"></div>
@@ -68,13 +59,11 @@
     </p>
   </div>
 
-  <!-- Foto -->
   <div class="custom-input-group">
     <label for="foto" class="form-label">📷 Foto</label>
     <input id="foto" type="file" class="custom-input-file" accept="image/*" (change)="onFileSelected($event)" multiple>
   </div>
 
-  <!-- Anteprima Foto -->
   <div *ngIf="fotoNuove.length > 0" class="foto-preview mt-3">
     <h5>Anteprima foto caricate:</h5>
     <div class="foto-grid">
@@ -85,7 +74,6 @@
     </div>
   </div>
 
-  <!-- Pulsanti -->
   <div class="d-flex justify-content-between mt-4">
     <button type="button" class="custom-btn cancel-btn" [routerLink]="['/home']">Indietro</button>
     <button type="button" class="custom-btn submit-btn"

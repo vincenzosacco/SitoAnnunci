@@ -45,7 +45,6 @@ public class DataDAO {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
-            // Specifico solo la colonna "id" come chiave generata
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"id"});
             ps.setString(1, d.getTitolo());
             ps.setString(2, d.getDescrizione());
@@ -68,7 +67,6 @@ public class DataDAO {
             return ps;
         }, keyHolder);
 
-        // Leggo la chiave generata in modo sicuro
         Number key = keyHolder.getKey();
         return key != null ? key.intValue() : 0;
     }
@@ -131,6 +129,8 @@ public class DataDAO {
     }
 
     public void deleteById(int id) {
+        //cancello tutte le foto collegate prima di cancellare l'annuncio, prima mi da  errore se lo provavo a cancellare direttamente
+        jdbcTemplate.update("DELETE FROM foto_annuncio WHERE annuncio_id = ?", id);
         jdbcTemplate.update("DELETE FROM annuncio WHERE id = ?", id);
     }
 
@@ -156,7 +156,6 @@ public class DataDAO {
         return rowsAffected > 0;
     }
 
-    // --- mapping con categoriaTipo e inVendita ---
     private Data mapRowToData(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String titolo = rs.getString("titolo");

@@ -1,4 +1,3 @@
-// src/app/services/annunci.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
@@ -40,7 +39,6 @@ export class AnnunciService {
     const body: any = {
       id,
       column,
-      // per i numeri inviamo un number (non string): se valore è undefined/null -> null
       nuovoValore: valore === null || valore === undefined ? null : valore
     };
 

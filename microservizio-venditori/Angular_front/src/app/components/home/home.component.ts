@@ -27,13 +27,11 @@ export class HomeComponent implements OnInit {
   protected MastodonIconDataUrl = "data:image/png;base64," + MastodonIcon;
   protected SoldIconDataUrl = "data:image/png;base64," + Sold;
 
-  // cache: annuncioId -> dataUrl (data:image/png;base64,...)
   private fotoCache = new Map<number, string>();
 
-  // sottoscrizioni per pulire quando necessario
   private subs = new Subscription();
 
-  // fallback immagine (metti nel tuo assets)
+  //se l'immagine non c'è
   private readonly fallbackImg = 'assets/no-image.png';
 
   constructor(
@@ -48,9 +46,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     console.log('HomeComponent inizializzato');
 
-    // Controlla localStorage
     let msg = localStorage.getItem('msg');
-      // Leggi dai query params: /home?msg=1
+      ///home?msg=1
       const urlParams = new URLSearchParams(window.location.search);
       const numeroStr = urlParams.get('user');
 
@@ -58,14 +55,12 @@ export class HomeComponent implements OnInit {
         localStorage.setItem('msg', numeroStr);
       }
 
-      // Rimuovi il parametro 'msg' dall'URL senza ricaricare
       urlParams.delete('user');
       const newUrl = urlParams.toString()
         ? `${window.location.pathname}?${urlParams.toString()}`
         : window.location.pathname;
       this.location.replaceState(newUrl);
 
-    // Carica gli annunci
     this.fetchAnnunci();
   }
   ngOnDestroy(): void {
@@ -75,14 +70,11 @@ export class HomeComponent implements OnInit {
   fetchAnnunci(): void {
     const s = this.annunciService.getAnnunci().subscribe({
       next: dati => {
-        // popola gli oggetti Annuncio
         this.annunci = dati.map((d: any) => Annuncio.fromJSON(d));
 
-        // DEBUG: quali annunci hanno inVendita = false?
         const nonInVendita = dati.filter((d: any) => d.inVendita === false);
         console.log("Annunci con inVendita = false:", nonInVendita);
 
-        // carica FOTO solo per gli annunci visibili (che corrispondono al venditore corrente)
         const venditoreId = Number(localStorage.getItem('msg'));
         const visible = this.annunci.filter(a => a.venditoreId === venditoreId);
 
@@ -95,7 +87,6 @@ export class HomeComponent implements OnInit {
   }
 
   private loadFotoForAnnuncio(annuncio: Annuncio) {
-    // se già in cache, nulla da fare
     if (this.fotoCache.has(annuncio.id)) return;
 
     const s = this.annunciService.getFotoAnnuncio(annuncio.id).subscribe({
@@ -104,7 +95,6 @@ export class HomeComponent implements OnInit {
           const dataUrl = `data:image/png;base64,${base64Array[0]}`;
           this.fotoCache.set(annuncio.id, dataUrl);
         } else {
-          // nessuna foto: setta fallback così il template mostra immagine di default
           this.fotoCache.set(annuncio.id, this.fallbackImg);
         }
       },
@@ -117,10 +107,6 @@ export class HomeComponent implements OnInit {
     this.subs.add(s);
   }
 
-  /**
-   * Usato dal template per ottenere l'url immagine da mettere in [src].
-   * Non fa chiamate e ritorna subito (o fallback).
-   */
   getFotoSrc(annuncio: Annuncio): string {
     return this.fotoCache.get(annuncio.id) ?? this.fallbackImg;
   }

@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
 
     this.http.get<any[]>(apiUrl).subscribe({
       next: (response: any[]) => {
-        console.log('Dati ricevuti:', response); // Log per controllare i dati ricevuti
+        console.log('Dati ricevuti:', response);
         this.annunci = response.map(data => Annuncio.fromJSON(data));
       },
       error: (error: any) => {

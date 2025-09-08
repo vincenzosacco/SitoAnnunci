@@ -1,18 +1,16 @@
-/* Chart card */
 .chart-container {
-  /* dimensione responsive: minimo 260px, ideale ~40vh, max 520px */
   height: clamp(260px, 40vh, 520px);
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
 
-  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(246,248,255,0.9));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 248, 255, 0.9));
   border-radius: 14px;
   padding: 14px;
   padding-top: 10px;
-  border: 1px solid rgba(100,123,237,0.08);
-  box-shadow: var(--shadow-sm, 0 6px 18px rgba(100,123,237,0.08));
+  border: 1px solid rgba(100, 123, 237, 0.08);
+  box-shadow: var(--shadow-sm, 0 6px 18px rgba(100, 123, 237, 0.08));
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -20,7 +18,6 @@
   animation: fadeInUp .36s ease both;
 }
 
-/* Header sopra il grafico: titolo + spazio per controlli */
 .chart-header {
   display: flex;
   align-items: center;
@@ -38,8 +35,6 @@
   gap: 8px;
   align-items: center;
 }
-
-/* Corpo che contiene la canvas: occupa tutto lo spazio rimasto */
 .chart-body {
   position: relative;
   flex: 1 1 auto;
@@ -47,7 +42,6 @@
   display: block;
 }
 
-/* canvas: forza a riempire .chart-body */
 .chart-body canvas,
 .chart-container canvas {
   width: 100% !important;
@@ -55,7 +49,6 @@
   display: block;
 }
 
-/* Piccoli pulsanti nella header */
 .chart-header .btn {
   background: transparent;
   border: 1px solid rgba(100,123,237,0.14);
@@ -68,7 +61,6 @@
 }
 .chart-header .btn:hover { transform: translateY(-3px); background: rgba(100,123,237,0.04); }
 
-/* Placeholder (loading / no data) */
 .chart-placeholder {
   height: 100%;
   display: flex;
@@ -86,7 +78,6 @@
   border-radius: 8px;
 }
 
-/* Mobile: riduce padding e altezza */
 @media (max-width: 700px) {
   .chart-container {
     height: clamp(220px, 45vh, 420px);

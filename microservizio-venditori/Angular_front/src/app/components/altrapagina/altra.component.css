@@ -9,7 +9,7 @@ p {
 
 .full-screen {
   height: 78vh;
-  background: linear-gradient(to right, #f8f9fa, #e0f7fa); /* opzionale */
+  background: linear-gradient(to right, #f8f9fa, #e0f7fa);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,7 +75,6 @@ p {
   font-size: 1rem;
   border: none;
   border-radius: 30px;
-  /* cursor: pointer; */
   transition: all 0.3s ease;
 }
 
@@ -132,14 +131,13 @@ p {
   transition: filter 0.3s ease;
 }
 
-/* overlay nascosto di default */
 .foto-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5); /* oscuramento */
+  background: rgba(0,0,0,0.5);
   display: flex;
   justify-content: center;
   align-items: center;

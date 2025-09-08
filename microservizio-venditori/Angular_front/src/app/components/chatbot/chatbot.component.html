@@ -1,66 +1,71 @@
 <div class="chat-popup" [class.open]="isOpen">
-  <!-- Intestazione cliccabile -->
   <div class="chat-header" (click)="toggleChat()">
     <label><strong>Chat di Supporto</strong></label>
   </div>
 
-  <!-- Contenuto della chat -->
   <div class="chat-body" *ngIf="isOpen">
-    <div>
-      <label>In quale ruolo ti identifichi?</label>
+
+    <div class="bot-message" *ngIf="!tag[0]">
+      In quale ruolo ti identifichi?
       <div class="button-group">
-        <button
-          *ngFor="let r of ruolo"
-          [class.selected]="tag[0] === r"
-          (click)="tag[0] = r; controlla1()">
+        <button *ngFor="let r of ruolo" (click)="scegli(0, r)">
           {{r}}
         </button>
       </div>
     </div>
-
     <div *ngIf="tag[0]">
-      <label>Quanto vuoi investire nella promozione?</label>
+      <div class="bot-message">In quale ruolo ti identifichi?</div>
+      <div class="user-message">{{tag[0]}}</div>
+    </div>
+
+    <div class="bot-message" *ngIf="tag[0] && !tag[1]">
+      Quanto vuoi investire nella promozione?
       <div class="button-group">
-        <button
-          *ngFor="let i of investimento"
-          [class.selected]="tag[1] === i"
-          (click)="tag[1] = i; controlla2()">
+        <button *ngFor="let i of investimento" (click)="scegli(1, i)">
           {{i}}
         </button>
       </div>
     </div>
-
     <div *ngIf="tag[1]">
-      <label>Qual è il punto di forza dell'immobile?</label>
+      <div class="bot-message">Quanto vuoi investire nella promozione?</div>
+      <div class="user-message">{{tag[1]}}</div>
+    </div>
+
+    <div class="bot-message" *ngIf="tag[1] && !tag[2]">
+      Qual è il punto di forza dell'immobile?
       <div class="button-group">
-        <button
-          *ngFor="let p of puntoDiForza"
-          [class.selected]="tag[2] === p"
-          (click)="tag[2] = p; controlla3()">
+        <button *ngFor="let p of puntoDiForza" (click)="scegli(2, p)">
           {{p}}
         </button>
       </div>
     </div>
-
     <div *ngIf="tag[2]">
-      <label>La vendita è urgente?</label>
+      <div class="bot-message">Qual è il punto di forza dell'immobile?</div>
+      <div class="user-message">{{tag[2]}}</div>
+    </div>
+
+    <div class="bot-message" *ngIf="tag[2] && !tag[3]">
+      La vendita è urgente?
       <div class="button-group">
-        <button
-          *ngFor="let u of urgenza"
-          [class.selected]="tag[3] === u"
-          (click)="tag[3] = u; controlla4()">
+        <button *ngFor="let u of urgenza" (click)="scegli(3, u)">
           {{u}}
         </button>
       </div>
     </div>
+    <div *ngIf="tag[3]">
+      <div class="bot-message">La vendita è urgente?</div>
+      <div class="user-message">{{tag[3]}}</div>
+    </div>
 
-    <div *ngIf="parte4Data && rispostaOttenuta" class="chat-messages">
-      <h3>Consigli:</h3>
-      <ul>
-        <li *ngFor="let r of chatService.getRaccomandazione(tag)">
-          {{r}}
-        </li>
-      </ul>
+    <div *ngIf="parte4Data && rispostaOttenuta">
+      <div class="bot-message">
+        <h3>Consigli:</h3>
+        <ul>
+          <li *ngFor="let r of chatService.getRaccomandazione(tag)">
+            {{r}}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

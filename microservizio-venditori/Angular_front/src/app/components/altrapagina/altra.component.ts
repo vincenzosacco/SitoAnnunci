@@ -230,7 +230,6 @@ export class AltraComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  // --- AGGIORNAMENTO DATI ---
   aggiornaTutto(): void {
     const lat = this.latitudine ?? null;
     const lng = this.longitudine ?? null;

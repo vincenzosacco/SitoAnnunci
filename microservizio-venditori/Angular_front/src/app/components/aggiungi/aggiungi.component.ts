@@ -1,4 +1,3 @@
-// -------------------- AggiungiComponent.ts --------------------
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -14,14 +13,12 @@ import { NgForOf, NgIf } from '@angular/common';
   imports: [FormsModule, RouterLink, NgIf, NgForOf]
 })
 export class AggiungiComponent implements OnInit, OnDestroy {
-  // Mappa
   latitudine: number | null = null;
   longitudine: number | null = null;
   map!: google.maps.Map;
   marker: google.maps.Marker | null = null;
   indirizzo: string = '';
 
-  // Foto
   fotoNuove: string[] = [];
 
   tipoVendita: 'compra' | 'asta' = 'compra';
@@ -41,7 +38,6 @@ export class AggiungiComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  // -------------------- GOOGLE MAPS --------------------
   private loadGoogleMapsScript(): Promise<void> {
     return new Promise((resolve, reject) => {
       if ((window as any).google?.maps) { resolve(); return; }
@@ -56,7 +52,7 @@ export class AggiungiComponent implements OnInit, OnDestroy {
   }
 
   private initMap(): void {
-    const centro = { lat: 41.9028, lng: 12.4964 }; // Roma
+    const centro = { lat: 41.9028, lng: 12.4964 }; //lo punto inizialmente a Roma
     this.map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
       center: centro,
       zoom: 6
@@ -69,7 +65,7 @@ export class AggiungiComponent implements OnInit, OnDestroy {
       this.latitudine = lat;
       this.longitudine = lng;
       this.posizionaMarker(lat, lng);
-      this.aggiornaCoordinate(lat, lng); // aggiorna indirizzo
+      this.aggiornaCoordinate(lat, lng);
     });
   }
 
@@ -90,7 +86,6 @@ export class AggiungiComponent implements OnInit, OnDestroy {
       .catch(() => this.indirizzo = 'Errore nel recupero indirizzo');
   }
 
-  // -------------------- GESTIONE FOTO --------------------
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files) {
@@ -118,7 +113,6 @@ export class AggiungiComponent implements OnInit, OnDestroy {
   }
 
   private formatLocalDateTimeForBackend(date: Date): string {
-    // produce "yyyy-MM-ddTHH:mm:ss" (senza timezone) — compatibile con LocalDateTime Jackson
     const pad = (n: number) => n.toString().padStart(2, '0');
     const Y = date.getFullYear();
     const M = pad(date.getMonth() + 1);
@@ -130,20 +124,17 @@ export class AggiungiComponent implements OnInit, OnDestroy {
   }
 
   aggiornaTutto(titolo: string, descrizione: string, m2: number, prezzo: number) {
-    // validazione minima
     if (!titolo || titolo.trim() === '') {
       alert('Inserisci un titolo.');
       return;
     }
 
-    // prezzo passato come stringa/numero nel template: normalizziamo
     const prezzoRaw = (prezzo === undefined || prezzo === null) ? '' : String(prezzo).trim();
     if (prezzoRaw === '') {
       alert('Inserisci un prezzo.');
       return;
     }
 
-    // sostituisci eventuali virgole e prova a convertire
     const prezzoNormalized = prezzoRaw.replace(',', '.');
     const prezzoNum = Number(prezzoNormalized);
     if (isNaN(prezzoNum)) {
@@ -153,7 +144,6 @@ export class AggiungiComponent implements OnInit, OnDestroy {
 
     const idCasuale = Math.floor(Math.random() * (999999 - 1000 + 1)) + 1000;
 
-    // venditore: prova a convertire localStorage msg in numero, altrimenti null
     const vendRaw = localStorage.getItem('msg');
     const vendId = vendRaw ? Number(vendRaw) : NaN;
     const venditoreIdOrNull = !isNaN(vendId) ? vendId : null;
@@ -166,35 +156,34 @@ export class AggiungiComponent implements OnInit, OnDestroy {
       descrizione: descrizione ?? null,
       superficie: (m2 === undefined || m2 === null || isNaN(Number(m2))) ? null : Number(m2),
       indirizzo: this.indirizzo ?? null,
-      // invio più campi relativi al prezzo per coprire mapping diversi lato server
+      //invio più campi relativi al prezzo per coprire mapping diversi lato server
       prezzo: prezzoNum,
       prezzo_nuovo: prezzoNum,
       prezzoNuovo: prezzoNum,
       prezzoVecchio: prezzoNum,
-      // venditore
+      //venditore
       venditoreId: venditoreIdOrNull,
       venditore_id: venditoreIdOrNull,
-      // categoria
+      //categoria
       categoria_id: this.categoriaId,
       categoriaId: this.categoriaId,
-      // coordinate
+      //coordinate
       latitudine: this.latitudine,
       longitudine: this.longitudine,
-      // eventuale flag
-      dataCreazione: dataCreazione, // invio stringa compatibile con LocalDateTime
+
+      dataCreazione: dataCreazione,
       isChanged: true,
       placeId: 'place_11'
     };
 
     console.log('POST /create body:', body);
 
-    // dentro aggiornaTutto(...)
     this.annunciService.createAnnuncio(body).subscribe({
       next: (res: any) => {
         console.log('Annuncio creato (risposta):', res);
         const createdId = (res && (res.id || res.getId)) ? (res.id ?? res.getId) : idCasuale;
 
-        // se è un'asta: chiama endpoint per inserire id nella tabella asta
+        //se è un'asta chiama endpoint per inserire id nella tabella asta
         if (this.tipoVendita === 'asta') {
           this.annunciService.addAsta({ id: createdId, prezzoBase: prezzoNum }).subscribe({
             next: () => {
@@ -207,7 +196,6 @@ export class AggiungiComponent implements OnInit, OnDestroy {
             }
           });
         } else {
-          // normale vendita: salva foto e fine
           this.savePhotosAfterCreate(createdId);
         }
       },
@@ -235,6 +223,6 @@ export class AggiungiComponent implements OnInit, OnDestroy {
       alert('Annuncio salvato con successo!');
     }
   }
-    // Per usare Number in template
+
   public readonly Number = Number;
 }

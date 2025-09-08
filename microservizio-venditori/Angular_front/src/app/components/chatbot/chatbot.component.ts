@@ -12,16 +12,13 @@ import { NgForOf, NgIf } from '@angular/common';
   standalone: true,
   imports: [FormsModule, CommonModule, NgIf, NgForOf]
 })
-
 export class ChatbotComponent {
-  isOpen = false; // stato della tendina
-
+  isOpen = false;
   tag: string[] = ["","","",""];
   ruolo: string[] = ["Famiglia","Investitore"];
   investimento: string[] = ["Budget elevato","Budget limitato"];
   puntoDiForza: string[] = ["Caratteristica interna","Location"];
   urgenza: string[] = ["Posso aspettare","Urgente"];
-
   parte1Data = false;
   parte2Data = false;
   parte3Data = false;
@@ -33,6 +30,7 @@ export class ChatbotComponent {
   toggleChat() {
     this.isOpen = !this.isOpen;
   }
+
   private controlla(val: string, pos: number) {
     if (!val) {
       this.tag[pos - 1] = "";
@@ -48,6 +46,16 @@ export class ChatbotComponent {
   controlla4() {
     this.parte4Data = this.controlla(this.tag[3],4);
     if(this.parte4Data) this.visualizza();
+  }
+
+  scegli(index: number, valore: string) {
+    this.tag[index] = valore;
+    switch(index) {
+      case 0: this.controlla1(); break;
+      case 1: this.controlla2(); break;
+      case 2: this.controlla3(); break;
+      case 3: this.controlla4(); break;
+    }
   }
 
   private visualizza(){

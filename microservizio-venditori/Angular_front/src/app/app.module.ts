@@ -12,8 +12,8 @@ import { CommonModule } from '@angular/common'; // Importa CommonModule
   ],
   imports: [
     BrowserModule,
-    CommonModule,  // Aggiungi CommonModule per usare *ngFor
-    routes         // Aggiungi il tuo array di routes
+    CommonModule,
+    routes
   ],
   bootstrap: [AppComponent]
 })

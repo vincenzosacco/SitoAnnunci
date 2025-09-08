@@ -6,14 +6,14 @@ export class Annuncio {
   private _indirizzo: string;
   private _categoriaId: number | null;
   private _venditoreId: number | null;
-  private _dataCreazione: string; // ISO string dal JSON
+  private _dataCreazione: string;
   private _longitudine: number | null;
   private _latitudine: number | null;
   private _prezzoNuovo: number | null;
   private _prezzoVecchio: number | null;
-  private _immagine?: string | null; // vecchio campo singolo
-  private _immagini: string[];       // nuovo campo array
-  private _inVendita: boolean | null; // 👈 aggiunto
+  private _immagine?: string | null;
+  private _immagini: string[];
+  private _inVendita: boolean | null;
 
   constructor(
     id: number,
@@ -30,7 +30,7 @@ export class Annuncio {
     prezzoVecchio: number | null,
     immagine?: string | null,
     immagini: string[] = [],
-    inVendita: boolean | null = null // 👈 aggiunto
+    inVendita: boolean | null = null
   ) {
     this._id = id;
     this._titolo = titolo;

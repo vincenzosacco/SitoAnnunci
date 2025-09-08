@@ -14,10 +14,8 @@ export class AnnunciLazyProxyServiceProxyService {
 
   getAnnunci(): Observable<Annuncio[]> {
     if (this.cacheAnnunci) {
-      // Ritorna dati in cache (lazy loading evitato, è già caricato)
       return of(this.cacheAnnunci);
     } else {
-      // Carica dati dal servizio originale e memorizza in cache
       return this.annunciService.getAnnunci().pipe(
         tap(annunci => this.cacheAnnunci = annunci)
       );
@@ -25,7 +23,6 @@ export class AnnunciLazyProxyServiceProxyService {
   }
 
   rimuoviAnnuncio(id: number): Observable<void> {
-    // Rimuovi l'annuncio e svuota cache per rifare fetch alla prossima get
     return new Observable<void>(observer => {
       this.annunciService.rimuoviAnnuncio(id).subscribe({
         next: () => {

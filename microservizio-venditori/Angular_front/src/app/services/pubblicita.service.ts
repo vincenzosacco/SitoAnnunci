@@ -7,20 +7,16 @@ export class PubblicitaService {
 
   constructor(private http: HttpClient) {}
 
-  // Chiedi al backend l'URL di login Mastodon
   getLoginUrl() {
     return this.http.get<{ authUrl: string }>(`${this.baseUrl}/login-url`);
   }
 
-  // Apri popup per login Mastodon
   login() {
     this.getLoginUrl().subscribe(({ authUrl }) => {
       const popup = window.open(authUrl, 'Login Mastodon', 'width=600,height=700');
       if (!popup) {
         alert('Popup bloccato dal browser, permetti l\'apertura delle finestre popup');
       }
-      // Non c'è modo semplice di sapere quando il popup si chiude senza backend più complesso,
-      // quindi lascia all'utente chiuderlo manualmente.
     });
   }
 

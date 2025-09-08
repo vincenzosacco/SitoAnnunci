@@ -41,10 +41,10 @@ public class DataCachingProxy {
     }
 
     public void createAnnuncio(Data nuovoAnnuncio) {
-        int generatedId = dataDAO.save(nuovoAnnuncio); // salva nel database e ottiene ID
+        int generatedId = dataDAO.save(nuovoAnnuncio);
         nuovoAnnuncio.setId(generatedId);
         if (cache != null) {
-            cache.add(nuovoAnnuncio); // aggiorna la cache
+            cache.add(nuovoAnnuncio);
         }
     }
 
@@ -102,12 +102,11 @@ public class DataCachingProxy {
         cache = null;
     }
 
-    // Aggiornamento specifico per inVendita
     public void setInVendita(int id, boolean inVendita) {
         updateField(id, "in_vendita", inVendita);
     }
 
-    // proxy
+    //proxy
     public void addAsta(int annuncioId, BigDecimal prezzoBase) {
         dataDAO.addAsta(annuncioId, prezzoBase);
         invalidateCache();

@@ -71,10 +71,10 @@ public class DataController {
         }
 
         int id = idObj;
-        // normalizza per confronto (tolgo underscore e minuscolo)
+        //normalizzo per confronto (tolgo underscore e minuscolo)
         String columnNormalized = columnRaw.replaceAll("_", "").toLowerCase();
 
-        // mappatura verso il nome reale della colonna in DB
+        //mappatura verso il nome reale della colonna in DB
         String dbColumn = switch (columnNormalized) {
             case "categoriaid" -> "categoria_id";
             case "venditoreid" -> "venditore_id";
@@ -82,7 +82,7 @@ public class DataController {
             case "prezzovecchio" -> "prezzo";
             case "invendita" -> "in_vendita";
             case "datacreazione", "data_creazione" -> "data_creazione";
-            default -> columnRaw; // usa come è stato inviato (ma assicurati che sia uno dei alloweds)
+            default -> columnRaw;
         };
 
         Object valoreDaSalvare = null;
@@ -146,7 +146,6 @@ public class DataController {
 
                     case "datacreazione":
                     case "data_creazione":
-                        // accettiamo stringa 'yyyy-MM-ddTHH:mm:ss' o timestamp ISO
                         valoreDaSalvare = java.time.LocalDateTime.parse(raw);
                         sqlType = Types.TIMESTAMP;
                         break;
@@ -157,7 +156,6 @@ public class DataController {
                 }
             }
 
-            // delega al proxy/DAO usando il nome DB corretto
             dataProxy.updateFieldWithType(id, dbColumn, valoreDaSalvare, sqlType);
 
         } catch (NumberFormatException ex) {
@@ -178,7 +176,7 @@ public class DataController {
     @GetMapping("/api/annunci/{annuncioId}/foto")
     public List<String> getFotosForAnnuncio(@PathVariable int annuncioId) {
         List<byte[]> fotos = dataProxy.findPhotosByAnnuncioId(annuncioId);
-        // Convertiamo ogni byte[] in stringa Base64 (Angular si aspetta stringhe)
+        //converto ogni byte in stringa Base64
         return fotos.stream()
                 .map(b -> b == null ? null : Base64.getEncoder().encodeToString(b))
                 .collect(Collectors.toList());
@@ -226,7 +224,7 @@ public class DataController {
         Integer annuncioId = (body.get("annuncioId") instanceof Number) ? ((Number) body.get("annuncioId")).intValue() : null;
         if (annuncioId == null) return ResponseEntity.badRequest().body("annuncioId non numerico");
 
-        // prezzoBase opzionale: se non passato, leggi prezzo_nuovo dall'annuncio
+        // prezzoBase = prezzo_nuovo dall'annuncio
         BigDecimal prezzoBase = null;
         if (body.get("prezzoBase") != null) {
             Object pb = body.get("prezzoBase");
@@ -236,7 +234,6 @@ public class DataController {
                 prezzoBase = new BigDecimal(pb.toString().replace(',', '.'));
             }
         } else {
-            // fallback: prendi prezzo_nuovo dall'annuncio (DAO via proxy)
             var optional = dataProxy.getById(annuncioId);
             if (optional.isPresent()) {
                 prezzoBase = optional.get().getPrezzoNuovo();

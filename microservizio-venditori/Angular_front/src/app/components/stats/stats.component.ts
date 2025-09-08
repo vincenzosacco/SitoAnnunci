@@ -18,7 +18,7 @@ export class StatsComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.annunciService.getAnnunci().subscribe({
       next: (data) => {
-        // Filtra solo gli annunci del venditore salvato nel localStorage
+        //Filtra solo gli annunci del venditore salvato nel localStorage
         const venditoreId = Number(localStorage.getItem('msg'));
         this.annunci = data
           .map((d: any) => Annuncio.fromJSON(d))
@@ -34,8 +34,8 @@ export class StatsComponent implements AfterViewInit {
 
     Chart.register(...registerables);
 
-    const labels = this.annunci.map(a => a.titolo); // etichette: titolo dell'annuncio
-    const prezzi = this.annunci.map(a => a.prezzoNuovo); // dati: prezzoNuovo
+    const labels = this.annunci.map(a => a.titolo);
+    const prezzi = this.annunci.map(a => a.prezzoNuovo);
 
     this.chart = new Chart(this.lineCanvas.nativeElement, {
       type: 'line',
