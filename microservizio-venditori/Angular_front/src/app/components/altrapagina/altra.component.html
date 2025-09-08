@@ -64,6 +64,19 @@
       [ngModelOptions]="{standalone: true}">
   </div>
 
+  <div class="custom-input-group">
+    <label class="form-label">Categoria</label>
+    <select [(ngModel)]="selectedCategoryId" name="categoria" [ngModelOptions]="{standalone: true}" class="custom-input">
+      <option [value]="1">Appartamento</option>
+      <option [value]="2">Villa</option>
+      <option [value]="3">Attico</option>
+      <option [value]="4">Monolocale</option>
+      <option [value]="5">Terreno</option>
+      <option [value]="6">Box Auto</option>
+      <option [value]="7">Ufficio</option>
+    </select>
+  </div>
+
   <!-- Posizione -->
   <div class="custom-input-group">
     <label class="form-label">📍 Posizione</label>

@@ -1,10 +1,10 @@
-<!-- -------------------- AggiungiComponent.html -------------------- -->
 <form (ngSubmit)="$event.preventDefault()">
 
   <!-- Titolo -->
   <div class="custom-input-group">
     <label for="titolo" class="form-label">📝 Titolo</label>
-    <input id="titolo" type="text" class="custom-input" placeholder="Scrivi il titolo del tuo immobile" name="titolo" #titolo>
+    <input id="titolo" type="text" class="custom-input"
+           placeholder="Scrivi il titolo del tuo immobile" name="titolo" #titolo>
   </div>
 
   <!-- Metri Quadri -->
@@ -16,18 +16,51 @@
   <!-- Descrizione -->
   <div class="custom-input-group">
     <label for="descrizione" class="form-label">💬 Descrizione</label>
-    <textarea id="descrizione" class="custom-input" rows="4" placeholder="Scrivi una descrizione dettagliata" name="descrizione" #descrizione></textarea>
+    <textarea id="descrizione" class="custom-input" rows="4"
+              placeholder="Scrivi una descrizione dettagliata" name="descrizione" #descrizione></textarea>
   </div>
 
   <!-- Prezzo -->
   <div class="custom-input-group">
     <label for="prezzo" class="form-label">💶 Prezzo</label>
-    <input id="prezzo" type="number" step="0.01" class="custom-input" placeholder="Inserisci il prezzo" name="prezzo" #prezzo>
+    <input id="prezzo" type="number" step="0.01" class="custom-input"
+           placeholder="Inserisci il prezzo" name="prezzo" #prezzo>
+  </div>
+
+  <!-- Tipo vendita -->
+  <div class="custom-input-group">
+    <label for="tipoVendita" class="form-label">⚖️ Tipo vendita</label>
+    <select id="tipoVendita" [(ngModel)]="tipoVendita" name="tipoVendita" class="custom-input" [ngModelOptions]="{standalone: true}">
+      <option [value]="'compra'">Compra subito</option>
+      <option [value]="'asta'">Asta</option>
+    </select>
+  </div>
+
+  <!-- Categoria -->
+  <div class="custom-input-group">
+    <label for="categoria" class="form-label">🏷️ Categoria</label>
+    <select id="categoria" [(ngModel)]="categoriaId" name="categoriaId" class="custom-input" [ngModelOptions]="{standalone: true}">
+      <option [value]="1">Appartamento</option>
+      <option [value]="2">Villa</option>
+      <option [value]="3">Attico</option>
+      <option [value]="4">Monolocale</option>
+      <option [value]="5">Terreno</option>
+      <option [value]="6">Box Auto</option>
+      <option [value]="7">Ufficio</option>
+    </select>
+  </div>
+
+  <!-- Mappa -->
+  <!-- Indirizzo -->
+  <div class="custom-input-group">
+    <label for="indirizzo" class="form-label">🏠 Indirizzo</label>
+    <input id="indirizzo" type="text" class="custom-input"
+           placeholder="Inserisci l'indirizzo del tuo immobile"
+           name="indirizzo" [(ngModel)]="indirizzo" [ngModelOptions]="{standalone: true}">
   </div>
 
   <!-- Mappa -->
   <div class="custom-input-group">
-    <p *ngIf="indirizzo" class="mt-2">Indirizzo: <strong>{{ indirizzo }}</strong></p>
     <label class="form-label">📍 Posizione</label>
     <div id="map" style="height: 400px; width: 100%;"></div>
     <p *ngIf="latitudine !== null && longitudine !== null" class="mt-2">

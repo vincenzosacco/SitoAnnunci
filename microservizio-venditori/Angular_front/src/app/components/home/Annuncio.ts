@@ -11,8 +11,9 @@ export class Annuncio {
   private _latitudine: number | null;
   private _prezzoNuovo: number | null;
   private _prezzoVecchio: number | null;
-  private _immagine?: string | null;         // vecchio campo singolo
-  private _immagini: string[];               // nuovo campo array
+  private _immagine?: string | null; // vecchio campo singolo
+  private _immagini: string[];       // nuovo campo array
+  private _inVendita: boolean | null; // 👈 aggiunto
 
   constructor(
     id: number,
@@ -28,7 +29,8 @@ export class Annuncio {
     prezzoNuovo: number | null,
     prezzoVecchio: number | null,
     immagine?: string | null,
-    immagini: string[] = []
+    immagini: string[] = [],
+    inVendita: boolean | null = null // 👈 aggiunto
   ) {
     this._id = id;
     this._titolo = titolo;
@@ -44,6 +46,7 @@ export class Annuncio {
     this._prezzoVecchio = prezzoVecchio;
     this._immagine = immagine ?? null;
     this._immagini = immagini;
+    this._inVendita = inVendita;
   }
 
   // Getter e Setter
@@ -91,9 +94,12 @@ export class Annuncio {
   get immagini(): string[] { return this._immagini; }
   set immagini(value: string[]) { this._immagini = value; }
 
-  // Creazione da JSON (gestisce sia singolo che array di immagini)
+  // nuovo campo inVendita
+  get inVendita(): boolean | null { return this._inVendita; }
+  set inVendita(value: boolean | null) { this._inVendita = value; }
+
+  // Creazione da JSON
   static fromJSON(json: any): Annuncio {
-    // Se il backend restituisce immagini multiple, usa array
     const immaginiArray: string[] = json.immagini ?? (json.immagine ? [json.immagine] : []);
     return new Annuncio(
       json.id,
@@ -109,7 +115,8 @@ export class Annuncio {
       json.prezzoNuovo ?? null,
       json.prezzoVecchio ?? null,
       json.immagine ?? null,
-      immaginiArray
+      immaginiArray,
+      json.inVendita ?? null
     );
   }
 }

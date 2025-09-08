@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { Annuncio } from './Annuncio';
 import { AnnunciService } from '../../services/annunci.service';
 import { MastodonIcon } from './Images';
+import { Sold } from './Images';
 import { PubblicitaService } from '../../services/pubblicita.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
   loggedIn = false;
   private annuncioDaPubblicare: Annuncio | null = null;
   protected MastodonIconDataUrl = "data:image/png;base64," + MastodonIcon;
+  protected SoldIconDataUrl = "data:image/png;base64," + Sold;
 
   // cache: annuncioId -> dataUrl (data:image/png;base64,...)
   private fotoCache = new Map<number, string>();
@@ -76,6 +78,10 @@ export class HomeComponent implements OnInit {
         // popola gli oggetti Annuncio
         this.annunci = dati.map((d: any) => Annuncio.fromJSON(d));
 
+        // DEBUG: quali annunci hanno inVendita = false?
+        const nonInVendita = dati.filter((d: any) => d.inVendita === false);
+        console.log("Annunci con inVendita = false:", nonInVendita);
+
         // carica FOTO solo per gli annunci visibili (che corrispondono al venditore corrente)
         const venditoreId = Number(localStorage.getItem('msg'));
         const visible = this.annunci.filter(a => a.venditoreId === venditoreId);
@@ -88,10 +94,6 @@ export class HomeComponent implements OnInit {
     this.subs.add(s);
   }
 
-  /**
-   * Carica la foto (prima immagine) per un annuncio e la salva nella cache.
-   * Usa la rotta /api/annunci/{id}/foto che ritorna string[] (base64).
-   */
   private loadFotoForAnnuncio(annuncio: Annuncio) {
     // se già in cache, nulla da fare
     if (this.fotoCache.has(annuncio.id)) return;

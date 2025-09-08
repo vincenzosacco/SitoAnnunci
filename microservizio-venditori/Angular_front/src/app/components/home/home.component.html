@@ -40,6 +40,7 @@
 
       <!-- Immagine -->
       <img [id]="'foto-annuncio-' + annuncio.id" alt="Foto annuncio" [src]="getFotoSrc(annuncio)"/>
+      <img *ngIf="annuncio.inVendita === false" [src]="SoldIconDataUrl" alt="Sold" class="sold"/>
 
       <!-- Pulsante Mastodon -->
       <button

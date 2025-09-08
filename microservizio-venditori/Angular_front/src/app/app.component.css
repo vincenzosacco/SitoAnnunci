@@ -117,27 +117,34 @@ body::before {
   width: var(--sidebar-square-w);
   height: 150px;
   padding: 14px;
-  background: linear-gradient(180deg, rgba(100,123,237,0.06), rgba(100,123,237,0.02));
-  border-radius: calc(var(--radius) - 2px);
+  background: linear-gradient(180deg, rgba(100,123,237,0.1), rgba(100,123,237,0.2));
+  border-radius: 18px;
   position: fixed;
   top: 20px;
   right: 20px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 0 10px rgba(100,123,237,0.15), 0 4px 12px rgba(100,123,237,0.08);
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: stretch;
   z-index: 120;
   backdrop-filter: blur(6px);
-  border: 1px solid rgba(100,123,237,0.08);
+  border: 2px solid rgba(100,123,237,0.3);
+  transition: transform 200ms ease, box-shadow 200ms ease;
   animation: fadeInUp 360ms ease both;
 }
 
-/* link nella sidebar */
+/* hover della sidebar per effetto leggero di movimento + glow */
+.sidebar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px rgba(100,123,237,0.2), 0 6px 18px rgba(100,123,237,0.12);
+}
+
+/* link nella sidebar con piccolo glitter interno */
 .sidebar a {
   background: var(--card-bg);
   padding: 8px 10px;
-  border-radius: 8px;
+  border-radius: 10px; /* leggermente più tondo */
   color: #0b1220;
   text-decoration: none;
   font-weight: 600;
@@ -145,15 +152,20 @@ body::before {
   box-shadow: 0 2px 6px rgba(11,17,32,0.04);
   transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
 }
+
+/* hover dei link */
 .sidebar a:hover {
-  transform: translateY(-4px);
-  background: var(--accent);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(100,123,237,0.06), rgba(100,123,237,0.12));
+  box-shadow: 0 4px 12px rgba(100,123,237,0.08);
 }
+
+/* link attivo */
 .sidebar a.active {
   background: linear-gradient(90deg, var(--primary-400), var(--primary));
   color: white;
-  box-shadow: 0 8px 24px rgba(100,123,237,0.16);
+  box-shadow: 0 8px 24px rgba(100, 123, 237, 0.16);
+  border: 1px solid rgba(100, 123, 237, 0.3);
 }
 
 /* Navbar orizzontale (mobile) */
@@ -205,14 +217,31 @@ body::before {
 
 /* titolo */
 h1 {
-  margin: 6px 0 22px 0;
-  font-size: clamp(1.6rem, 4.8vw, 2.6rem);
-  color: #0b1220;
+  font-family: Inter, "Segoe UI", serif;
+  margin: 12px 0 22px 0;
+  font-size: clamp(3rem, 9vw, 3rem);
+  color: #ffffff;
+  font-weight: 700;
   letter-spacing: -0.02em;
   text-align: center;
-  font-weight: 700;
   text-shadow: 0 1px 0 rgba(255,255,255,0.6);
-  margin-top: 12px;
+  -webkit-text-stroke: 1px royalblue;
+
+  /* Bordi e background */
+  padding: 12px 24px;
+  border-radius: 18px; /* bordo “tondo” */
+  background: linear-gradient(135deg, rgba(100,123,237,0.1), rgba(100,123,237,0.2));
+  border: 2px solid rgba(100,123,237,0.3);
+
+  /* effetto glitter leggero */
+  box-shadow: 0 0 10px rgba(100,123,237,0.15), 0 2px 8px rgba(100,123,237,0.08);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+/* effetto hover delicato */
+h1:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px rgba(100,123,237,0.2), 0 4px 12px rgba(100,123,237,0.12);
 }
 
 /* nav-row bottom (mobile) */

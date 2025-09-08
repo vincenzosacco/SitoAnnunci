@@ -107,7 +107,15 @@ public class DataDAO {
                 ps.setNull(1, sqlType);
             } else {
                 switch (sqlType) {
-                    case Types.INTEGER -> ps.setInt(1, (Integer) nuovoValore);
+                    case Types.INTEGER -> {
+                        if (nuovoValore instanceof Integer) {
+                            ps.setInt(1, (Integer) nuovoValore);
+                        } else if (nuovoValore instanceof String) {
+                            ps.setInt(1, Integer.parseInt((String) nuovoValore));
+                        } else {
+                            throw new IllegalArgumentException("Valore non convertibile in INTEGER: " + nuovoValore);
+                        }
+                    }
                     case Types.DOUBLE -> ps.setDouble(1, (Double) nuovoValore);
                     case Types.NUMERIC -> ps.setBigDecimal(1, (BigDecimal) nuovoValore);
                     case Types.BINARY -> ps.setBytes(1, (byte[]) nuovoValore);
@@ -179,5 +187,10 @@ public class DataDAO {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    public void addAsta(int annuncioId, BigDecimal prezzoBase) {
+        String sql = "INSERT INTO asta (annuncio_id, prezzo_base) VALUES (?, ?)";
+        jdbcTemplate.update(sql, annuncioId, prezzoBase);
     }
 }

@@ -106,4 +106,10 @@ public class DataCachingProxy {
     public void setInVendita(int id, boolean inVendita) {
         updateField(id, "in_vendita", inVendita);
     }
+
+    // proxy
+    public void addAsta(int annuncioId, BigDecimal prezzoBase) {
+        dataDAO.addAsta(annuncioId, prezzoBase);
+        invalidateCache();
+    }
 }

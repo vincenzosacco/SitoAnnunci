@@ -1,4 +1,13 @@
 /* ===== BACKGROUND + FONT (incolla nel tuo styles.css o in <style> nel head) ===== */
+app-root {
+  display: block;
+  min-height: 100vh;
+  position: relative;   /* per usare z-index */
+  z-index: 2;           /* sopra body::before che ha z-index:0 */
+  background: linear-gradient(180deg, rgb(196,211,255), rgb(196,211,255));
+  background-size: cover;
+}
+
 body {
   font-family: Arial, sans-serif; /* come richiesto */
   margin: 0;
@@ -9,7 +18,7 @@ body {
   /* base + gradient */
   background-color: #f6f8ff;
   background-image:
-    linear-gradient(180deg, #f8faff 0%, #f6f8ff 60%),
+    linear-gradient(180deg, rgb(196,211,255,1) 0%, rgb(196,211,255,1) 60%),
 
       /* bagliori radiali */
     radial-gradient(600px 300px at 8% 12%, rgba(100,123,237,0.06), transparent 18%),

@@ -71,8 +71,19 @@ public class DataController {
         }
 
         int id = idObj;
-        // normalizza: togli underscore e minuscola per confronto
+        // normalizza per confronto (tolgo underscore e minuscolo)
         String columnNormalized = columnRaw.replaceAll("_", "").toLowerCase();
+
+        // mappatura verso il nome reale della colonna in DB
+        String dbColumn = switch (columnNormalized) {
+            case "categoriaid" -> "categoria_id";
+            case "venditoreid" -> "venditore_id";
+            case "prezzonuovo"-> "prezzo_nuovo";
+            case "prezzovecchio" -> "prezzo";
+            case "invendita" -> "in_vendita";
+            case "datacreazione", "data_creazione" -> "data_creazione";
+            default -> columnRaw; // usa come è stato inviato (ma assicurati che sia uno dei alloweds)
+        };
 
         Object valoreDaSalvare = null;
         int sqlType = Types.VARCHAR;
@@ -87,7 +98,6 @@ public class DataController {
                 switch (columnNormalized) {
                     case "latitudine":
                     case "longitudine":
-                        // double
                         valoreDaSalvare = Double.parseDouble(raw.replace(',', '.'));
                         sqlType = Types.DOUBLE;
                         break;
@@ -95,8 +105,7 @@ public class DataController {
                     case "prezzonuovo":
                     case "prezzo_nuovo":
                     case "prezzovecchio":
-                    case "prezzo": // se usi anche questo
-                        // BigDecimal: assicurati che venga passato con '.' come separatore decimale
+                    case "prezzo":
                         valoreDaSalvare = new java.math.BigDecimal(raw.replace(',', '.'));
                         sqlType = Types.NUMERIC;
                         break;
@@ -106,9 +115,20 @@ public class DataController {
                         sqlType = Types.INTEGER;
                         break;
 
+                    case "categoriaid":
+                    case "categoria_id":
+                        valoreDaSalvare = Integer.parseInt(raw);
+                        sqlType = Types.INTEGER;
+                        break;
+
+                    case "venditoreid":
+                    case "venditore_id":
+                        valoreDaSalvare = Integer.parseInt(raw);
+                        sqlType = Types.INTEGER;
+                        break;
+
                     case "invendita":
                     case "in_vendita":
-                        // accettiamo stringhe "true"/"false" o numeri 0/1
                         if ("true".equalsIgnoreCase(raw) || "1".equals(raw)) {
                             valoreDaSalvare = true;
                         } else if ("false".equalsIgnoreCase(raw) || "0".equals(raw)) {
@@ -120,25 +140,33 @@ public class DataController {
                         break;
 
                     case "foto":
-                        // base64 -> byte[]
                         valoreDaSalvare = java.util.Base64.getDecoder().decode(raw);
                         sqlType = Types.BINARY;
                         break;
 
+                    case "datacreazione":
+                    case "data_creazione":
+                        // accettiamo stringa 'yyyy-MM-ddTHH:mm:ss' o timestamp ISO
+                        valoreDaSalvare = java.time.LocalDateTime.parse(raw);
+                        sqlType = Types.TIMESTAMP;
+                        break;
+
                     default:
-                        // stringhe generiche (titolo, descrizione, indirizzo, ecc.)
                         valoreDaSalvare = raw;
                         sqlType = Types.VARCHAR;
                 }
             }
 
-            // delega al proxy che userà il DAO
-            dataProxy.updateFieldWithType(id, columnRaw, valoreDaSalvare, sqlType);
+            // delega al proxy/DAO usando il nome DB corretto
+            dataProxy.updateFieldWithType(id, dbColumn, valoreDaSalvare, sqlType);
 
         } catch (NumberFormatException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato numerico non valido per " + columnRaw, ex);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore: " + ex.getMessage(), ex);
         }
     }
+
 
     @DeleteMapping("/api/delete/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
@@ -156,11 +184,6 @@ public class DataController {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Aggiunge una foto in Base64 a un annuncio.
-     * POST /api/annunci/{annuncioId}/foto
-     * Body JSON: { "fotoBase64": "..." }
-     */
     @PostMapping("/api/annunci/{annuncioId}/fotoAdd")
     public ResponseEntity<String> addPhoto(
             @PathVariable int annuncioId,
@@ -181,6 +204,7 @@ public class DataController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore server: " + e.getMessage());
         }
     }
+
     @DeleteMapping("/api/annunci/{annuncioId}/foto/{index}")
     public ResponseEntity<String> removePhotoByIndex(
             @PathVariable int annuncioId,
@@ -191,6 +215,43 @@ public class DataController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Foto non trovata all'indice " + index);
+        }
+    }
+
+    @PostMapping("/api/astaAdd")
+    public ResponseEntity<String> addAsta(@RequestBody Map<String, Object> body) {
+        if (body == null || body.get("annuncioId") == null) {
+            return ResponseEntity.badRequest().body("annuncioId mancante");
+        }
+        Integer annuncioId = (body.get("annuncioId") instanceof Number) ? ((Number) body.get("annuncioId")).intValue() : null;
+        if (annuncioId == null) return ResponseEntity.badRequest().body("annuncioId non numerico");
+
+        // prezzoBase opzionale: se non passato, leggi prezzo_nuovo dall'annuncio
+        BigDecimal prezzoBase = null;
+        if (body.get("prezzoBase") != null) {
+            Object pb = body.get("prezzoBase");
+            if (pb instanceof Number) {
+                prezzoBase = new BigDecimal(((Number) pb).toString());
+            } else {
+                prezzoBase = new BigDecimal(pb.toString().replace(',', '.'));
+            }
+        } else {
+            // fallback: prendi prezzo_nuovo dall'annuncio (DAO via proxy)
+            var optional = dataProxy.getById(annuncioId);
+            if (optional.isPresent()) {
+                prezzoBase = optional.get().getPrezzoNuovo();
+            }
+        }
+
+        if (prezzoBase == null) {
+            return ResponseEntity.badRequest().body("prezzoBase mancante e prezzo_nuovo non presente per l'annuncio");
+        }
+
+        try {
+            dataProxy.addAsta(annuncioId, prezzoBase);
+            return ResponseEntity.ok("Asta registrata");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore: " + e.getMessage());
         }
     }
 }

@@ -36,8 +36,6 @@ export class AnnunciService {
       });
   }
 
-// prima: usavi HttpParams -> NO
-// dopo: inviamo JSON body: { id, column, nuovoValore }
   aggiornaSpecData(id: number, column: string, valore: any): Observable<any> {
     const body: any = {
       id,
@@ -72,7 +70,12 @@ export class AnnunciService {
   removePhotoByIndex(annuncioId: number, index: number) {
     return this.http.delete(
       `${this.apiUrl}/annunci/${annuncioId}/foto/${index}`,
-      { responseType: 'text' }
+      {responseType: 'text'}
     );
+  }
+
+  addAsta(annuncioId: { id: any; prezzoBase: number }): Observable<any> {
+    const body = { annuncioId };
+    return this.http.post(`${this.baseRoot}/api/astaAdd`, body, { responseType: 'text' as 'json' });
   }
 }

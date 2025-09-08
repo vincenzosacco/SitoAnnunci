@@ -138,6 +138,11 @@ body {
   font-size: 1rem;
 }
 
+.sold
+{
+  position: absolute;
+}
+
 /* MEDIA QUERIES: mobile friendly */
 @media (max-width: 900px) {
   #annunci-container {

@@ -24,6 +24,9 @@ export class AggiungiComponent implements OnInit, OnDestroy {
   // Foto
   fotoNuove: string[] = [];
 
+  tipoVendita: 'compra' | 'asta' = 'compra';
+  categoriaId: number = 1;
+
   private subs = new Subscription();
 
   constructor(private annunciService: AnnunciService) {}
@@ -43,7 +46,7 @@ export class AggiungiComponent implements OnInit, OnDestroy {
     return new Promise((resolve, reject) => {
       if ((window as any).google?.maps) { resolve(); return; }
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=LA_TUA_API_KEY`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDHI3EEzM_-s0uuU0xZkLGUfiMhjeelsN8`;
       script.async = true;
       script.defer = true;
       script.onload = () => resolve();
@@ -114,9 +117,18 @@ export class AggiungiComponent implements OnInit, OnDestroy {
     this.fotoNuove.splice(index, 1);
   }
 
-  // -------------------- CREAZIONE ANNUNCIO --------------------
-  // AggiungiComponent.ts — modifica aggiornaTutto(...)
-// AggiungiComponent.ts
+  private formatLocalDateTimeForBackend(date: Date): string {
+    // produce "yyyy-MM-ddTHH:mm:ss" (senza timezone) — compatibile con LocalDateTime Jackson
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    const Y = date.getFullYear();
+    const M = pad(date.getMonth() + 1);
+    const D = pad(date.getDate());
+    const h = pad(date.getHours());
+    const m = pad(date.getMinutes());
+    const s = pad(date.getSeconds());
+    return `${Y}-${M}-${D}T${h}:${m}:${s}`;
+  }
+
   aggiornaTutto(titolo: string, descrizione: string, m2: number, prezzo: number) {
     // validazione minima
     if (!titolo || titolo.trim() === '') {
@@ -146,7 +158,8 @@ export class AggiungiComponent implements OnInit, OnDestroy {
     const vendId = vendRaw ? Number(vendRaw) : NaN;
     const venditoreIdOrNull = !isNaN(vendId) ? vendId : null;
 
-    // Corpo: includo più varianti dei nomi (snake_case + camelCase)
+    const dataCreazione = this.formatLocalDateTimeForBackend(new Date());
+
     const body: any = {
       id: idCasuale,
       titolo: titolo,
@@ -161,10 +174,14 @@ export class AggiungiComponent implements OnInit, OnDestroy {
       // venditore
       venditoreId: venditoreIdOrNull,
       venditore_id: venditoreIdOrNull,
+      // categoria
+      categoria_id: this.categoriaId,
+      categoriaId: this.categoriaId,
       // coordinate
       latitudine: this.latitudine,
       longitudine: this.longitudine,
       // eventuale flag
+      dataCreazione: dataCreazione, // invio stringa compatibile con LocalDateTime
       isChanged: true,
       placeId: 'place_11'
     };
@@ -175,22 +192,23 @@ export class AggiungiComponent implements OnInit, OnDestroy {
     this.annunciService.createAnnuncio(body).subscribe({
       next: (res: any) => {
         console.log('Annuncio creato (risposta):', res);
-        const createdId = res && res.id ? res.id : idCasuale; // usa l'id ritornato dal server
+        const createdId = (res && (res.id || res.getId)) ? (res.id ?? res.getId) : idCasuale;
 
-        if (this.fotoNuove.length > 0) {
-          const calls = this.fotoNuove.map(foto => this.annunciService.addPhoto(createdId, foto));
-          forkJoin(calls).subscribe({
+        // se è un'asta: chiama endpoint per inserire id nella tabella asta
+        if (this.tipoVendita === 'asta') {
+          this.annunciService.addAsta({ id: createdId, prezzoBase: prezzoNum }).subscribe({
             next: () => {
-              this.fotoNuove = [];
-              alert('Annuncio e foto salvati con successo!');
+              console.log('Asta registrata per annuncio', createdId);
+              this.savePhotosAfterCreate(createdId);
             },
             error: err => {
-              console.error('Errore salvataggio foto:', err);
-              alert('Annuncio creato, ma errore nel salvataggio delle foto.');
+              console.error('Errore registrazione asta:', err);
+              alert('Annuncio creato, ma errore nel registrare l\'asta.');
             }
           });
         } else {
-          alert('Annuncio salvato con successo!');
+          // normale vendita: salva foto e fine
+          this.savePhotosAfterCreate(createdId);
         }
       },
       error: err => {
@@ -198,6 +216,24 @@ export class AggiungiComponent implements OnInit, OnDestroy {
         alert('Errore durante il salvataggio dell\'annuncio. Vedi console.');
       }
     });
+  }
+
+  private savePhotosAfterCreate(createdId: number) {
+    if (this.fotoNuove.length > 0) {
+      const calls = this.fotoNuove.map(foto => this.annunciService.addPhoto(createdId, foto));
+      forkJoin(calls).subscribe({
+        next: () => {
+          this.fotoNuove = [];
+          alert('Annuncio e foto salvati con successo!');
+        },
+        error: err => {
+          console.error('Errore salvataggio foto:', err);
+          alert('Annuncio creato, ma errore nel salvataggio delle foto.');
+        }
+      });
+    } else {
+      alert('Annuncio salvato con successo!');
+    }
   }
     // Per usare Number in template
   public readonly Number = Number;
