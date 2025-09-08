@@ -1,5 +1,6 @@
-import {Component, inject} from '@angular/core';
+import {Component, Optional} from '@angular/core';
 import {AuthFacadeService} from '../../../services/auth/auth-facade.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-no-auth-redirect',
@@ -15,10 +16,18 @@ import {AuthFacadeService} from '../../../services/auth/auth-facade.service';
   `,
   styleUrl: './no-auth-redirect.component.css'
 })
+/**
+ * Component that prompts the user to log in when they attempt to access a resource without authentication.
+ * Can be used as a standalone page or within a dialog (pop-up).
+ */
 export class NoAuthRedirectComponent {
-  private authFacadeService = inject(AuthFacadeService);
+    constructor(
+        private authFacadeService: AuthFacadeService,
+        @Optional() private dialogRef?: MatDialogRef<NoAuthRedirectComponent>
+    ) {}
 
-  protected login() {
-    this.authFacadeService.login();
-  }
+    login() {
+        this.authFacadeService.login();
+        this.dialogRef?.close();
+    }
 }
