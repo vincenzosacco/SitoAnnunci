@@ -10,7 +10,7 @@ import {BaseApiService} from "./base-api.service";
 export class AnnuncioService extends BaseApiService<AnnuncioModel> {
 
   constructor() {
-        super('annunci')
+        super('public/annunci')
     }
 
   getById(id: number) {

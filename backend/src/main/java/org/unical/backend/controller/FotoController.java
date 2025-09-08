@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("photos")
+@RequestMapping("public/photos")
 public class FotoController {
     private final IFotoService fotoService;
 

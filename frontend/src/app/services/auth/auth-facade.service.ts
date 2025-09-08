@@ -60,14 +60,16 @@ EXAMPLE:
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
     const auth = inject(AuthService);
 
+    // Skip adding Authorization header for public endpoints
+    if (req.url.includes('/public/')) {
+        return next(req); // Send request as-is
+    }
+
     return auth.isAuthenticated$.pipe(
-
-        /* Use switchMap to wait for the isAuthenticated$ observable to emit a value */
-
         switchMap(isAuthenticated => {
             if (!isAuthenticated) {
                 console.debug('User not authenticated. Skipping token.');
-                return next(req); // Return observable
+                return next(req);
             }
 
             return from(auth.getAccessTokenSilently()).pipe(
@@ -85,6 +87,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         })
     );
 };
+
 
 
 

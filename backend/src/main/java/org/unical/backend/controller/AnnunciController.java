@@ -9,7 +9,7 @@ import org.unical.backend.model.Annuncio;
 import org.unical.backend.service.IAnnuncioService;
 
 @RestController
-@RequestMapping("annunci")
+@RequestMapping("public/annunci")
 public class AnnunciController {
     private final IAnnuncioService annService;
 
